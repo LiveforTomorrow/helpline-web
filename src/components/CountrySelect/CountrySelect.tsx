@@ -12,6 +12,7 @@ type Country = {
 
 type Props = {
     countries: Country[];
+    onChange: (country: Country) => void;
 };
 
 // ISO 3166-1 alpha-2
@@ -24,6 +25,9 @@ const countryToFlag = (isoCode: string): string => {
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
+        root: {
+            width: 'auto !important',
+        },
         inputRoot: {
             borderRadius: '48px',
             backgroundColor: '#EEEDF4',
@@ -60,41 +64,45 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-const CountrySelect = ({ countries }: Props): ReactElement => {
+const CountrySelect = ({ countries, onChange }: Props): ReactElement => {
     const classes = useStyles();
 
     return (
-        <Autocomplete
-            style={{ width: 300 }}
-            options={countries}
-            classes={{
-                inputRoot: classes.inputRoot,
-                option: classes.option,
-                popupIndicator: classes.popupIndicator,
-                popupIndicatorOpen: classes.popupIndicatorOpen,
-                paper: classes.paper,
-            }}
-            popupIcon={<SearchIcon />}
-            autoHighlight
-            getOptionLabel={(option): string => option.name}
-            renderOption={(option): ReactElement => (
-                <Fragment>
-                    <span>{countryToFlag(option.code)}</span>
-                    {option.name}
-                </Fragment>
-            )}
-            renderInput={(params): ReactElement => (
-                <TextField
-                    {...params}
-                    placeholder="Start typing your country..."
-                    variant="outlined"
-                    inputProps={{
-                        ...params.inputProps,
-                        autoComplete: 'new-password', // disable autocomplete and autofill
-                    }}
-                />
-            )}
-        />
+        <Fragment>
+            <Autocomplete
+                style={{ width: 300 }}
+                options={countries}
+                classes={{
+                    root: classes.root,
+                    inputRoot: classes.inputRoot,
+                    option: classes.option,
+                    popupIndicator: classes.popupIndicator,
+                    popupIndicatorOpen: classes.popupIndicatorOpen,
+                    paper: classes.paper,
+                }}
+                popupIcon={<SearchIcon />}
+                autoHighlight
+                getOptionLabel={(option): string => option.name}
+                renderOption={(option): ReactElement => (
+                    <Fragment>
+                        <span>{countryToFlag(option.code)}</span>
+                        {option.name}
+                    </Fragment>
+                )}
+                onChange={(_e, value: Country): void => onChange(value)}
+                renderInput={(params): ReactElement => (
+                    <TextField
+                        {...params}
+                        placeholder="Start typing your country..."
+                        variant="outlined"
+                        inputProps={{
+                            ...params.inputProps,
+                            autoComplete: 'new-password', // disable autocomplete and autofill
+                        }}
+                    />
+                )}
+            />
+        </Fragment>
     );
 };
 
