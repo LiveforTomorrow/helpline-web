@@ -5,6 +5,7 @@ import CountrySelect from '../src/components/CountrySelect';
 import { request } from 'graphql-request';
 import { Typography, Container, Box } from '@material-ui/core';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
+import TopicSelect from '../src/components/TopicSelect';
 
 type Country = {
     code: string;
@@ -27,8 +28,9 @@ const useStyles = makeStyles(() =>
         },
     }),
 );
-const Home = ({ countries }: Props): ReactElement => {
-    const [country, setCountry] = useState(null);
+const Home = ({ topics, countries }: Props): ReactElement => {
+    const [selectedCountry, setSelectedCountry] = useState(null);
+    const [selectedTopics, setSelectedTopics] = useState([]);
     const classes = useStyles();
 
     return (
@@ -39,7 +41,7 @@ const Home = ({ countries }: Props): ReactElement => {
             <TopBar />
             <Container className={classes.container} maxWidth="xs">
                 <Box my={5}>
-                    {!country && (
+                    {!selectedCountry && (
                         <Fragment>
                             <Typography variant="h5">find a helpline</Typography>
                             <Box my={2}>
@@ -49,7 +51,15 @@ const Home = ({ countries }: Props): ReactElement => {
                             </Box>
                         </Fragment>
                     )}
-                    <CountrySelect countries={countries} onChange={setCountry} />
+                    <CountrySelect countries={countries} onChange={setSelectedCountry} />
+                    {selectedCountry && (
+                        <Fragment>
+                            <Box my={2}>
+                                <Typography variant="h5">What would you like help with?</Typography>
+                            </Box>
+                            <TopicSelect topics={topics} onChange={setSelectedTopics} />
+                        </Fragment>
+                    )}
                 </Box>
             </Container>
         </Fragment>
