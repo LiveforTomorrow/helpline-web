@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { storiesOf } from '@storybook/react';
-import TopBar from './index';
+import TopBar from './TopBar';
 import { Container, Typography } from '@material-ui/core';
 import * as Faker from 'faker';
 

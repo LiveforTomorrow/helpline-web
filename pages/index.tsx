@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import React, { ReactElement, Fragment } from 'react';
-import TopBar from '../src/components/TopBar';
+import TopBar from '../src/components/TopBar/TopBar';
 
 const Home = (): ReactElement => (
     <Fragment>
