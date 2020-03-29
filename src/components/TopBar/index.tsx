@@ -79,11 +79,14 @@ const TopBar = ({ country }: Props): ReactElement => {
                         Need to leave quickly? Click to leave this site and open the weather.
                     </Typography>
                 )}
-                <Link href="/weather" passHref>
-                    <Button color="inherit" className={classes.button} endIcon={<DirectionsRunIcon />}>
-                        Leave Quickly
-                    </Button>
-                </Link>
+                <Button
+                    color="inherit"
+                    className={classes.button}
+                    endIcon={<DirectionsRunIcon />}
+                    href="https://accuweather.com"
+                >
+                    Leave Quickly
+                </Button>
             </Toolbar>
         </AppBar>
     );
