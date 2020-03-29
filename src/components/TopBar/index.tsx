@@ -3,7 +3,6 @@ import { AppBar, Toolbar, Typography, Button } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import DirectionsRunIcon from '@material-ui/icons/DirectionsRun';
 import CallIcon from '@material-ui/icons/Call';
-import Link from 'next/link';
 
 type Country = {
     emergencyNumber: string;
@@ -20,6 +19,7 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         toolbar: {
             display: 'grid',
+            height: '64px',
             gridGap: theme.spacing(2),
             gridAutoFlow: 'column',
             gridTemplateColumns: '1fr',
@@ -60,35 +60,40 @@ const TopBar = ({ country }: Props): ReactElement => {
     const classes = useStyles();
 
     return (
-        <AppBar className={classes.appBar}>
-            <Toolbar className={classes.toolbar}>
-                {country ? (
-                    <Fragment>
-                        <Typography className={classes.title}>Are you or someone else in immediate danger?</Typography>
-                        <Button
-                            color="inherit"
-                            className={classes.button}
-                            endIcon={<CallIcon />}
-                            href={`tel:${country.emergencyNumber}`}
-                        >
-                            Emergency Services
-                        </Button>
-                    </Fragment>
-                ) : (
-                    <Typography className={classes.title}>
-                        Need to leave quickly? Click to leave this site and open the weather.
-                    </Typography>
-                )}
-                <Button
-                    color="inherit"
-                    className={classes.button}
-                    endIcon={<DirectionsRunIcon />}
-                    href="https://accuweather.com"
-                >
-                    Leave Quickly
-                </Button>
-            </Toolbar>
-        </AppBar>
+        <Fragment>
+            <AppBar className={classes.appBar} position="fixed">
+                <Toolbar className={classes.toolbar}>
+                    {country ? (
+                        <Fragment>
+                            <Typography className={classes.title}>
+                                Are you or someone else in immediate danger?
+                            </Typography>
+                            <Button
+                                color="inherit"
+                                className={classes.button}
+                                endIcon={<CallIcon />}
+                                href={`tel:${country.emergencyNumber}`}
+                            >
+                                Emergency Services
+                            </Button>
+                        </Fragment>
+                    ) : (
+                        <Typography className={classes.title}>
+                            Need to leave quickly? Click to leave this site and open the weather.
+                        </Typography>
+                    )}
+                    <Button
+                        color="inherit"
+                        className={classes.button}
+                        endIcon={<DirectionsRunIcon />}
+                        href="https://accuweather.com"
+                    >
+                        Leave Quickly
+                    </Button>
+                </Toolbar>
+            </AppBar>
+            <Toolbar className={classes.toolbar} />
+        </Fragment>
     );
 };
 
