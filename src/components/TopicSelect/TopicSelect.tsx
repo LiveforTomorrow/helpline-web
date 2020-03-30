@@ -2,7 +2,7 @@
 import React, { ReactElement, useState } from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { Chip, Box, Typography } from '@material-ui/core';
-import { find, xor } from 'lodash/fp';
+import { find, xor, sortBy } from 'lodash/fp';
 
 type Topic = {
     name: string;
@@ -41,7 +41,7 @@ const TopicSelect = ({ topics, onChange }: Props): ReactElement => {
     const [selectedTopics, setSelectedTopics] = useState([]);
 
     const onClick = (topic: Topic): void => {
-        const topics = xor([topic], selectedTopics);
+        const topics = sortBy('name', xor([topic], selectedTopics));
         setSelectedTopics(topics);
         onChange(topics);
     };

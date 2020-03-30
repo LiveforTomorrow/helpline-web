@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const TopBar = ({ topics, countries }: Props): ReactElement => {
     const [selectedCountry, setSelectedCountry] = useState<Country | undefined>(undefined);
-    const [selectedTopics, setSelectedTopics] = useState([]);
+    const [selectedTopics, setSelectedTopics] = useState<Topic[]>([]);
     const classes = useStyles();
 
     return (
@@ -56,7 +56,13 @@ const TopBar = ({ topics, countries }: Props): ReactElement => {
                     <Box my={2}>
                         <TopicSelect topics={topics} onChange={setSelectedTopics} />
                     </Box>
-                    <Link href="/[code]" as={`/${selectedCountry.code.toLowerCase()}`} passHref>
+                    <Link
+                        href={{
+                            pathname: `/${selectedCountry.code.toLowerCase()}`,
+                            query: { topics: selectedTopics.map((topic) => topic.name) },
+                        }}
+                        passHref
+                    >
                         <Button className={classes.button} variant="contained" color="primary" size="large">
                             Search
                         </Button>
