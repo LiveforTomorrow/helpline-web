@@ -5,6 +5,7 @@ import TopBar from '../src/components/TopBar';
 import { Typography, Container, Box } from '@material-ui/core';
 import { useRouter } from 'next/router';
 import formatArrayIntoSentence from '../src/util/formatArrayIntoSentence';
+import Head from 'next/head';
 
 type Country = {
     code: string;
@@ -18,10 +19,16 @@ type Props = {
 
 const Country = ({ country }: Props): ReactElement => {
     const router = useRouter();
-    const { topics } = router.query;
+    let { topics } = router.query;
+    if (topics) {
+        topics = [topics].flat();
+    }
 
     return (
         <Fragment>
+            <Head>
+                <title>Find A Helpline | {country.name}</title>
+            </Head>
             <TopBar country={country} />
             <Container>
                 <Box my={2}>
