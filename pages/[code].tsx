@@ -30,7 +30,7 @@ const Country = ({ country }: Props): ReactElement => {
                         <Typography component="span" color="primary">
                             {country.name}
                         </Typography>
-                        {topics && <Fragment> for {formatArrayIntoSentence(topics)}.</Fragment>}
+                        {topics && <Fragment> for {formatArrayIntoSentence(topics)}</Fragment>}.
                     </Typography>
                 </Box>
             </Container>
