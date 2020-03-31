@@ -21,10 +21,23 @@ type Props = {
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
-        box: {
-            marginTop: theme.spacing(5),
-            marginBottom: theme.spacing(5),
+        logo: {
             textAlign: 'center',
+            '& img': {
+                maxWidth: '300px',
+            },
+        },
+        box: {
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            paddingTop: theme.spacing(5),
+            paddingBottom: theme.spacing(5),
+            textAlign: 'center',
+            height: 'calc(100vh - 64px)',
+            [theme.breakpoints.down('xs')]: {
+                height: 'calc(100vh - 80px)',
+            },
         },
         button: {
             borderRadius: '1000px',
@@ -41,7 +54,9 @@ const TopBar = ({ topics, countries }: Props): ReactElement => {
         <Box className={classes.box}>
             {!selectedCountry && (
                 <Fragment>
-                    <Typography variant="h5">find a helpline</Typography>
+                    <Box className={classes.logo}>
+                        <img src="/logo.svg" alt="find a helpline" />
+                    </Box>
                     <Box my={2}>
                         <Typography>Struggling? Talk to a real person about what&apos;s going on, for free.</Typography>
                     </Box>
