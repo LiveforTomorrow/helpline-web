@@ -28,16 +28,9 @@ const useStyles = makeStyles((theme: Theme) =>
             },
         },
         box: {
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
             paddingTop: theme.spacing(5),
             paddingBottom: theme.spacing(5),
             textAlign: 'center',
-            height: 'calc(100vh - 64px)',
-            [theme.breakpoints.down('xs')]: {
-                height: 'calc(100vh - 80px)',
-            },
         },
         button: {
             borderRadius: '1000px',
