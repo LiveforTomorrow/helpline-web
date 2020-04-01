@@ -1,6 +1,6 @@
 import React, { ReactElement, Fragment, useState } from 'react';
 import CountrySelect from '../CountrySelect';
-import { Typography, Box, Button } from '@material-ui/core';
+import { Typography, Box, Button, Container } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import TopicSelect from '../TopicSelect';
 import Link from 'next/link';
@@ -27,10 +27,14 @@ const useStyles = makeStyles((theme: Theme) =>
                 maxWidth: '250px',
             },
         },
-        box: {
+        container: {
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
             paddingTop: theme.spacing(5),
             paddingBottom: theme.spacing(5),
             textAlign: 'center',
+            height: '100%',
         },
         button: {
             borderRadius: '1000px',
@@ -38,13 +42,13 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-const TopBar = ({ topics, countries }: Props): ReactElement => {
+const Search = ({ topics, countries }: Props): ReactElement => {
     const [selectedCountry, setSelectedCountry] = useState<Country | undefined>(undefined);
     const [selectedTopics, setSelectedTopics] = useState<Topic[]>([]);
     const classes = useStyles();
 
     return (
-        <Box className={classes.box}>
+        <Container maxWidth="xs" className={classes.container}>
             {!selectedCountry && (
                 <Fragment>
                     <Box className={classes.logo}>
@@ -79,8 +83,8 @@ const TopBar = ({ topics, countries }: Props): ReactElement => {
                     </Link>
                 </Fragment>
             )}
-        </Box>
+        </Container>
     );
 };
 
-export default TopBar;
+export default Search;

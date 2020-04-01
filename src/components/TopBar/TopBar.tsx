@@ -39,13 +39,6 @@ const useStyles = makeStyles((theme: Theme) =>
         toolbarWithoutCountry: {
             gridTemplateColumns: '1fr auto',
         },
-        toolbarSpacer: {
-            padding: 0,
-            height: '64px',
-            [theme.breakpoints.down('xs')]: {
-                height: '80px',
-            },
-        },
         title: {
             minWidth: '80px',
             [theme.breakpoints.down('xs')]: {
@@ -65,7 +58,7 @@ const useStyles = makeStyles((theme: Theme) =>
             paddingLeft: theme.spacing(2),
             paddingRight: theme.spacing(2),
             [theme.breakpoints.down('xs')]: {
-                fontSize: '0.8rem',
+                fontSize: '0.6rem',
                 paddingRight: theme.spacing(1),
                 paddingLeft: theme.spacing(1),
             },
@@ -80,47 +73,52 @@ const TopBar = ({ country }: Props): ReactElement => {
     const classes = useStyles();
 
     return (
-        <Fragment>
-            <AppBar className={classes.appBar} position="fixed">
-                <Container>
-                    <Toolbar
-                        className={[
-                            classes.toolbar,
-                            country ? classes.toolbarWithCountry : classes.toolbarWithoutCountry,
-                        ].join(' ')}
-                    >
-                        {country ? (
-                            <Fragment>
-                                <Typography className={[classes.title, classes.titleWithCountry].join(' ')}>
-                                    Are you or someone else in immediate danger?
-                                </Typography>
-                                <Button
-                                    color="inherit"
-                                    className={classes.button}
-                                    endIcon={<CallIcon />}
-                                    href={`tel:${country.emergencyNumber}`}
-                                >
-                                    Dial {country.emergencyNumber}
-                                </Button>
-                            </Fragment>
-                        ) : (
-                            <Typography className={classes.title}>
-                                Need to leave quickly? Click to leave this site and open the weather.
+        <AppBar className={classes.appBar} position="static">
+            <Container>
+                <Toolbar
+                    className={[
+                        classes.toolbar,
+                        country ? classes.toolbarWithCountry : classes.toolbarWithoutCountry,
+                    ].join(' ')}
+                >
+                    {country ? (
+                        <Fragment>
+                            <Typography className={[classes.title, classes.titleWithCountry].join(' ')}>
+                                Are you or someone else in immediate danger?
                             </Typography>
-                        )}
-                        <Button
-                            color="inherit"
-                            className={classes.button}
-                            endIcon={<DirectionsRunIcon />}
-                            href="https://accuweather.com"
-                        >
-                            Leave Quickly
-                        </Button>
-                    </Toolbar>
-                </Container>
-            </AppBar>
-            <Toolbar className={classes.toolbarSpacer} />
-        </Fragment>
+                            <Button
+                                color="inherit"
+                                className={classes.button}
+                                endIcon={
+                                    <Hidden xsDown>
+                                        <CallIcon />
+                                    </Hidden>
+                                }
+                                href={`tel:${country.emergencyNumber}`}
+                            >
+                                Emergency Services
+                            </Button>
+                        </Fragment>
+                    ) : (
+                        <Typography className={classes.title}>
+                            Need to leave quickly? Click to leave this site and open the weather.
+                        </Typography>
+                    )}
+                    <Button
+                        color="inherit"
+                        className={classes.button}
+                        endIcon={
+                            <Hidden xsDown>
+                                <DirectionsRunIcon />
+                            </Hidden>
+                        }
+                        href="https://accuweather.com"
+                    >
+                        Leave Quickly
+                    </Button>
+                </Toolbar>
+            </Container>
+        </AppBar>
     );
 };
 

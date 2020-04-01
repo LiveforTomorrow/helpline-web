@@ -1,8 +1,7 @@
 import Head from 'next/head';
 import React, { ReactElement, Fragment } from 'react';
-import TopBar from '../src/components/TopBar/TopBar';
+import Chrome from '../src/components/Chrome';
 import { request } from 'graphql-request';
-import { Container } from '@material-ui/core';
 import Search from '../src/components/Search';
 
 type Country = {
@@ -25,10 +24,9 @@ const Home = ({ topics, countries }: Props): ReactElement => {
             <Head>
                 <title>Find A Helpline</title>
             </Head>
-            <TopBar />
-            <Container maxWidth="xs">
+            <Chrome>
                 <Search countries={countries} topics={topics} />
-            </Container>
+            </Chrome>
         </Fragment>
     );
 };
