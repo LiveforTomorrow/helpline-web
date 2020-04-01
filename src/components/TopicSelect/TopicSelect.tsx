@@ -1,4 +1,3 @@
-/* eslint-disable no-use-before-define */
 import React, { ReactElement, useState } from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { Chip, Box, Typography } from '@material-ui/core';

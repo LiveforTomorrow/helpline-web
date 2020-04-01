@@ -32,12 +32,9 @@ const Country = ({ country }: Props): ReactElement => {
             <Chrome country={country}>
                 <Container>
                     <Box my={2}>
-                        <Typography>
-                            Best helplines in{' '}
-                            <Typography component="span" color="primary">
-                                {country.name}
-                            </Typography>
-                            {topics && <Fragment> for {formatArrayIntoSentence(topics)}</Fragment>}.
+                        <Typography variant="h6">
+                            Best helplines in {country.name}
+                            {topics && <Fragment> for {formatArrayIntoSentence(topics).toLowerCase()}</Fragment>}.
                         </Typography>
                     </Box>
                 </Container>
