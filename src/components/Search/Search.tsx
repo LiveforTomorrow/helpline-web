@@ -36,6 +36,10 @@ const useStyles = makeStyles((theme: Theme) =>
             textAlign: 'center',
             height: '100%',
         },
+        box: {
+            display: 'grid',
+            gridGap: theme.spacing(2),
+        },
         button: {
             borderRadius: '1000px',
         },
@@ -49,27 +53,23 @@ const Search = ({ topics, countries }: Props): ReactElement => {
 
     return (
         <Container maxWidth="xs" className={classes.container}>
-            {!selectedCountry && (
-                <Fragment>
+            <Box className={classes.box}>
+                {!selectedCountry && (
                     <Box className={classes.logo}>
                         <img src="/logo.svg" alt="find a helpline" />
                     </Box>
-                    <Box my={2}>
-                        <Typography>Struggling? Talk to a real person about what&apos;s going on, for free.</Typography>
-                    </Box>
-                </Fragment>
-            )}
-            <CountrySelect countries={countries} onChange={setSelectedCountry} />
-            {selectedCountry && (
-                <Fragment>
-                    <Box my={2}>
-                        <Typography variant="h6">
-                            <strong>What would you like help with?</strong>
-                        </Typography>
-                    </Box>
-                    <Box my={2}>
-                        <TopicSelect topics={topics} onChange={setSelectedTopics} />
-                    </Box>
+                )}
+                {!selectedCountry && (
+                    <Typography>Struggling? Talk to a real person about what&apos;s going on, for free.</Typography>
+                )}
+                <CountrySelect countries={countries} onChange={setSelectedCountry} />
+                {selectedCountry && (
+                    <Typography variant="h6">
+                        <strong>What would you like help with?</strong>
+                    </Typography>
+                )}
+                {selectedCountry && <TopicSelect topics={topics} onChange={setSelectedTopics} />}
+                {selectedCountry && (
                     <Link
                         href={{
                             pathname: `/${selectedCountry.code.toLowerCase()}`,
@@ -81,8 +81,8 @@ const Search = ({ topics, countries }: Props): ReactElement => {
                             Search
                         </Button>
                     </Link>
-                </Fragment>
-            )}
+                )}
+            </Box>
         </Container>
     );
 };
