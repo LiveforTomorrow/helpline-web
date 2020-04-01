@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme: Theme) =>
         logo: {
             textAlign: 'center',
             '& img': {
-                maxWidth: '300px',
+                maxWidth: '250px',
             },
         },
         box: {
@@ -59,7 +59,9 @@ const TopBar = ({ topics, countries }: Props): ReactElement => {
             {selectedCountry && (
                 <Fragment>
                     <Box my={2}>
-                        <Typography variant="h5">What would you like help with?</Typography>
+                        <Typography variant="h6">
+                            <strong>What would you like help with?</strong>
+                        </Typography>
                     </Box>
                     <Box my={2}>
                         <TopicSelect topics={topics} onChange={setSelectedTopics} />
