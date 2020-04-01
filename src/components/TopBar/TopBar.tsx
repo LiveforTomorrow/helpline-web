@@ -1,5 +1,5 @@
 import React, { ReactElement, Fragment } from 'react';
-import { AppBar, Container, Toolbar, Typography, Button, Hidden } from '@material-ui/core';
+import { AppBar, Container, Toolbar, Typography, Button } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import DirectionsRunIcon from '@material-ui/icons/DirectionsRun';
 import CallIcon from '@material-ui/icons/Call';
@@ -14,6 +14,12 @@ type Props = {
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
+        container: {
+            [theme.breakpoints.down('xs')]: {
+                paddingRight: theme.spacing(1),
+                paddingLeft: theme.spacing(1),
+            },
+        },
         appBar: {
             backgroundColor: '#181719',
         },
@@ -58,12 +64,17 @@ const useStyles = makeStyles((theme: Theme) =>
             paddingLeft: theme.spacing(2),
             paddingRight: theme.spacing(2),
             [theme.breakpoints.down('xs')]: {
-                fontSize: '0.6rem',
+                fontSize: '0.7rem',
                 paddingRight: theme.spacing(1),
                 paddingLeft: theme.spacing(1),
             },
             '&:hover': {
                 backgroundColor: '#CC001E',
+            },
+        },
+        buttonEndIcon: {
+            [theme.breakpoints.down('xs')]: {
+                display: 'none',
             },
         },
     }),
@@ -74,7 +85,7 @@ const TopBar = ({ country }: Props): ReactElement => {
 
     return (
         <AppBar className={classes.appBar} position="static">
-            <Container>
+            <Container className={country && classes.container}>
                 <Toolbar
                     className={[
                         classes.toolbar,
@@ -88,12 +99,8 @@ const TopBar = ({ country }: Props): ReactElement => {
                             </Typography>
                             <Button
                                 color="inherit"
-                                className={classes.button}
-                                endIcon={
-                                    <Hidden xsDown>
-                                        <CallIcon />
-                                    </Hidden>
-                                }
+                                classes={{ root: classes.button, endIcon: classes.buttonEndIcon }}
+                                endIcon={<CallIcon />}
                                 href={`tel:${country.emergencyNumber}`}
                             >
                                 Emergency Services
@@ -106,12 +113,8 @@ const TopBar = ({ country }: Props): ReactElement => {
                     )}
                     <Button
                         color="inherit"
-                        className={classes.button}
-                        endIcon={
-                            <Hidden xsDown>
-                                <DirectionsRunIcon />
-                            </Hidden>
-                        }
+                        classes={{ root: classes.button, endIcon: classes.buttonEndIcon }}
+                        endIcon={<DirectionsRunIcon />}
                         href="https://accuweather.com"
                     >
                         Leave Quickly
