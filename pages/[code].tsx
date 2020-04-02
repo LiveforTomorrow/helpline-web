@@ -10,7 +10,7 @@ import formatArrayIntoSentence from '../src/util/formatArrayIntoSentence';
 import Chrome from '../src/components/Chrome';
 import { GetCountry } from '../types/GetCountry';
 
-const Country = ({ country }: GetCountry): ReactElement => {
+const CountryPage = ({ country }: GetCountry): ReactElement => {
     const router = useRouter();
     let { topics } = router.query;
 
@@ -77,4 +77,4 @@ export const getStaticPaths: GetStaticPaths = async () => {
     };
 };
 
-export default Country;
+export default CountryPage;

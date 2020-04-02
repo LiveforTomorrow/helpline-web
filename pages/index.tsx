@@ -1,44 +1,19 @@
 import Head from 'next/head';
 import React, { ReactElement, Fragment } from 'react';
-import { request } from 'graphql-request';
-import gql from 'graphql-tag';
-import { print } from 'graphql';
-import Search from '../src/components/Search';
 import Chrome from '../src/components/Chrome';
-import { GetCountriesAndTopics } from '../types/GetCountriesAndTopics';
+import Placeholder from '../src/components/Placeholder';
 
-const Home = ({ topics, countries }: GetCountriesAndTopics): ReactElement => {
+const IndexPage = (): ReactElement => {
     return (
         <Fragment>
             <Head>
                 <title>Find A Helpline</title>
             </Head>
             <Chrome>
-                <Search countries={countries} topics={topics} />
+                <Placeholder />
             </Chrome>
         </Fragment>
     );
 };
 
-export const getStaticProps = async (): Promise<{ props: GetCountriesAndTopics }> => {
-    const query = gql`
-        query GetCountriesAndTopics {
-            countries {
-                code
-                name
-            }
-            topics {
-                name
-            }
-        }
-    `;
-    const { countries, topics } = await request('https://api.findahelpline.com', print(query));
-    return {
-        props: {
-            countries,
-            topics,
-        },
-    };
-};
-
-export default Home;
+export default IndexPage;
