@@ -4,7 +4,7 @@ import { ServerStyleSheets } from '@material-ui/core/styles';
 import { RenderPageResult } from 'next/dist/next-server/lib/utils';
 import theme from '../src/theme';
 
-export default class MyDocument extends Document {
+class MyDocument extends Document {
     render(): ReactElement {
         return (
             <html lang="en">
@@ -64,3 +64,5 @@ MyDocument.getInitialProps = async (ctx): Promise<DocumentInitialProps> => {
         styles: [...React.Children.toArray(initialProps.styles), sheets.getStyleElement()],
     };
 };
+
+export default MyDocument;

@@ -14,7 +14,15 @@ module.exports = {
     sourceType: "module" // Allows for the use of imports
   },
   rules: {
-    "import/order": "error"
+    "import/exports-last": "error",
+    "import/no-duplicates": "error",
+    "import/extensions": "error",
+    "import/order": "error",
+    "import/newline-after-import": "error",
+    "import/prefer-default-export": "error",
+    "import/no-named-default": "error",
+    "import/no-anonymous-default-export": "error",
+    "import/dynamic-import-chunkname": "error",
   },
   settings: {
     react: {
