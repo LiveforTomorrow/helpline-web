@@ -61,7 +61,7 @@ const TopBar = (): ReactElement => {
                     <Button
                         startIcon={<ThumbUpIcon />}
                         classes={{ root: classes.buttonRoot, label: classes.buttonLabel }}
-                        href="elliot@livefortomorrow.co"
+                        href="mailto:elliot@livefortomorrow.co"
                         color="primary"
                     >
                         Partner With Us
