@@ -1,7 +1,7 @@
 import React, { ReactElement, ReactNode } from 'react';
-import TopBar from '../TopBar';
 import Div100vh from 'react-div-100vh';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
+import TopBar from '../TopBar';
 
 type Country = {
     emergencyNumber: string;
@@ -11,6 +11,7 @@ type Props = {
     country?: Country;
     children: ReactNode;
 };
+
 const useStyles = makeStyles(() =>
     createStyles({
         div100vh: {

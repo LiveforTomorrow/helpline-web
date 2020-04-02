@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import TopBar from './TopBar';
+import TopBar from '.';
 
 storiesOf('TopBar', module)
     .add('default', () => {

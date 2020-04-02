@@ -1,9 +1,9 @@
-import React, { ReactElement, Fragment, useState } from 'react';
-import CountrySelect from '../CountrySelect';
+import React, { ReactElement, useState } from 'react';
 import { Typography, Box, Button, Container } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import TopicSelect from '../TopicSelect';
 import Link from 'next/link';
+import TopicSelect from '../TopicSelect';
+import CountrySelect from '../CountrySelect';
 
 type Country = {
     code: string;

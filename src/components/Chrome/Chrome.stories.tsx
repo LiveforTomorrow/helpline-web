@@ -1,8 +1,8 @@
 import React, { Fragment } from 'react';
 import { storiesOf } from '@storybook/react';
-import Chrome from './Chrome';
 import { Container, Typography } from '@material-ui/core';
 import * as Faker from 'faker';
+import Chrome from '.';
 
 storiesOf('Chrome', module)
     .add('default', () => {

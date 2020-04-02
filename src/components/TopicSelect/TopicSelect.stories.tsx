@@ -1,9 +1,9 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import TopicSelect from './TopicSelect';
 import { ThemeProvider, Box } from '@material-ui/core';
 import theme from '../../theme';
+import TopicSelect from '.';
 
 storiesOf('TopicSelect', module).add('default', () => {
     return (

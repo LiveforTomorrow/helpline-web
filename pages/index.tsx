@@ -1,24 +1,13 @@
 import Head from 'next/head';
 import React, { ReactElement, Fragment } from 'react';
-import Chrome from '../src/components/Chrome';
 import { request } from 'graphql-request';
+import gql from 'graphql-tag';
+import { print } from 'graphql';
 import Search from '../src/components/Search';
+import Chrome from '../src/components/Chrome';
+import { IndexProps } from './__generated__/IndexProps';
 
-type Country = {
-    code: string;
-    name: string;
-};
-
-type Topic = {
-    name: string;
-};
-
-type Props = {
-    countries: Country[];
-    topics: Topic[];
-};
-
-const Home = ({ topics, countries }: Props): ReactElement => {
+const Home = ({ topics, countries }: IndexProps): ReactElement => {
     return (
         <Fragment>
             <Head>
@@ -31,19 +20,19 @@ const Home = ({ topics, countries }: Props): ReactElement => {
     );
 };
 
-export const getStaticProps = async (): Promise<{ props: Props }> => {
-    const query = `
-        query {
+export const getStaticProps = async (): Promise<{ props: IndexProps }> => {
+    const query = gql`
+        query IndexProps {
             countries {
                 code
                 name
             }
             topics {
-              name
+                name
             }
         }
     `;
-    const { countries, topics } = await request('https://api.findahelpline.com', query);
+    const { countries, topics } = await request('https://api.findahelpline.com', print(query));
     return {
         props: {
             countries,

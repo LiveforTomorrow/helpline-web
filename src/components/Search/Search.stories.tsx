@@ -1,8 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import Search from '.';
 import { ThemeProvider, Box } from '@material-ui/core';
 import theme from '../../theme';
+import Search from '.';
 
 storiesOf('Search', module).add('default', () => {
     return (
