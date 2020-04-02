@@ -4,23 +4,23 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: CountryProps
+// GraphQL query operation: GetCountry
 // ====================================================
 
-export interface CountryProps_country {
+export interface GetCountry_country {
   __typename: "Country";
   code: string;
   name: string;
   emergencyNumber: string | null;
 }
 
-export interface CountryProps {
+export interface GetCountry {
   /**
    * Find a country by code
    */
-  country: CountryProps_country;
+  country: GetCountry_country;
 }
 
-export interface CountryPropsVariables {
+export interface GetCountryVariables {
   code: string;
 }

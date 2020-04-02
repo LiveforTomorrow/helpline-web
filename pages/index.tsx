@@ -5,9 +5,9 @@ import gql from 'graphql-tag';
 import { print } from 'graphql';
 import Search from '../src/components/Search';
 import Chrome from '../src/components/Chrome';
-import { IndexProps } from './__generated__/IndexProps';
+import { GetCountriesAndTopics } from '../types/GetCountriesAndTopics';
 
-const Home = ({ topics, countries }: IndexProps): ReactElement => {
+const Home = ({ topics, countries }: GetCountriesAndTopics): ReactElement => {
     return (
         <Fragment>
             <Head>
@@ -20,9 +20,9 @@ const Home = ({ topics, countries }: IndexProps): ReactElement => {
     );
 };
 
-export const getStaticProps = async (): Promise<{ props: IndexProps }> => {
+export const getStaticProps = async (): Promise<{ props: GetCountriesAndTopics }> => {
     const query = gql`
-        query IndexProps {
+        query GetCountriesAndTopics {
             countries {
                 code
                 name

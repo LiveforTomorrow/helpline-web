@@ -8,9 +8,9 @@ import gql from 'graphql-tag';
 import { print } from 'graphql';
 import formatArrayIntoSentence from '../src/util/formatArrayIntoSentence';
 import Chrome from '../src/components/Chrome';
-import { CountryProps } from './__generated__/CountryProps';
+import { GetCountry } from '../types/GetCountry';
 
-const Country = ({ country }: CountryProps): ReactElement => {
+const Country = ({ country }: GetCountry): ReactElement => {
     const router = useRouter();
     let { topics } = router.query;
 
@@ -37,9 +37,9 @@ const Country = ({ country }: CountryProps): ReactElement => {
     );
 };
 
-export const getStaticProps: GetStaticProps = async (context): Promise<{ props: CountryProps }> => {
+export const getStaticProps: GetStaticProps = async (context): Promise<{ props: GetCountry }> => {
     const query = gql`
-        query CountryProps($code: String!) {
+        query GetCountry($code: String!) {
             country(code: $code) {
                 code
                 name
@@ -57,7 +57,7 @@ export const getStaticProps: GetStaticProps = async (context): Promise<{ props: 
 
 export const getStaticPaths: GetStaticPaths = async () => {
     const query = gql`
-        query Countries {
+        query GetCountries {
             countries {
                 code
             }
