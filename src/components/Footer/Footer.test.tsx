@@ -15,7 +15,7 @@ describe('Footer', () => {
 
     it('should contain contact link', () => {
         const { getByTestId } = render(<Footer />);
-        expect(getByTestId('contact')).toHaveAttribute('href', 'mailto:elliot@livefortomorrow.co');
+        expect(getByTestId('contact')).toHaveAttribute('href', '/contact');
     });
 
     it('should contain crowdsource link', () => {
