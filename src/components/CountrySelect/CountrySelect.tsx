@@ -85,10 +85,11 @@ const CountrySelect = ({ countries, onChange }: Props): ReactElement => {
                 getOptionLabel={(option): string => option.name}
                 renderOption={(option): ReactElement => (
                     <Fragment>
-                        <span>{countryToFlag(option.code)}</span>
+                        <span data-testid="countryFlag">{countryToFlag(option.code)}</span>
                         {option.name}
                     </Fragment>
                 )}
+                openOnFocus={true}
                 onChange={(_e, value: Country): void => onChange(value)}
                 renderInput={(params): ReactElement => (
                     <TextField
@@ -98,6 +99,7 @@ const CountrySelect = ({ countries, onChange }: Props): ReactElement => {
                         inputProps={{
                             ...params.inputProps,
                             autoComplete: 'new-password', // disable autocomplete and autofill
+                            'data-testid': 'countryInput',
                         }}
                     />
                 )}

@@ -1,25 +1,19 @@
 import React, { ReactElement, Fragment } from 'react';
 import { request } from 'graphql-request';
 import { GetStaticPaths, GetStaticProps } from 'next';
-import TopBar from '../src/components/TopBar';
 import { Typography, Container, Box } from '@material-ui/core';
 import { useRouter } from 'next/router';
-import formatArrayIntoSentence from '../src/util/formatArrayIntoSentence';
 import Head from 'next/head';
+import gql from 'graphql-tag';
+import { print } from 'graphql';
+import formatArrayIntoSentence from '../src/util/formatArrayIntoSentence';
+import Chrome from '../src/components/Chrome';
+import { GetCountry } from '../types/GetCountry';
 
-type Country = {
-    code: string;
-    name: string;
-    emergencyNumber: string;
-};
-
-type Props = {
-    country: Country;
-};
-
-const Country = ({ country }: Props): ReactElement => {
+const CountryPage = ({ country }: GetCountry): ReactElement => {
     const router = useRouter();
     let { topics } = router.query;
+
     if (topics) {
         topics = [topics].flat();
     }
@@ -29,33 +23,31 @@ const Country = ({ country }: Props): ReactElement => {
             <Head>
                 <title>Find A Helpline | {country.name}</title>
             </Head>
-            <TopBar country={country} />
-            <Container>
-                <Box my={2}>
-                    <Typography>
-                        Best helplines in{' '}
-                        <Typography component="span" color="primary">
-                            {country.name}
+            <Chrome country={country}>
+                <Container>
+                    <Box my={2}>
+                        <Typography variant="h6">
+                            Best helplines in {country.name}
+                            {topics && <Fragment> for {formatArrayIntoSentence(topics).toLowerCase()}</Fragment>}.
                         </Typography>
-                        {topics && <Fragment> for {formatArrayIntoSentence(topics)}</Fragment>}.
-                    </Typography>
-                </Box>
-            </Container>
+                    </Box>
+                </Container>
+            </Chrome>
         </Fragment>
     );
 };
 
-export const getStaticProps: GetStaticProps = async (context): Promise<{ props: Props }> => {
-    const query = `
-      query {
-        country(code: "${context.params.code}") {
-          code
-          name
-          emergencyNumber
+export const getStaticProps: GetStaticProps = async (context): Promise<{ props: GetCountry }> => {
+    const query = gql`
+        query GetCountry($code: String!) {
+            country(code: $code) {
+                code
+                name
+                emergencyNumber
+            }
         }
-      }
-  `;
-    const { country } = await request('https://api.findahelpline.com', query);
+    `;
+    const { country } = await request('https://api.findahelpline.com', print(query), { code: context.params.code });
     return {
         props: {
             country,
@@ -64,14 +56,14 @@ export const getStaticProps: GetStaticProps = async (context): Promise<{ props: 
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    const query = `
-        query {
+    const query = gql`
+        query GetCountries {
             countries {
                 code
             }
         }
     `;
-    const { countries } = await request('https://api.findahelpline.com', query);
+    const { countries } = await request('https://api.findahelpline.com', print(query));
 
     return {
         paths: countries.map((country) => {
@@ -85,4 +77,4 @@ export const getStaticPaths: GetStaticPaths = async () => {
     };
 };
 
-export default Country;
+export default CountryPage;

@@ -1,9 +1,9 @@
-import React, { ReactElement, Fragment, useState } from 'react';
-import CountrySelect from '../CountrySelect';
-import { Typography, Box, Button } from '@material-ui/core';
+import React, { ReactElement, useState } from 'react';
+import { Typography, Box, Button, Container } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import TopicSelect from '../TopicSelect';
 import Link from 'next/link';
+import TopicSelect from '../TopicSelect';
+import CountrySelect from '../CountrySelect';
 
 type Country = {
     code: string;
@@ -21,10 +21,24 @@ type Props = {
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
-        box: {
-            marginTop: theme.spacing(5),
-            marginBottom: theme.spacing(5),
+        logo: {
             textAlign: 'center',
+            '& img': {
+                maxWidth: '250px',
+            },
+        },
+        container: {
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            paddingTop: theme.spacing(5),
+            paddingBottom: theme.spacing(5),
+            textAlign: 'center',
+            height: '100%',
+        },
+        box: {
+            display: 'grid',
+            gridGap: theme.spacing(2),
         },
         button: {
             borderRadius: '1000px',
@@ -32,30 +46,30 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-const TopBar = ({ topics, countries }: Props): ReactElement => {
+const Search = ({ topics, countries }: Props): ReactElement => {
     const [selectedCountry, setSelectedCountry] = useState<Country | undefined>(undefined);
     const [selectedTopics, setSelectedTopics] = useState<Topic[]>([]);
     const classes = useStyles();
 
     return (
-        <Box className={classes.box}>
-            {!selectedCountry && (
-                <Fragment>
-                    <Typography variant="h5">find a helpline</Typography>
-                    <Box my={2}>
-                        <Typography>Struggling? Talk to a real person about what&apos;s going on, for free.</Typography>
+        <Container maxWidth="xs" className={classes.container}>
+            <Box className={classes.box}>
+                {!selectedCountry && (
+                    <Box className={classes.logo}>
+                        <img src="/logo.svg" alt="find a helpline" />
                     </Box>
-                </Fragment>
-            )}
-            <CountrySelect countries={countries} onChange={setSelectedCountry} />
-            {selectedCountry && (
-                <Fragment>
-                    <Box my={2}>
-                        <Typography variant="h5">What would you like help with?</Typography>
-                    </Box>
-                    <Box my={2}>
-                        <TopicSelect topics={topics} onChange={setSelectedTopics} />
-                    </Box>
+                )}
+                {!selectedCountry && (
+                    <Typography>Struggling? Talk to a real person about what&apos;s going on, for free.</Typography>
+                )}
+                <CountrySelect countries={countries} onChange={setSelectedCountry} />
+                {selectedCountry && (
+                    <Typography variant="h6">
+                        <strong>What would you like help with?</strong>
+                    </Typography>
+                )}
+                {selectedCountry && <TopicSelect topics={topics} onChange={setSelectedTopics} />}
+                {selectedCountry && (
                     <Link
                         href={{
                             pathname: `/${selectedCountry.code.toLowerCase()}`,
@@ -63,14 +77,20 @@ const TopBar = ({ topics, countries }: Props): ReactElement => {
                         }}
                         passHref
                     >
-                        <Button className={classes.button} variant="contained" color="primary" size="large">
+                        <Button
+                            data-testid="searchButton"
+                            className={classes.button}
+                            variant="contained"
+                            color="primary"
+                            size="large"
+                        >
                             Search
                         </Button>
                     </Link>
-                </Fragment>
-            )}
-        </Box>
+                )}
+            </Box>
+        </Container>
     );
 };
 
-export default TopBar;
+export default Search;

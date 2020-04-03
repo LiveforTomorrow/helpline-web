@@ -1,4 +1,3 @@
-/* eslint-disable no-use-before-define */
 import React, { ReactElement, useState } from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { Chip, Box, Typography } from '@material-ui/core';
@@ -33,6 +32,19 @@ const useStyles = makeStyles((theme: Theme) =>
                 marginBottom: theme.spacing(0.5),
             },
         },
+        chipRoot: {
+            fontWeight: 600,
+        },
+        chipColorPrimary: {
+            backgroundColor: '#000000',
+            '&:hover, &:focus': {
+                backgroundColor: '#000000',
+            },
+        },
+        text: {
+            fontSize: '0.8rem',
+            fontWeight: 'bold',
+        },
     }),
 );
 
@@ -49,7 +61,7 @@ const TopicSelect = ({ topics, onChange }: Props): ReactElement => {
     return (
         <Box className={classes.box}>
             <Box mb={1} className={classes.heading}>
-                <Typography variant="body1">Select topics (optional)</Typography>
+                <Typography className={classes.text}>Select topics (optional)</Typography>
             </Box>
             <Box className={classes.chips}>
                 {topics.map((topic) => (
@@ -58,6 +70,12 @@ const TopicSelect = ({ topics, onChange }: Props): ReactElement => {
                         key={topic.name}
                         label={topic.name}
                         onClick={(): void => onClick(topic)}
+                        data-testid="topicChip"
+                        classes={{
+                            root: classes.chipRoot,
+                            colorPrimary: classes.chipColorPrimary,
+                            clickableColorPrimary: classes.chipColorPrimary,
+                        }}
                     />
                 ))}
             </Box>
