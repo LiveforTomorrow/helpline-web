@@ -43,9 +43,11 @@ const Footer = (): ReactElement => {
                             About
                         </Link>
                     </NextLink>
-                    <Link href="mailto:elliot@livefortomorrow.co" className={classes.link} data-testid="contact">
-                        Contact
-                    </Link>
+                    <NextLink href="/contact" passHref>
+                        <Link className={classes.link} data-testid="contact">
+                            Contact
+                        </Link>
+                    </NextLink>
                     <Link
                         href="https://zealnz.typeform.com/to/BtdlLP"
                         className={classes.link}
