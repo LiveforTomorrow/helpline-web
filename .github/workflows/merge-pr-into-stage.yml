@@ -1,4 +1,4 @@
-name: Merge PR into staging
+name: Merge PR into stage
 on:
     pull_request:
         types: [labeled, synchronize]

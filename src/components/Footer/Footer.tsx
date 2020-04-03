@@ -54,7 +54,7 @@ const Footer = (): ReactElement => {
                         Crowdsource
                     </Link>
                 </Typography>
-                <Typography className={classes.copyright}>
+                <Typography className={classes.copyright} data-testid="copyright">
                     Powered by Live For Tomorrow &copy; {new Date().getFullYear()}
                 </Typography>
             </Box>

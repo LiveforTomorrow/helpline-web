@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import Footer from '.';
 
-describe('Placeholder', () => {
+describe('Footer', () => {
     it('should contain privacy link', () => {
         const { getByTestId } = render(<Footer />);
         expect(getByTestId('privacy')).toHaveAttribute('href', '/privacy');
