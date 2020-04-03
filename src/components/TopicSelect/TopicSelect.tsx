@@ -70,6 +70,7 @@ const TopicSelect = ({ topics, onChange }: Props): ReactElement => {
                         key={topic.name}
                         label={topic.name}
                         onClick={(): void => onClick(topic)}
+                        data-testid="topicChip"
                         classes={{
                             root: classes.chipRoot,
                             colorPrimary: classes.chipColorPrimary,
