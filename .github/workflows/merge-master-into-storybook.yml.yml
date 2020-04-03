@@ -1,3 +1,4 @@
+name: Merge master into storybook
 on:
     push:
         branches:

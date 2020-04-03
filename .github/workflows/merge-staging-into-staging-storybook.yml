@@ -1,3 +1,4 @@
+name: Merge staging into staging-storybook
 on:
     push:
         branches:
