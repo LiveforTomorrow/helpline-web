@@ -1,4 +1,4 @@
-name: Merge staging into staging-storybook
+name: Merge stage into stage-storybook
 on:
     push:
         branches:
