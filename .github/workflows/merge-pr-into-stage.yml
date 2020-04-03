@@ -10,8 +10,9 @@ jobs:
             - uses: actions/checkout@master
             - name: Merge by labeled
               uses: devmasx/merge-branch@v1.1.0
+              if: contains( github.event.pull_request.labels.*.name, 'merged into stage')
               with:
-                  label_name: 'merged into stage'
+                  type: now
                   target_branch: 'stage'
               env:
                   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
