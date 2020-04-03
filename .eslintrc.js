@@ -1,6 +1,7 @@
 module.exports = {
   parser: "@typescript-eslint/parser", // Specifies the ESLint parser
   extends: [
+    "plugin:jest/recommended",
     "plugin:import/errors",
     "plugin:import/warnings",
     "plugin:import/typescript",
