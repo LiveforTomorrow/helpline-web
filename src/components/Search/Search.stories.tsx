@@ -10,8 +10,15 @@ storiesOf('Search', module).add('default', () => {
             <Box m={2}>
                 <Search
                     countries={[
-                        { name: 'Australia', code: 'AU' },
-                        { name: 'New Zealand', code: 'NZ' },
+                        { code: 'AU', name: 'Australia', subdivisions: [] },
+                        {
+                            code: 'NZ',
+                            name: 'New Zealand',
+                            subdivisions: [
+                                { name: 'Bay of Plenty', code: 'BOP' },
+                                { name: 'Auckland', code: 'AUK' },
+                            ],
+                        },
                     ]}
                     topics={[{ name: 'Anxiety' }, { name: 'Bullying' }]}
                 />

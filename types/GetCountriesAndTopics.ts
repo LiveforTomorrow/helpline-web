@@ -7,10 +7,17 @@
 // GraphQL query operation: GetCountriesAndTopics
 // ====================================================
 
+export interface GetCountriesAndTopics_countries_subdivisions {
+  __typename: "Subdivision";
+  code: string;
+  name: string;
+}
+
 export interface GetCountriesAndTopics_countries {
   __typename: "Country";
   code: string;
   name: string;
+  subdivisions: GetCountriesAndTopics_countries_subdivisions[];
 }
 
 export interface GetCountriesAndTopics_topics {
