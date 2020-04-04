@@ -39,15 +39,17 @@ const CountryPage = ({ country }: GetCountry): ReactElement => {
 
 export const getStaticProps: GetStaticProps = async (context): Promise<{ props: GetCountry }> => {
     const query = gql`
-        query GetCountry($code: String!) {
-            country(code: $code) {
+        query GetCountry($countryCode: String!) {
+            country(code: $countryCode) {
                 code
                 name
                 emergencyNumber
             }
         }
     `;
-    const { country } = await request('https://api.findahelpline.com', print(query), { code: context.params.code });
+    const { country } = await request('https://api.findahelpline.com', print(query), {
+        countryCode: context.params.countryCode,
+    });
     return {
         props: {
             country,
@@ -69,7 +71,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
         paths: countries.map((country) => {
             return {
                 params: {
-                    code: country.code.toLowerCase(),
+                    countryCode: country.code.toLowerCase(),
                 },
             };
         }),

@@ -5,9 +5,15 @@ import Link from 'next/link';
 import TopicSelect from '../TopicSelect';
 import CountrySelect from '../CountrySelect';
 
+type Subdivision = {
+    code: string;
+    name: string;
+};
+
 type Country = {
     code: string;
     name: string;
+    subdivisions: Subdivision[];
 };
 
 type Topic = {
@@ -48,6 +54,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const Search = ({ topics, countries }: Props): ReactElement => {
     const [selectedCountry, setSelectedCountry] = useState<Country | undefined>(undefined);
+    const [selectedSubdivision, setSelectedSubdivision] = useState<Subdivision | undefined>(undefined);
     const [selectedTopics, setSelectedTopics] = useState<Topic[]>([]);
     const classes = useStyles();
 
@@ -62,7 +69,11 @@ const Search = ({ topics, countries }: Props): ReactElement => {
                 {!selectedCountry && (
                     <Typography>Struggling? Talk to a real person about what&apos;s going on, for free.</Typography>
                 )}
-                <CountrySelect countries={countries} onChange={setSelectedCountry} />
+                <CountrySelect
+                    countries={countries}
+                    onCountryChange={setSelectedCountry}
+                    onSubdivisionChange={setSelectedSubdivision}
+                />
                 {selectedCountry && (
                     <Typography variant="h6">
                         <strong>What would you like help with?</strong>
@@ -72,7 +83,9 @@ const Search = ({ topics, countries }: Props): ReactElement => {
                 {selectedCountry && (
                     <Link
                         href={{
-                            pathname: `/${selectedCountry.code.toLowerCase()}`,
+                            pathname: `/${selectedCountry.code.toLowerCase()}${
+                                selectedSubdivision ? `/${selectedSubdivision.code.toLowerCase()}` : ''
+                            }`,
                             query: { topics: selectedTopics.map((topic) => topic.name) },
                         }}
                         passHref
