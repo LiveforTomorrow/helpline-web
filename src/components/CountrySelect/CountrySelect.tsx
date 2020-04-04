@@ -1,18 +1,27 @@
 /* eslint-disable no-use-before-define */
-import React, { ReactElement, Fragment } from 'react';
+import React, { ReactElement, Fragment, useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
+import { Box } from '@material-ui/core';
+import { sortBy } from 'lodash/fp';
 
-type Country = {
+type Subdivision = {
     code: string;
     name: string;
 };
 
+type Country = {
+    code: string;
+    name: string;
+    subdivisions: Subdivision[];
+};
+
 type Props = {
     countries: Country[];
-    onChange: (country: Country) => void;
+    onCountryChange: (country: Country) => void;
+    onSubdivisionChange: (subdivision: Subdivision) => void;
 };
 
 // ISO 3166-1 alpha-2
@@ -27,6 +36,10 @@ const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
             width: 'auto !important',
+        },
+        box: {
+            display: 'grid',
+            gridGap: theme.spacing(1),
         },
         inputRoot: {
             borderRadius: '48px',
@@ -64,14 +77,28 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-const CountrySelect = ({ countries, onChange }: Props): ReactElement => {
+const CountrySelect = ({ countries, onCountryChange, onSubdivisionChange }: Props): ReactElement => {
     const classes = useStyles();
+    const [selectedCountry, setSelectedCountry] = useState<Country | undefined>(undefined);
+    const setSelectedSubdivision = useState<Subdivision | undefined>(undefined)[1];
+
+    const localOnCountryChange = (country: Country): void => {
+        setSelectedCountry(country);
+        onCountryChange(country);
+        setSelectedSubdivision(undefined);
+        onSubdivisionChange(undefined);
+    };
+
+    const localOnSubdivisionChange = (subdivision: Subdivision): void => {
+        setSelectedSubdivision(subdivision);
+        onSubdivisionChange(subdivision);
+    };
 
     return (
-        <Fragment>
+        <Box className={classes.box}>
             <Autocomplete
                 style={{ width: 300 }}
-                options={countries}
+                options={sortBy('name', countries) as Country[]}
                 classes={{
                     root: classes.root,
                     inputRoot: classes.inputRoot,
@@ -90,7 +117,7 @@ const CountrySelect = ({ countries, onChange }: Props): ReactElement => {
                     </Fragment>
                 )}
                 openOnFocus={true}
-                onChange={(_e, value: Country): void => onChange(value)}
+                onChange={(_e, value: Country): void => localOnCountryChange(value)}
                 renderInput={(params): ReactElement => (
                     <TextField
                         {...params}
@@ -104,7 +131,24 @@ const CountrySelect = ({ countries, onChange }: Props): ReactElement => {
                     />
                 )}
             />
-        </Fragment>
+            {selectedCountry && selectedCountry.subdivisions.length > 0 && (
+                <Autocomplete
+                    classes={{
+                        root: classes.root,
+                        inputRoot: classes.inputRoot,
+                        option: classes.option,
+                        paper: classes.paper,
+                    }}
+                    options={sortBy('name', selectedCountry.subdivisions) as Subdivision[]}
+                    getOptionLabel={(option): string => option.name}
+                    openOnFocus={true}
+                    onChange={(_e, value: Subdivision): void => localOnSubdivisionChange(value)}
+                    renderInput={(params): ReactElement => (
+                        <TextField {...params} placeholder="State or province (optional)" variant="outlined" />
+                    )}
+                />
+            )}
+        </Box>
     );
 };
 

@@ -35,7 +35,7 @@ const Footer = (): ReactElement => {
                 <Typography className={classes.links}>
                     <NextLink href="/privacy" passHref>
                         <Link className={classes.link} data-testid="privacy">
-                            Your Privacy
+                            Privacy
                         </Link>
                     </NextLink>
                     <NextLink href="/about" passHref>
@@ -49,11 +49,11 @@ const Footer = (): ReactElement => {
                         </Link>
                     </NextLink>
                     <Link
-                        href="https://zealnz.typeform.com/to/BtdlLP"
+                        href="https://zealnz.typeform.com/to/KGmaEf"
                         className={classes.link}
                         data-testid="crowdsource"
                     >
-                        Crowdsource
+                        Help Crowdsource
                     </Link>
                 </Typography>
                 <Typography className={classes.copyright} data-testid="copyright">
