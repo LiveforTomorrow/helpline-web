@@ -9,19 +9,22 @@ import { print } from 'graphql';
 import { find, flatten } from 'lodash/fp';
 import formatArrayIntoSentence from '../../src/util/formatArrayIntoSentence';
 import Chrome from '../../src/components/Chrome';
-import {
-    GetCountryAndSubdivisions,
-    GetCountryAndSubdivisions_country as Country,
-    GetCountryAndSubdivisions_country_subdivisions as Subdivision,
-} from '../../types/GetCountryAndSubdivisions';
 import { GetCountriesAndSubdivisions } from '../../types/GetCountriesAndSubdivisions';
+import OrganizationCard from '../../src/components/OrganizationCard';
+import {
+    GetCountrySubdivisionsAndOrganizations,
+    GetCountrySubdivisionsAndOrganizations_country_subdivisions as Subdivision,
+    GetCountrySubdivisionsAndOrganizations_country as Country,
+    GetCountrySubdivisionsAndOrganizations_organizations as OrganizationsConnection,
+} from '../../types/GetCountrySubdivisionsAndOrganizations';
 
 type Props = {
     country: Country;
     subdivision: Subdivision;
+    organizations: OrganizationsConnection;
 };
 
-const CountryPage = ({ country, subdivision }: Props): ReactElement => {
+const CountryPage = ({ country, subdivision, organizations }: Props): ReactElement => {
     const router = useRouter();
     let { topics } = router.query;
 
@@ -37,13 +40,18 @@ const CountryPage = ({ country, subdivision }: Props): ReactElement => {
                 </title>
             </Head>
             <Chrome country={country}>
-                <Container>
+                <Container maxWidth="xs">
                     <Box my={2}>
                         <Typography variant="h6">
                             Best helplines in {subdivision.name}, {country.name}
                             {topics && <Fragment> for {formatArrayIntoSentence(topics).toLowerCase()}</Fragment>}.
                         </Typography>
                     </Box>
+                    {organizations.nodes.map((organization) => (
+                        <Box key={organization.slug} my={2}>
+                            <OrganizationCard organization={organization} />
+                        </Box>
+                    ))}
                 </Container>
             </Chrome>
         </Fragment>
@@ -52,7 +60,7 @@ const CountryPage = ({ country, subdivision }: Props): ReactElement => {
 
 export const getStaticProps: GetStaticProps = async (context): Promise<{ props: Props }> => {
     const query = gql`
-        query GetCountryAndSubdivisions($countryCode: String!) {
+        query GetCountrySubdivisionsAndOrganizations($countryCode: String!, $subdivisionCode: String!) {
             country(code: $countryCode) {
                 code
                 name
@@ -62,16 +70,43 @@ export const getStaticProps: GetStaticProps = async (context): Promise<{ props: 
                     name
                 }
             }
+            organizations(countryCode: $countryCode, subdivisionCodes: [$subdivisionCode]) {
+                nodes {
+                    slug
+                    name
+                    alwaysOpen
+                    smsNumber
+                    phoneNumber
+                    url
+                    chatUrl
+                    humanSupportTypes {
+                        name
+                    }
+                    categories {
+                        name
+                    }
+                    topics {
+                        name
+                    }
+                    openingHours {
+                        day
+                        open
+                        close
+                    }
+                }
+            }
         }
     `;
-    const { country } = (await request('https://api.findahelpline.com', print(query), {
-        countryCode: context.params.countryCode,
-    })) as GetCountryAndSubdivisions;
+    const { country, organizations } = (await request('https://api.findahelpline.com', print(query), {
+        countryCode: context.params.countryCode.toString().toUpperCase(),
+        subdivisionCode: context.params.subdivisionCode.toString().toUpperCase(),
+    })) as GetCountrySubdivisionsAndOrganizations;
     const subdivision = find({ code: context.params.subdivisionCode.toString().toUpperCase() }, country.subdivisions);
     return {
         props: {
             country,
             subdivision,
+            organizations,
         },
     };
 };
