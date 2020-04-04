@@ -79,7 +79,7 @@ export const getStaticProps: GetStaticProps = async (context): Promise<{ props: 
         }
     `;
     const { country, organizations } = await request('https://api.findahelpline.com', print(query), {
-        countryCode: context.params.countryCode.toString().toUpperCase(),
+        countryCode: context.params.countryCode,
     });
     return {
         props: {
