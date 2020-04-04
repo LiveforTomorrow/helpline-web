@@ -9,10 +9,18 @@ storiesOf('CountrySelect', module).add('default', () => {
         <Box m={2}>
             <CountrySelect
                 countries={[
-                    { code: 'AU', name: 'Australia' },
-                    { code: 'NZ', name: 'New Zealand' },
+                    { code: 'AU', name: 'Australia', subdivisions: [] },
+                    {
+                        code: 'NZ',
+                        name: 'New Zealand',
+                        subdivisions: [
+                            { name: 'Bay of Plenty', code: 'BOP' },
+                            { name: 'Auckland', code: 'AUK' },
+                        ],
+                    },
                 ]}
-                onChange={action('onChange')}
+                onCountryChange={action('onCountryChange')}
+                onSubdivisionChange={action('onSubdivisionChange')}
             />
         </Box>
     );

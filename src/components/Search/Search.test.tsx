@@ -4,8 +4,15 @@ import Search from '.';
 
 describe('Search', () => {
     const countries = [
-        { code: 'AU', name: 'Australia' },
-        { code: 'NZ', name: 'New Zealand' },
+        { code: 'AU', name: 'Australia', subdivisions: [] },
+        {
+            code: 'NZ',
+            name: 'New Zealand',
+            subdivisions: [
+                { name: 'Bay of Plenty', code: 'BOP' },
+                { name: 'Auckland', code: 'AUK' },
+            ],
+        },
     ];
     const topics = [{ name: 'happy' }, { name: 'sad' }];
 
@@ -18,12 +25,23 @@ describe('Search', () => {
         expect(getByText('What would you like help with?')).toBeTruthy();
     });
 
-    it('should change display after country select', () => {
+    it('should change search url after country select', () => {
         const { getByTestId, getByRole } = render(<Search countries={countries} topics={topics} />);
         const element = getByRole('textbox');
         fireEvent.click(element);
         fireEvent.click(getByRole('listbox').children[0]);
         expect(getByTestId('searchButton')).toHaveAttribute('href', '/au');
+    });
+
+    it('should change search url after country and subdivision select', () => {
+        const { getByTestId, getAllByRole } = render(<Search countries={countries} topics={topics} />);
+        const countryElement = getAllByRole('textbox')[0];
+        fireEvent.click(countryElement);
+        fireEvent.click(getAllByRole('listbox')[0].children[1]);
+        const subdivisionElement = getAllByRole('textbox')[1];
+        fireEvent.click(subdivisionElement);
+        fireEvent.click(getAllByRole('listbox')[0].children[1]);
+        expect(getByTestId('searchButton')).toHaveAttribute('href', '/nz/auk');
     });
 
     it('should change search url after topic select', () => {
