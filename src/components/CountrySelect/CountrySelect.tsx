@@ -144,7 +144,7 @@ const CountrySelect = ({ countries, onCountryChange, onSubdivisionChange }: Prop
                     openOnFocus={true}
                     onChange={(_e, value: Subdivision): void => localOnSubdivisionChange(value)}
                     renderInput={(params): ReactElement => (
-                        <TextField {...params} placeholder="State or province" variant="outlined" />
+                        <TextField {...params} placeholder="State or province (optional)" variant="outlined" />
                     )}
                 />
             )}
