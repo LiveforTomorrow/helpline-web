@@ -81,7 +81,6 @@ export const getStaticProps: GetStaticProps = async (context): Promise<{ props: 
     const { country, organizations } = await request('https://api.findahelpline.com', print(query), {
         countryCode: context.params.countryCode.toString().toUpperCase(),
     });
-    console.log(organizations);
     return {
         props: {
             country,
