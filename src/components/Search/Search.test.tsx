@@ -41,7 +41,7 @@ describe('Search', () => {
         const subdivisionElement = getAllByRole('textbox')[1];
         fireEvent.click(subdivisionElement);
         fireEvent.click(getAllByRole('listbox')[0].children[1]);
-        expect(getByTestId('searchButton')).toHaveAttribute('href', '/nz/auk');
+        expect(getByTestId('searchButton')).toHaveAttribute('href', '/nz/bop');
     });
 
     it('should change search url after topic select', () => {

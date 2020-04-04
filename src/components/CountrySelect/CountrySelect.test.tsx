@@ -4,7 +4,6 @@ import CountrySelect from '.';
 
 describe('CountrySelect', () => {
     const countries = [
-        { code: 'AU', name: 'Australia', subdivisions: [] },
         {
             code: 'NZ',
             name: 'New Zealand',
@@ -13,6 +12,7 @@ describe('CountrySelect', () => {
                 { name: 'Auckland', code: 'AUK' },
             ],
         },
+        { code: 'AU', name: 'Australia', subdivisions: [] },
     ];
 
     it('should contain placeholder', () => {
@@ -51,7 +51,7 @@ describe('CountrySelect', () => {
             if (counter == 0) {
                 expect(subdivision).toEqual(undefined);
             } else {
-                expect(subdivision).toEqual({ name: 'Auckland', code: 'AUK' });
+                expect(subdivision).toEqual({ name: 'Bay of Plenty', code: 'BOP' });
             }
             counter += 1;
         };

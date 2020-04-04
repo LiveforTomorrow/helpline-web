@@ -5,6 +5,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import { Box } from '@material-ui/core';
+import { sortBy } from 'lodash/fp';
 
 type Subdivision = {
     code: string;
@@ -97,7 +98,7 @@ const CountrySelect = ({ countries, onCountryChange, onSubdivisionChange }: Prop
         <Box className={classes.box}>
             <Autocomplete
                 style={{ width: 300 }}
-                options={countries}
+                options={sortBy('name', countries) as Country[]}
                 classes={{
                     root: classes.root,
                     inputRoot: classes.inputRoot,
@@ -138,7 +139,7 @@ const CountrySelect = ({ countries, onCountryChange, onSubdivisionChange }: Prop
                         option: classes.option,
                         paper: classes.paper,
                     }}
-                    options={selectedCountry.subdivisions}
+                    options={sortBy('name', selectedCountry.subdivisions) as Subdivision[]}
                     getOptionLabel={(option): string => option.name}
                     openOnFocus={true}
                     onChange={(_e, value: Subdivision): void => localOnSubdivisionChange(value)}
