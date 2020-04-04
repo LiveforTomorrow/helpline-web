@@ -98,8 +98,8 @@ export const getStaticProps: GetStaticProps = async (context): Promise<{ props: 
         }
     `;
     const { country, organizations } = (await request('https://api.findahelpline.com', print(query), {
-        countryCode: context.params.countryCode.toString().toUpperCase(),
-        subdivisionCode: context.params.subdivisionCode.toString().toUpperCase(),
+        countryCode: context.params.countryCode,
+        subdivisionCode: context.params.subdivisionCode,
     })) as GetCountrySubdivisionsAndOrganizations;
     const subdivision = find({ code: context.params.subdivisionCode.toString().toUpperCase() }, country.subdivisions);
     return {
