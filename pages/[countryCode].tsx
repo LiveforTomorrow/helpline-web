@@ -8,9 +8,10 @@ import gql from 'graphql-tag';
 import { print } from 'graphql';
 import formatArrayIntoSentence from '../src/util/formatArrayIntoSentence';
 import Chrome from '../src/components/Chrome';
-import { GetCountry } from '../types/GetCountry';
+import { GetCountryAndOrganizations } from '../types/GetCountryAndOrganizations';
+import OrganizationCard from '../src/components/OrganizationCard';
 
-const CountryPage = ({ country }: GetCountry): ReactElement => {
+const CountryPage = ({ country, organizations }: GetCountryAndOrganizations): ReactElement => {
     const router = useRouter();
     let { topics } = router.query;
 
@@ -24,35 +25,66 @@ const CountryPage = ({ country }: GetCountry): ReactElement => {
                 <title>Find A Helpline | {country.name}</title>
             </Head>
             <Chrome country={country}>
-                <Container>
+                <Container maxWidth="xs">
                     <Box my={2}>
                         <Typography variant="h6">
                             Best helplines in {country.name}
                             {topics && <Fragment> for {formatArrayIntoSentence(topics).toLowerCase()}</Fragment>}.
                         </Typography>
                     </Box>
+                    {organizations.nodes.map((organization) => (
+                        <Box key={organization.slug} my={2}>
+                            <OrganizationCard organization={organization} />
+                        </Box>
+                    ))}
                 </Container>
             </Chrome>
         </Fragment>
     );
 };
 
-export const getStaticProps: GetStaticProps = async (context): Promise<{ props: GetCountry }> => {
+export const getStaticProps: GetStaticProps = async (context): Promise<{ props: GetCountryAndOrganizations }> => {
     const query = gql`
-        query GetCountry($countryCode: String!) {
+        query GetCountryAndOrganizations($countryCode: String!) {
             country(code: $countryCode) {
                 code
                 name
                 emergencyNumber
             }
+            organizations(countryCode: $countryCode) {
+                nodes {
+                    slug
+                    name
+                    alwaysOpen
+                    smsNumber
+                    phoneNumber
+                    url
+                    chatUrl
+                    humanSupportTypes {
+                        name
+                    }
+                    categories {
+                        name
+                    }
+                    topics {
+                        name
+                    }
+                    openingHours {
+                        day
+                        open
+                        close
+                    }
+                }
+            }
         }
     `;
-    const { country } = await request('https://api.findahelpline.com', print(query), {
-        countryCode: context.params.countryCode,
+    const { country, organizations } = await request('https://api.findahelpline.com', print(query), {
+        countryCode: context.params.countryCode.toString().toUpperCase(),
     });
     return {
         props: {
             country,
+            organizations,
         },
     };
 };
