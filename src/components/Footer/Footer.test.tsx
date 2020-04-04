@@ -20,7 +20,7 @@ describe('Footer', () => {
 
     it('should contain crowdsource link', () => {
         const { getByTestId } = render(<Footer />);
-        expect(getByTestId('crowdsource')).toHaveAttribute('href', 'https://zealnz.typeform.com/to/BtdlLP');
+        expect(getByTestId('crowdsource')).toHaveAttribute('href', 'https://zealnz.typeform.com/to/KGmaEf');
     });
 
     it('should have correct text', () => {
