@@ -26,6 +26,10 @@ export const getStaticProps = async (): Promise<{ props: GetCountriesAndTopics }
             countries {
                 code
                 name
+                subdivisions {
+                    code
+                    name
+                }
             }
             topics {
                 name

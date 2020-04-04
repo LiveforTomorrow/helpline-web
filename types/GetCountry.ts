@@ -22,5 +22,5 @@ export interface GetCountry {
 }
 
 export interface GetCountryVariables {
-  code: string;
+  countryCode: string;
 }
