@@ -53,7 +53,7 @@ const TopBar = (): ReactElement => {
                     <p>
                         COVID-19 is{' '}
                         <a
-                            href="https://www.psychiatry.org/newsroom/news-releases/new-poll-covid-19-impacting-mental-well-being-americans-feeling-anxious-especially-for-loved-ones-older-adults-are-less-anxious."
+                            href="https://www.psychiatry.org/newsroom/news-releases/new-poll-covid-19-impacting-mental-well-being-americans-feeling-anxious-especially-for-loved-ones-older-adults-are-less-anxious"
                             target="_blank"
                             rel="noopener noreferrer"
                             className={classes.link}
