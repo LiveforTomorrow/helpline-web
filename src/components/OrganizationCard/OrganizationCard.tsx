@@ -1,17 +1,18 @@
 import React, { ReactElement } from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import { Typography, Chip, Button, Box, Fab, Hidden } from '@material-ui/core';
+import { Typography, Chip, Button, Box, Fab } from '@material-ui/core';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import SmsOutlinedIcon from '@material-ui/icons/SmsOutlined';
 import PhoneIcon from '@material-ui/icons/Phone';
 import PublicIcon from '@material-ui/icons/Public';
 import MessageOutlinedIcon from '@material-ui/icons/MessageOutlined';
+import Link from 'next/link';
 
 type OpeningHour = {
     day: string;
-    open: number;
-    close: number;
+    open: string;
+    close: string;
 };
 
 type HumanSupportType = {
@@ -23,6 +24,7 @@ type Category = {
 };
 
 type Organization = {
+    slug: string;
     name: string;
     alwaysOpen: boolean;
     humanSupportTypes: HumanSupportType[];
@@ -32,6 +34,7 @@ type Organization = {
     phoneNumber?: string;
     url?: string;
     chatUrl?: string;
+    timezone: string;
 };
 
 type Props = {
@@ -41,7 +44,7 @@ type Props = {
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         box: {
-            display: 'grid',
+            display: 'flex',
             border: '1px solid #000',
             borderRadius: '10px',
             gridTemplateColumns: '1fr 88px',
@@ -49,16 +52,19 @@ const useStyles = makeStyles((theme: Theme) =>
                 padding: theme.spacing(2),
             },
             '@media (max-width: 320px)': {
-                gridTemplateColumns: '1fr',
+                flexDirection: 'column',
             },
         },
         grid: {
-            display: 'grid',
-            gridAutoRows: 'min-content',
+            flex: 1,
+            display: 'flex',
+            flexDirection: 'column',
+            minWidth: 0,
         },
         heading: {
             fontWeight: 'bold',
             textDecoration: 'underline',
+            color: '#000000',
         },
         chipAlwaysOpen: {
             color: '#FFFFFF',
@@ -103,10 +109,12 @@ const useStyles = makeStyles((theme: Theme) =>
             borderTopRightRadius: '10px',
             borderBottomRightRadius: '10px',
             textAlign: 'center',
+            gridRowGap: theme.spacing(2),
+            gridAutoRows: 'min-content',
             '@media (max-width: 320px)': {
                 borderTopRightRadius: '0',
                 borderBottomLeftRadius: '10px',
-                gridTemplateColumns: '1fr 1fr 1fr',
+                gridAutoFlow: 'column',
             },
         },
         fabLabel: {
@@ -114,7 +122,6 @@ const useStyles = makeStyles((theme: Theme) =>
             fontSize: '0.8rem',
             lineHeight: '1rem',
             paddingTop: theme.spacing(1),
-            paddingBottom: theme.spacing(1),
         },
     }),
 );
@@ -126,7 +133,9 @@ const OrganizationCard = ({ organization }: Props): ReactElement => {
         <Box className={classes.box}>
             <Box className={classes.grid}>
                 <Typography variant="h6">
-                    <span className={classes.heading}>{organization.name}</span>{' '}
+                    <Link href="/organizations/[slug]" as={`/organizations/${organization.slug}`} passHref>
+                        <a className={classes.heading}>{organization.name}</a>
+                    </Link>{' '}
                     {organization.alwaysOpen && <Chip className={classes.chipAlwaysOpen} label="24/7" />}
                 </Typography>
                 {organization.alwaysOpen && (
@@ -137,8 +146,7 @@ const OrganizationCard = ({ organization }: Props): ReactElement => {
                             startIcon={<AccessTimeIcon />}
                             disabled
                         >
-                            <span className={classes.open}>Open</span>
-                            <Hidden xsDown>&nbsp;&#8226; Available 24/7</Hidden>
+                            <span className={classes.open}>Open</span> &nbsp;&#8226; Available 24/7
                         </Button>
                     </Box>
                 )}
@@ -186,7 +194,13 @@ const OrganizationCard = ({ organization }: Props): ReactElement => {
                             className={[classes.button, classes.buttonLink].join(' ')}
                             startIcon={<PublicIcon />}
                         >
-                            {organization.url}
+                            {
+                                organization.url
+                                    .replace('http://', '')
+                                    .replace('https://', '')
+                                    .replace('www.', '')
+                                    .split(/[/?#]/)[0]
+                            }
                         </Button>
                     </Box>
                 )}
@@ -198,32 +212,34 @@ const OrganizationCard = ({ organization }: Props): ReactElement => {
                     </Box>
                 )}
             </Box>
-            <Box className={classes.side}>
-                {organization.smsNumber && (
-                    <Box>
-                        <Fab href={`sms:${organization.smsNumber}`} color="primary" aria-label="text">
-                            <SmsOutlinedIcon />
-                        </Fab>
-                        <Typography className={classes.fabLabel}>Text</Typography>
-                    </Box>
-                )}
-                {organization.phoneNumber && (
-                    <Box>
-                        <Fab href={`tel:${organization.phoneNumber}`} color="primary" aria-label="call">
-                            <PhoneIcon />
-                        </Fab>
-                        <Typography className={classes.fabLabel}>Call</Typography>
-                    </Box>
-                )}
-                {organization.chatUrl && (
-                    <Box>
-                        <Fab href={organization.chatUrl} color="primary" aria-label="text">
-                            <MessageOutlinedIcon />
-                        </Fab>
-                        <Typography className={classes.fabLabel}>Web Chat</Typography>
-                    </Box>
-                )}
-            </Box>
+            {(organization.smsNumber || organization.phoneNumber || organization.chatUrl) && (
+                <Box className={classes.side}>
+                    {organization.smsNumber && (
+                        <Box>
+                            <Fab href={`sms:${organization.smsNumber}`} color="primary" aria-label="text">
+                                <SmsOutlinedIcon />
+                            </Fab>
+                            <Typography className={classes.fabLabel}>Text</Typography>
+                        </Box>
+                    )}
+                    {organization.phoneNumber && (
+                        <Box>
+                            <Fab href={`tel:${organization.phoneNumber}`} color="primary" aria-label="call">
+                                <PhoneIcon />
+                            </Fab>
+                            <Typography className={classes.fabLabel}>Call</Typography>
+                        </Box>
+                    )}
+                    {organization.chatUrl && (
+                        <Box>
+                            <Fab href={organization.chatUrl} color="primary" aria-label="text">
+                                <MessageOutlinedIcon />
+                            </Fab>
+                            <Typography className={classes.fabLabel}>Web Chat</Typography>
+                        </Box>
+                    )}
+                </Box>
+            )}
         </Box>
     );
 };
