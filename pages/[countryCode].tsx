@@ -60,6 +60,7 @@ export const getStaticProps: GetStaticProps = async (context): Promise<{ props: 
                     phoneNumber
                     url
                     chatUrl
+                    timezone
                     humanSupportTypes {
                         name
                     }

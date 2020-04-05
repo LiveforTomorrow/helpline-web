@@ -45,6 +45,7 @@ export interface GetCountryAndOrganizations_organizations_nodes {
   phoneNumber: string | null;
   url: string | null;
   chatUrl: string | null;
+  timezone: string;
   humanSupportTypes: GetCountryAndOrganizations_organizations_nodes_humanSupportTypes[];
   categories: GetCountryAndOrganizations_organizations_nodes_categories[];
   topics: GetCountryAndOrganizations_organizations_nodes_topics[];
