@@ -3,6 +3,7 @@ import { render } from '@testing-library/react';
 import OrganizationCard from '.';
 
 const organization = {
+    slug: 'youthline',
     name: 'Youthline',
     alwaysOpen: true,
     openingHours: [],
@@ -12,6 +13,7 @@ const organization = {
     phoneNumber: '0800 376 633',
     url: 'https://youthline.co.nz',
     chatUrl: 'https://youthline.co.nz',
+    timezone: 'Auckland',
 };
 
 describe('OrganizationCard', () => {
