@@ -130,7 +130,7 @@ const OrganizationCard = ({ organization }: Props): ReactElement => {
     const classes = useStyles();
 
     return (
-        <Box className={classes.box}>
+        <Box className={classes.box} m={1}>
             <Box className={classes.grid}>
                 <Typography variant="h6">
                     <Link href="/organizations/[slug]" as={`/organizations/${organization.slug}`} passHref>
