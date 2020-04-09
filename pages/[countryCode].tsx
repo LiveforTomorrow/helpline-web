@@ -15,6 +15,8 @@ const CountryPage = ({ country, organizations }: GetCountryAndOrganizations): Re
 
     if (topics) {
         topics = [topics].flat();
+    } else {
+        topics = [];
     }
 
     return (
@@ -23,7 +25,7 @@ const CountryPage = ({ country, organizations }: GetCountryAndOrganizations): Re
                 <title>Find A Helpline | {country.name}</title>
             </Head>
             <Chrome country={country}>
-                <OrganizationList organizations={organizations.nodes} country={country} topics={topics as string[]} />
+                <OrganizationList organizations={organizations.nodes} country={country} topics={topics} />
             </Chrome>
         </Fragment>
     );

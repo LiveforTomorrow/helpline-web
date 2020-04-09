@@ -28,6 +28,8 @@ const CountryPage = ({ country, subdivision, organizations }: Props): ReactEleme
 
     if (topics) {
         topics = [topics].flat();
+    } else {
+        topics = [];
     }
 
     return (
@@ -42,7 +44,7 @@ const CountryPage = ({ country, subdivision, organizations }: Props): ReactEleme
                     organizations={organizations.nodes}
                     country={country}
                     subdivision={subdivision}
-                    topics={topics as string[]}
+                    topics={topics}
                 />
             </Chrome>
         </Fragment>
