@@ -10,7 +10,7 @@ import { find, flatten } from 'lodash/fp';
 import formatArrayIntoSentence from '../../src/util/formatArrayIntoSentence';
 import Chrome from '../../src/components/Chrome';
 import { GetCountriesAndSubdivisions } from '../../types/GetCountriesAndSubdivisions';
-import OrganizationCard from '../../src/components/OrganizationCard';
+import OrganizationItem from '../../src/components/OrganizationItem';
 import {
     GetCountrySubdivisionsAndOrganizations,
     GetCountrySubdivisionsAndOrganizations_country_subdivisions as Subdivision,
@@ -49,7 +49,7 @@ const CountryPage = ({ country, subdivision, organizations }: Props): ReactEleme
                     </Box>
                     {organizations.nodes.map((organization) => (
                         <Box key={organization.slug} my={2}>
-                            <OrganizationCard organization={organization} />
+                            <OrganizationItem organization={organization} />
                         </Box>
                     ))}
                 </Container>

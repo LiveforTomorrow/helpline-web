@@ -9,7 +9,7 @@ import { print } from 'graphql';
 import formatArrayIntoSentence from '../src/util/formatArrayIntoSentence';
 import Chrome from '../src/components/Chrome';
 import { GetCountryAndOrganizations } from '../types/GetCountryAndOrganizations';
-import OrganizationCard from '../src/components/OrganizationCard';
+import OrganizationItem from '../src/components/OrganizationItem';
 
 const CountryPage = ({ country, organizations }: GetCountryAndOrganizations): ReactElement => {
     const router = useRouter();
@@ -34,7 +34,7 @@ const CountryPage = ({ country, organizations }: GetCountryAndOrganizations): Re
                     </Box>
                     {organizations.nodes.map((organization) => (
                         <Box key={organization.slug} my={2}>
-                            <OrganizationCard organization={organization} />
+                            <OrganizationItem organization={organization} />
                         </Box>
                     ))}
                 </Container>
