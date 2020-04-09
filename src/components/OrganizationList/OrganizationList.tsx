@@ -1,8 +1,9 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, Fragment } from 'react';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import { Typography, Container, Box } from '@material-ui/core';
 import OrganizationItem, { Organization } from '../OrganizationItem/OrganizationItem';
 import formatArrayIntoSentence from '../../util/formatArrayIntoSentence';
+import NavBar from '../NavBar';
 
 type Props = {
     country: { name: string };
@@ -17,20 +18,23 @@ const OrganizationList = ({ country, subdivision, topics, organizations }: Props
     const classes = useStyles();
 
     return (
-        <Container maxWidth="xs">
-            <Box my={2}>
-                <Typography variant="h6">
-                    Best helplines in {subdivision && `${subdivision.name}, `}
-                    {country.name}
-                    {topics.length > 0 && ` for ${formatArrayIntoSentence(topics).toLowerCase()}`}.
-                </Typography>
-            </Box>
-            {organizations.map((organization) => (
-                <Box key={organization.slug} my={2}>
-                    <OrganizationItem organization={organization} />
+        <Fragment>
+            <NavBar />
+            <Container maxWidth="xs">
+                <Box my={2}>
+                    <Typography variant="h6">
+                        {`Best helplines in ${subdivision ? `${subdivision.name}, ` : ''}${country.name}${
+                            topics.length > 0 ? ` for ${formatArrayIntoSentence(topics).toLowerCase()}` : ''
+                        }.`}
+                    </Typography>
                 </Box>
-            ))}
-        </Container>
+                {organizations.map((organization) => (
+                    <Box key={organization.slug} my={2}>
+                        <OrganizationItem organization={organization} />
+                    </Box>
+                ))}
+            </Container>
+        </Fragment>
     );
 };
 
