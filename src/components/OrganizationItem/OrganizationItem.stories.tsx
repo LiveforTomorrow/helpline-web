@@ -29,10 +29,6 @@ export const Default = (): ReactElement => (
     </ThemeProvider>
 );
 
-Default.story = {
-    name: 'default',
-};
-
 export const Basic = (): ReactElement => (
     <ThemeProvider theme={theme}>
         <Box m={2}>
@@ -52,10 +48,6 @@ export const Basic = (): ReactElement => (
     </ThemeProvider>
 );
 
-Basic.story = {
-    name: 'basic',
-};
-
 export const NoSmsNumber = (): ReactElement => (
     <ThemeProvider theme={theme}>
         <Box m={2}>
@@ -63,10 +55,6 @@ export const NoSmsNumber = (): ReactElement => (
         </Box>
     </ThemeProvider>
 );
-
-NoSmsNumber.story = {
-    name: 'no smsNumber',
-};
 
 export const NoPhoneNumber = (): ReactElement => (
     <ThemeProvider theme={theme}>
@@ -76,10 +64,6 @@ export const NoPhoneNumber = (): ReactElement => (
     </ThemeProvider>
 );
 
-NoPhoneNumber.story = {
-    name: 'no phoneNumber',
-};
-
 export const NoChatUrl = (): ReactElement => (
     <ThemeProvider theme={theme}>
         <Box m={2}>
@@ -88,10 +72,6 @@ export const NoChatUrl = (): ReactElement => (
     </ThemeProvider>
 );
 
-NoChatUrl.story = {
-    name: 'no chatUrl',
-};
-
 export const NoUrl = (): ReactElement => (
     <ThemeProvider theme={theme}>
         <Box m={2}>
@@ -99,10 +79,6 @@ export const NoUrl = (): ReactElement => (
         </Box>
     </ThemeProvider>
 );
-
-NoUrl.story = {
-    name: 'no url',
-};
 
 export const NotAlwaysOpen = (): ReactElement => (
     <ThemeProvider theme={theme}>
@@ -117,7 +93,3 @@ export const NotAlwaysOpen = (): ReactElement => (
         </Box>
     </ThemeProvider>
 );
-
-NotAlwaysOpen.story = {
-    name: 'not alwaysOpen',
-};

@@ -24,7 +24,7 @@ type Category = {
     name: string;
 };
 
-type Organization = {
+export type Organization = {
     slug: string;
     name: string;
     alwaysOpen: boolean;
