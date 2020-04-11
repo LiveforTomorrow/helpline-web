@@ -8,6 +8,7 @@ import PhoneIcon from '@material-ui/icons/Phone';
 import PublicIcon from '@material-ui/icons/Public';
 import MessageOutlinedIcon from '@material-ui/icons/MessageOutlined';
 import Link from 'next/link';
+import OrganizationOpen from '../OrganizationOpen';
 
 type OpeningHour = {
     day: string;
@@ -23,7 +24,7 @@ type Category = {
     name: string;
 };
 
-type Organization = {
+export type Organization = {
     slug: string;
     name: string;
     alwaysOpen: boolean;
@@ -71,10 +72,6 @@ const useStyles = makeStyles((theme: Theme) =>
             fontWeight: 'bold',
             backgroundColor: theme.palette.secondary.main,
             textDecoration: 'none',
-        },
-        open: {
-            color: '#3FA607',
-            fontWeight: 'bold',
         },
         button: {
             textTransform: 'none',
@@ -126,7 +123,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-const OrganizationCard = ({ organization }: Props): ReactElement => {
+const OrganizationItem = ({ organization }: Props): ReactElement => {
     const classes = useStyles();
 
     return (
@@ -138,15 +135,15 @@ const OrganizationCard = ({ organization }: Props): ReactElement => {
                     </Link>{' '}
                     {organization.alwaysOpen && <Chip className={classes.chipAlwaysOpen} label="24/7" />}
                 </Typography>
-                {organization.alwaysOpen && (
-                    <Box>
+                {(organization.alwaysOpen || organization.openingHours.length > 0) && (
+                    <Box data-testid="open">
                         <Button
                             size="large"
                             classes={{ root: classes.button, disabled: classes.buttonDisabled }}
                             startIcon={<AccessTimeIcon />}
                             disabled
                         >
-                            <span className={classes.open}>Open</span> &nbsp;&#8226; Available 24/7
+                            <OrganizationOpen organization={organization} />
                         </Button>
                     </Box>
                 )}
@@ -157,6 +154,7 @@ const OrganizationCard = ({ organization }: Props): ReactElement => {
                             classes={{ root: classes.button, disabled: classes.buttonDisabled }}
                             startIcon={<AccountCircleIcon />}
                             disabled
+                            data-testid="humanSupportTypes"
                         >
                             {organization.humanSupportTypes.map((humanSupportType) => humanSupportType.name).join(', ')}
                         </Button>
@@ -170,6 +168,7 @@ const OrganizationCard = ({ organization }: Props): ReactElement => {
                                 size="large"
                                 className={[classes.button, classes.buttonLink].join(' ')}
                                 startIcon={<SmsOutlinedIcon />}
+                                data-testid="smsNumber"
                             >
                                 {organization.smsNumber}
                             </Button>
@@ -180,6 +179,7 @@ const OrganizationCard = ({ organization }: Props): ReactElement => {
                                 size="large"
                                 className={[classes.button, classes.buttonLink].join(' ')}
                                 startIcon={<PhoneIcon />}
+                                data-testid="phoneNumber"
                             >
                                 {organization.phoneNumber}
                             </Button>
@@ -193,6 +193,7 @@ const OrganizationCard = ({ organization }: Props): ReactElement => {
                             href={organization.url}
                             className={[classes.button, classes.buttonLink].join(' ')}
                             startIcon={<PublicIcon />}
+                            data-testid="url"
                         >
                             {
                                 organization.url
@@ -205,7 +206,7 @@ const OrganizationCard = ({ organization }: Props): ReactElement => {
                     </Box>
                 )}
                 {organization.categories.length > 0 && (
-                    <Box className={classes.chips}>
+                    <Box className={classes.chips} data-testid="categories">
                         {organization.categories.map((category, index) => (
                             <Chip className={classes.chip} key={index} label={category.name} />
                         ))}
@@ -213,10 +214,15 @@ const OrganizationCard = ({ organization }: Props): ReactElement => {
                 )}
             </Box>
             {(organization.smsNumber || organization.phoneNumber || organization.chatUrl) && (
-                <Box className={classes.side}>
+                <Box className={classes.side} data-testid="fabs">
                     {organization.smsNumber && (
                         <Box>
-                            <Fab href={`sms:${organization.smsNumber}`} color="primary" aria-label="text">
+                            <Fab
+                                href={`sms:${organization.smsNumber}`}
+                                color="primary"
+                                aria-label="text"
+                                data-testid="smsNumberFab"
+                            >
                                 <SmsOutlinedIcon />
                             </Fab>
                             <Typography className={classes.fabLabel}>Text</Typography>
@@ -224,7 +230,12 @@ const OrganizationCard = ({ organization }: Props): ReactElement => {
                     )}
                     {organization.phoneNumber && (
                         <Box>
-                            <Fab href={`tel:${organization.phoneNumber}`} color="primary" aria-label="call">
+                            <Fab
+                                href={`tel:${organization.phoneNumber}`}
+                                color="primary"
+                                aria-label="call"
+                                data-testid="phoneNumberFab"
+                            >
                                 <PhoneIcon />
                             </Fab>
                             <Typography className={classes.fabLabel}>Call</Typography>
@@ -232,7 +243,7 @@ const OrganizationCard = ({ organization }: Props): ReactElement => {
                     )}
                     {organization.chatUrl && (
                         <Box>
-                            <Fab href={organization.chatUrl} color="primary" aria-label="text">
+                            <Fab href={organization.chatUrl} color="primary" aria-label="text" data-testid="chatUrlFab">
                                 <MessageOutlinedIcon />
                             </Fab>
                             <Typography className={classes.fabLabel}>Web Chat</Typography>
@@ -244,4 +255,4 @@ const OrganizationCard = ({ organization }: Props): ReactElement => {
     );
 };
 
-export default OrganizationCard;
+export default OrganizationItem;

@@ -1,22 +1,20 @@
 import React, { ReactElement, Fragment } from 'react';
 import { request } from 'graphql-request';
 import { GetStaticPaths, GetStaticProps } from 'next';
-import { Typography, Container, Box } from '@material-ui/core';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import gql from 'graphql-tag';
 import { print } from 'graphql';
 import { find, flatten } from 'lodash/fp';
-import formatArrayIntoSentence from '../../src/util/formatArrayIntoSentence';
 import Chrome from '../../src/components/Chrome';
 import { GetCountriesAndSubdivisions } from '../../types/GetCountriesAndSubdivisions';
-import OrganizationCard from '../../src/components/OrganizationCard';
 import {
     GetCountrySubdivisionsAndOrganizations,
     GetCountrySubdivisionsAndOrganizations_country_subdivisions as Subdivision,
     GetCountrySubdivisionsAndOrganizations_country as Country,
     GetCountrySubdivisionsAndOrganizations_organizations as OrganizationsConnection,
 } from '../../types/GetCountrySubdivisionsAndOrganizations';
+import OrganizationList from '../../src/components/OrganizationList';
 
 type Props = {
     country: Country;
@@ -30,6 +28,8 @@ const CountryPage = ({ country, subdivision, organizations }: Props): ReactEleme
 
     if (topics) {
         topics = [topics].flat();
+    } else {
+        topics = [];
     }
 
     return (
@@ -40,19 +40,12 @@ const CountryPage = ({ country, subdivision, organizations }: Props): ReactEleme
                 </title>
             </Head>
             <Chrome country={country}>
-                <Container maxWidth="xs">
-                    <Box my={2}>
-                        <Typography variant="h6">
-                            Best helplines in {subdivision.name}, {country.name}
-                            {topics && <Fragment> for {formatArrayIntoSentence(topics).toLowerCase()}</Fragment>}.
-                        </Typography>
-                    </Box>
-                    {organizations.nodes.map((organization) => (
-                        <Box key={organization.slug} my={2}>
-                            <OrganizationCard organization={organization} />
-                        </Box>
-                    ))}
-                </Container>
+                <OrganizationList
+                    organizations={organizations.nodes}
+                    country={country}
+                    subdivision={subdivision}
+                    topics={topics}
+                />
             </Chrome>
         </Fragment>
     );
