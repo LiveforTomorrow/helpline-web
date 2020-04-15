@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import { ThemeProvider, Box } from '@material-ui/core';
 import theme from '../../theme';
-import OrganizationItem from '.';
+import Organizationcard from '.';
 
 const organization = {
     slug: 'youthline',
@@ -18,13 +18,13 @@ const organization = {
 };
 
 export default {
-    title: 'OrganizationItem',
+    title: 'Organizationcard',
 };
 
 export const Default = (): ReactElement => (
     <ThemeProvider theme={theme}>
         <Box m={2}>
-            <OrganizationItem organization={organization} />
+            <Organizationcard organization={organization} />
         </Box>
     </ThemeProvider>
 );
@@ -32,7 +32,7 @@ export const Default = (): ReactElement => (
 export const Basic = (): ReactElement => (
     <ThemeProvider theme={theme}>
         <Box m={2}>
-            <OrganizationItem
+            <Organizationcard
                 organization={{
                     ...organization,
                     smsNumber: undefined,
@@ -51,7 +51,7 @@ export const Basic = (): ReactElement => (
 export const NoSmsNumber = (): ReactElement => (
     <ThemeProvider theme={theme}>
         <Box m={2}>
-            <OrganizationItem organization={{ ...organization, smsNumber: undefined }} />
+            <Organizationcard organization={{ ...organization, smsNumber: undefined }} />
         </Box>
     </ThemeProvider>
 );
@@ -59,7 +59,7 @@ export const NoSmsNumber = (): ReactElement => (
 export const NoPhoneNumber = (): ReactElement => (
     <ThemeProvider theme={theme}>
         <Box m={2}>
-            <OrganizationItem organization={{ ...organization, phoneNumber: undefined }} />
+            <Organizationcard organization={{ ...organization, phoneNumber: undefined }} />
         </Box>
     </ThemeProvider>
 );
@@ -67,7 +67,7 @@ export const NoPhoneNumber = (): ReactElement => (
 export const NoChatUrl = (): ReactElement => (
     <ThemeProvider theme={theme}>
         <Box m={2}>
-            <OrganizationItem organization={{ ...organization, chatUrl: undefined }} />
+            <Organizationcard organization={{ ...organization, chatUrl: undefined }} />
         </Box>
     </ThemeProvider>
 );
@@ -75,7 +75,7 @@ export const NoChatUrl = (): ReactElement => (
 export const NoUrl = (): ReactElement => (
     <ThemeProvider theme={theme}>
         <Box m={2}>
-            <OrganizationItem organization={{ ...organization, url: undefined }} />
+            <Organizationcard organization={{ ...organization, url: undefined }} />
         </Box>
     </ThemeProvider>
 );
@@ -83,7 +83,7 @@ export const NoUrl = (): ReactElement => (
 export const NotAlwaysOpen = (): ReactElement => (
     <ThemeProvider theme={theme}>
         <Box m={2}>
-            <OrganizationItem
+            <Organizationcard
                 organization={{
                     ...organization,
                     alwaysOpen: false,

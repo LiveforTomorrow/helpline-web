@@ -1,8 +1,8 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import OrganizationItem from '.';
+import Organizationcard from '.';
 
-describe('OrganizationItem', () => {
+describe('Organizationcard', () => {
     let organization;
 
     beforeEach(() => {
@@ -22,7 +22,7 @@ describe('OrganizationItem', () => {
     });
 
     it('should have open element', () => {
-        const { getByText } = render(<OrganizationItem organization={organization} />);
+        const { getByText } = render(<Organizationcard organization={organization} />);
         expect(getByText('Available 24/7')).toBeTruthy();
     });
 
@@ -32,13 +32,13 @@ describe('OrganizationItem', () => {
         });
 
         it('should not have open element', () => {
-            const { getByTestId } = render(<OrganizationItem organization={organization} />);
+            const { getByTestId } = render(<Organizationcard organization={organization} />);
             expect(() => getByTestId('open')).toThrow();
         });
     });
 
     it('should contain comma separated HumanSupportTypes', () => {
-        const { getByTestId } = render(<OrganizationItem organization={organization} />);
+        const { getByTestId } = render(<Organizationcard organization={organization} />);
         expect(getByTestId('humanSupportTypes')).toHaveTextContent('Volunteers, Staff');
     });
 
@@ -48,20 +48,20 @@ describe('OrganizationItem', () => {
         });
 
         it('should not have HumanSupportTypes element', () => {
-            const { getByTestId } = render(<OrganizationItem organization={organization} />);
+            const { getByTestId } = render(<Organizationcard organization={organization} />);
             expect(() => getByTestId('humanSupportTypes')).toThrow();
         });
     });
 
     it('should contain smsNumber', () => {
-        const { getByTestId } = render(<OrganizationItem organization={organization} />);
+        const { getByTestId } = render(<Organizationcard organization={organization} />);
         const element = getByTestId('smsNumber');
         expect(element).toHaveAttribute('href', 'sms:234');
         expect(element).toHaveTextContent('234');
     });
 
     it('should contain smsNumberFab', () => {
-        const { getByTestId } = render(<OrganizationItem organization={organization} />);
+        const { getByTestId } = render(<Organizationcard organization={organization} />);
         const element = getByTestId('smsNumberFab');
         expect(element).toHaveAttribute('href', 'sms:234');
     });
@@ -72,20 +72,20 @@ describe('OrganizationItem', () => {
         });
 
         it('should not have smsNumber element', () => {
-            const { getByTestId } = render(<OrganizationItem organization={organization} />);
+            const { getByTestId } = render(<Organizationcard organization={organization} />);
             expect(() => getByTestId('smsNumber')).toThrow();
         });
     });
 
     it('should contain phoneNumber', () => {
-        const { getByTestId } = render(<OrganizationItem organization={organization} />);
+        const { getByTestId } = render(<Organizationcard organization={organization} />);
         const element = getByTestId('phoneNumber');
         expect(element).toHaveAttribute('href', 'tel:0800 376 633');
         expect(element).toHaveTextContent('0800 376 633');
     });
 
     it('should contain phoneNumberFab', () => {
-        const { getByTestId } = render(<OrganizationItem organization={organization} />);
+        const { getByTestId } = render(<Organizationcard organization={organization} />);
         const element = getByTestId('phoneNumberFab');
         expect(element).toHaveAttribute('href', 'tel:0800 376 633');
     });
@@ -96,13 +96,13 @@ describe('OrganizationItem', () => {
         });
 
         it('should not have phoneNumber element', () => {
-            const { getByTestId } = render(<OrganizationItem organization={organization} />);
+            const { getByTestId } = render(<Organizationcard organization={organization} />);
             expect(() => getByTestId('phoneNumber')).toThrow();
         });
     });
 
     it('should contain url', () => {
-        const { getByTestId } = render(<OrganizationItem organization={organization} />);
+        const { getByTestId } = render(<Organizationcard organization={organization} />);
         const element = getByTestId('url');
         expect(element).toHaveAttribute('href', 'https://youthline.co.nz/website');
         expect(element).toHaveTextContent('youthline.co.nz');
@@ -114,13 +114,13 @@ describe('OrganizationItem', () => {
         });
 
         it('should not have url element', () => {
-            const { getByTestId } = render(<OrganizationItem organization={organization} />);
+            const { getByTestId } = render(<Organizationcard organization={organization} />);
             expect(() => getByTestId('url')).toThrow();
         });
     });
 
     it('should contain categories', () => {
-        const { getByTestId } = render(<OrganizationItem organization={organization} />);
+        const { getByTestId } = render(<Organizationcard organization={organization} />);
         expect(getByTestId('categories')).toHaveTextContent('For youthAll issues');
     });
 
@@ -130,13 +130,13 @@ describe('OrganizationItem', () => {
         });
 
         it('should not have categories element', () => {
-            const { getByTestId } = render(<OrganizationItem organization={organization} />);
+            const { getByTestId } = render(<Organizationcard organization={organization} />);
             expect(() => getByTestId('categories')).toThrow();
         });
     });
 
     it('should contain chatUrlFab', () => {
-        const { getByTestId } = render(<OrganizationItem organization={organization} />);
+        const { getByTestId } = render(<Organizationcard organization={organization} />);
         const element = getByTestId('chatUrlFab');
         expect(element).toHaveAttribute('href', 'https://youthline.co.nz/chat');
     });
@@ -147,7 +147,7 @@ describe('OrganizationItem', () => {
         });
 
         it('should not have chatUrlFab element', () => {
-            const { getByTestId } = render(<OrganizationItem organization={organization} />);
+            const { getByTestId } = render(<Organizationcard organization={organization} />);
             expect(() => getByTestId('chatUrlFab')).toThrow();
         });
     });
@@ -158,7 +158,7 @@ describe('OrganizationItem', () => {
         });
 
         it('should not have fabs element', () => {
-            const { getByTestId } = render(<OrganizationItem organization={organization} />);
+            const { getByTestId } = render(<Organizationcard organization={organization} />);
             expect(() => getByTestId('fabs')).toThrow();
         });
     });
