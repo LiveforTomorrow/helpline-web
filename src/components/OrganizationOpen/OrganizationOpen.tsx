@@ -22,6 +22,9 @@ type Props = {
 
 const useStyles = makeStyles(() =>
     createStyles({
+        body: {
+            fontSize: '0.9375rem',
+        },
         open: {
             color: '#3FA607',
             fontWeight: 'bold',
@@ -38,17 +41,17 @@ const OrganizationOpen = ({ organization }: Props): ReactElement => {
     }
 
     return (
-        <Fragment>
+        <Typography className={classes.body}>
             {organization.alwaysOpen && (
                 <Fragment>
-                    <span className={classes.open}>Open</span> &nbsp;&middot; <span>Available 24/7</span>
+                    <span className={classes.open}>Open</span> &nbsp;&middot;&nbsp; <span>Available 24/7</span>
                 </Fragment>
             )}
             {!organization.alwaysOpen && (
                 <Fragment>
                     {openStatus.open && (
                         <Fragment>
-                            <span className={classes.open}>Open</span> &nbsp;&middot;{' '}
+                            <span className={classes.open}>Open</span> &nbsp;&middot;&nbsp;{' '}
                             <span>
                                 {openStatus.openTime.local().format('h:mm A')} -{' '}
                                 {openStatus.closeTime.local().format('h:mm A')}
@@ -58,7 +61,7 @@ const OrganizationOpen = ({ organization }: Props): ReactElement => {
                     {!openStatus.open && <span>Closed</span>}
                 </Fragment>
             )}
-        </Fragment>
+        </Typography>
     );
 };
 
