@@ -38,7 +38,7 @@ const OrganizationOpen = ({ organization }: Props): ReactElement => {
     }
 
     return (
-        <Typography>
+        <Fragment>
             {organization.alwaysOpen && (
                 <Fragment>
                     <span className={classes.open}>Open</span> &nbsp;&#8226; <span>Available 24/7</span>
@@ -58,7 +58,7 @@ const OrganizationOpen = ({ organization }: Props): ReactElement => {
                     {!openStatus.open && <span>Closed</span>}
                 </Fragment>
             )}
-        </Typography>
+        </Fragment>
     );
 };
 
