@@ -65,7 +65,7 @@ const useStyles = makeStyles((theme: Theme) =>
         heading: {
             fontWeight: 'bold',
             textDecoration: 'underline',
-            color: '#000000',
+            color: theme.palette.text.primary,
         },
         chipAlwaysOpen: {
             color: '#FFFFFF',
@@ -77,7 +77,7 @@ const useStyles = makeStyles((theme: Theme) =>
             textTransform: 'none',
         },
         buttonDisabled: {
-            color: '#000000 !important',
+            color: `${theme.palette.text.primary} !important`,
         },
         buttonLink: {
             textDecoration: 'underline',
@@ -97,7 +97,7 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         chip: {
             color: '#FFFFFF',
-            backgroundColor: '#000000',
+            backgroundColor: theme.palette.text.primary,
             fontWeight: 600,
         },
         side: {
