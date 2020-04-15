@@ -41,14 +41,14 @@ const OrganizationOpen = ({ organization }: Props): ReactElement => {
         <Fragment>
             {organization.alwaysOpen && (
                 <Fragment>
-                    <span className={classes.open}>Open</span> &nbsp;&#8226; <span>Available 24/7</span>
+                    <span className={classes.open}>Open</span> &nbsp;&middot; <span>Available 24/7</span>
                 </Fragment>
             )}
             {!organization.alwaysOpen && (
                 <Fragment>
                     {openStatus.open && (
                         <Fragment>
-                            <span className={classes.open}>Open</span> &nbsp;&#8226;{' '}
+                            <span className={classes.open}>Open</span> &nbsp;&middot;{' '}
                             <span>
                                 {openStatus.openTime.local().format('h:mm A')} -{' '}
                                 {openStatus.closeTime.local().format('h:mm A')}
