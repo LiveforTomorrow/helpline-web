@@ -1,7 +1,7 @@
 import React, { ReactElement, Fragment } from 'react';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import { Typography, Container, Box } from '@material-ui/core';
-import Organizationcard, { Organization } from '../OrganizationCard/OrganizationCard';
+import OrganizationCard, { Organization } from '../OrganizationCard/OrganizationCard';
 import formatArrayIntoSentence from '../../util/formatArrayIntoSentence';
 import NavBar from '../NavBar';
 
@@ -30,7 +30,7 @@ const OrganizationList = ({ country, subdivision, topics, organizations }: Props
                 </Box>
                 {organizations.map((organization) => (
                     <Box key={organization.slug} my={2}>
-                        <Organizationcard organization={organization} />
+                        <OrganizationCard organization={organization} />
                     </Box>
                 ))}
             </Container>

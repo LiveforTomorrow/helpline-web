@@ -1,3 +1,3 @@
-import Organizationcard from './OrganizationCard';
+import OrganizationCard from './OrganizationCard';
 
-export default Organizationcard;
+export default OrganizationCard;
