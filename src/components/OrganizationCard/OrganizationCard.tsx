@@ -128,7 +128,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-const OrganizationItem = ({ organization }: Props): ReactElement => {
+const Organizationcard = ({ organization }: Props): ReactElement => {
     const classes = useStyles();
 
     return (
@@ -270,4 +270,4 @@ const OrganizationItem = ({ organization }: Props): ReactElement => {
     );
 };
 
-export default OrganizationItem;
+export default Organizationcard;
