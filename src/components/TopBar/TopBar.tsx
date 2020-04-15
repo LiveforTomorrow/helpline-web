@@ -104,7 +104,7 @@ const TopBar = ({ country }: Props): ReactElement => {
                                 href={`tel:${country.emergencyNumber}`}
                                 data-testid="emergencyServicesButton"
                             >
-                                <Hidden smUp>call {country.emergencyNumber}</Hidden>
+                                <Hidden smUp>Call {country.emergencyNumber}</Hidden>
                                 <Hidden only="xs">Emergency Services</Hidden>
                             </Button>
                         </Fragment>
