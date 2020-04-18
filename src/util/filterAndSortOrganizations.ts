@@ -74,7 +74,10 @@ const sortOrganizations = (sorts: Sort[], organizations: Organization[]): Organi
         return sortBy('name', organizations);
     }
     if (find({ name: 'Open now' }, sorts)) {
-        return sortBy((organization) => (isOpen(organization).open ? 'A' : 'B'), organizations);
+        return sortBy(
+            (organization) => (isOpen(organization).open ? `A ${organization.name}` : `B ${organization.name}`),
+            organizations,
+        );
     }
 };
 

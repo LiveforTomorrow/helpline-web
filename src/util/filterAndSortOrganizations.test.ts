@@ -2,8 +2,8 @@ import filterAndSortOrganizations from './filterAndSortOrganizations';
 
 describe('filterAndSortOrganizations', () => {
     const organization = {
-        slug: 'youthline',
-        name: 'Youthline',
+        slug: 'bbb',
+        name: 'Beta',
         alwaysOpen: false,
         openingHours: [],
         humanSupportTypes: [{ name: 'Volunteers' }, { name: 'Staff' }],
@@ -100,6 +100,36 @@ describe('filterAndSortOrganizations', () => {
     });
 
     describe('when sort provided', () => {
+        const alwaysOpenLastOrganization = {
+            slug: 'ooo',
+            name: 'Omega',
+            alwaysOpen: true,
+            openingHours: [],
+            humanSupportTypes: [{ name: 'Migrants' }, { name: 'AI' }],
+            categories: [{ name: 'For men' }, { name: 'All issues' }],
+            topics: [{ name: 'Anxiety' }, { name: 'Bullying' }],
+            smsNumber: '',
+            phoneNumber: null,
+            url: 'https://test.co.nz/website',
+            chatUrl: undefined,
+            timezone: 'Auckland',
+        };
+
+        const closedLastOrganization = {
+            slug: 'ooo',
+            name: 'Omega',
+            alwaysOpen: false,
+            openingHours: [],
+            humanSupportTypes: [{ name: 'Migrants' }, { name: 'AI' }],
+            categories: [{ name: 'For men' }, { name: 'All issues' }],
+            topics: [{ name: 'Anxiety' }, { name: 'Bullying' }],
+            smsNumber: '',
+            phoneNumber: null,
+            url: 'https://test.co.nz/website',
+            chatUrl: undefined,
+            timezone: 'Auckland',
+        };
+
         it('sorts by A – Z', () => {
             changes.sorts = [{ name: 'A – Z' }];
             expect(filterAndSortOrganizations(organizations, changes)).toEqual([filteredOrganization, organization]);
@@ -107,7 +137,12 @@ describe('filterAndSortOrganizations', () => {
 
         it('sorts by open now', () => {
             changes.sorts = [{ name: 'Open now' }];
-            expect(filterAndSortOrganizations(organizations, changes)).toEqual([filteredOrganization, organization]);
+            expect(
+                filterAndSortOrganizations(
+                    [alwaysOpenLastOrganization, closedLastOrganization, organization, filteredOrganization],
+                    changes,
+                ),
+            ).toEqual([filteredOrganization, alwaysOpenLastOrganization, organization, closedLastOrganization]);
         });
     });
 });
