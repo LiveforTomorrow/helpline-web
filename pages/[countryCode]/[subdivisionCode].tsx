@@ -13,6 +13,7 @@ import {
     GetSubdivisionCodeProps_country_subdivisions as Subdivision,
 } from '../../types/GetSubdivisionCodeProps';
 import OrganizationList from '../../src/components/OrganizationList';
+import Footer from '../../src/components/Footer';
 
 interface Props extends GetSubdivisionCodeProps {
     subdivision: Subdivision;
@@ -53,6 +54,7 @@ const SubdivisionCodePage = ({
                     humanSupportTypes={humanSupportTypes}
                     topics={topics}
                 />
+                <Footer />
             </Chrome>
         </Fragment>
     );

@@ -8,6 +8,7 @@ import { print } from 'graphql';
 import Chrome from '../src/components/Chrome';
 import { GetCountryCodeProps } from '../types/GetCountryCodeProps';
 import OrganizationList from '../src/components/OrganizationList';
+import Footer from '../src/components/Footer';
 
 const CountryCodePage = ({
     country,
@@ -40,6 +41,7 @@ const CountryCodePage = ({
                     humanSupportTypes={humanSupportTypes}
                     topics={topics}
                 />
+                <Footer />
             </Chrome>
         </Fragment>
     );
