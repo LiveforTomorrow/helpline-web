@@ -56,15 +56,16 @@ const OrganizationList = ({
     const classes = useStyles();
     const [showFilters, setShowFilters] = useState(false);
     const [selectedTopics, setSelectedTopics] = useState(preselectedTopics);
-    const [filteredOrganizations, setOrganizations] = useState(
-        filterAndSortOrganizations(organizations, {
+    const filterByPreselectedTopics = (): Organization[] => {
+        return filterAndSortOrganizations(organizations, {
             contactMethods: [],
             categories: [],
             humanSupportTypes: [],
-            topics: selectedTopics,
+            topics: preselectedTopics,
             sorts: [{ name: 'A – Z' }],
-        }),
-    );
+        });
+    };
+    const [filteredOrganizations, setOrganizations] = useState(filterByPreselectedTopics());
 
     const onChange = (changes): void => {
         setSelectedTopics(changes.topics);
@@ -72,7 +73,10 @@ const OrganizationList = ({
         setShowFilters(false);
     };
 
-    useEffect(() => setSelectedTopics(preselectedTopics), [preselectedTopics]);
+    useEffect(() => {
+        setSelectedTopics(preselectedTopics);
+        setOrganizations(filterByPreselectedTopics());
+    }, [preselectedTopics]);
 
     return (
         <Fragment>
