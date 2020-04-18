@@ -6,17 +6,24 @@ import Head from 'next/head';
 import gql from 'graphql-tag';
 import { print } from 'graphql';
 import Chrome from '../src/components/Chrome';
-import { GetCountryAndOrganizations } from '../types/GetCountryAndOrganizations';
+import { GetCountryCodeProps } from '../types/GetCountryCodeProps';
 import OrganizationList from '../src/components/OrganizationList';
 
-const CountryPage = ({ country, organizations }: GetCountryAndOrganizations): ReactElement => {
+const CountryCodePage = ({
+    country,
+    organizations,
+    categories,
+    humanSupportTypes,
+    topics,
+}: GetCountryCodeProps): ReactElement => {
     const router = useRouter();
-    let { topics } = router.query;
+    const queryTopics = router.query.topics;
+    let preselectedTopics: { name: string }[] = [];
 
-    if (topics) {
-        topics = [topics].flat();
-    } else {
-        topics = [];
+    if (queryTopics) {
+        preselectedTopics = [queryTopics].flat().map((topic) => {
+            return { name: topic };
+        });
     }
 
     return (
@@ -25,15 +32,22 @@ const CountryPage = ({ country, organizations }: GetCountryAndOrganizations): Re
                 <title>Find A Helpline | {country.name}</title>
             </Head>
             <Chrome country={country}>
-                <OrganizationList organizations={organizations.nodes} country={country} topics={topics} />
+                <OrganizationList
+                    organizations={organizations.nodes}
+                    country={country}
+                    preselectedTopics={preselectedTopics}
+                    categories={categories}
+                    humanSupportTypes={humanSupportTypes}
+                    topics={topics}
+                />
             </Chrome>
         </Fragment>
     );
 };
 
-export const getStaticProps: GetStaticProps = async (context): Promise<{ props: GetCountryAndOrganizations }> => {
+export const getStaticProps: GetStaticProps = async (context): Promise<{ props: GetCountryCodeProps }> => {
     const query = gql`
-        query GetCountryAndOrganizations($countryCode: String!) {
+        query GetCountryCodeProps($countryCode: String!) {
             country(code: $countryCode) {
                 code
                 name
@@ -65,15 +79,31 @@ export const getStaticProps: GetStaticProps = async (context): Promise<{ props: 
                     }
                 }
             }
+            categories {
+                name
+            }
+            humanSupportTypes {
+                name
+            }
+            topics {
+                name
+            }
         }
     `;
-    const { country, organizations } = await request('https://api.findahelpline.com', print(query), {
-        countryCode: context.params.countryCode,
-    });
+    const { country, organizations, categories, humanSupportTypes, topics } = await request(
+        'https://api.findahelpline.com',
+        print(query),
+        {
+            countryCode: context.params.countryCode,
+        },
+    );
     return {
         props: {
             country,
             organizations,
+            categories,
+            humanSupportTypes,
+            topics,
         },
     };
 };
@@ -100,4 +130,4 @@ export const getStaticPaths: GetStaticPaths = async () => {
     };
 };
 
-export default CountryPage;
+export default CountryCodePage;

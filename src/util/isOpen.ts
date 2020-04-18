@@ -26,8 +26,8 @@ const isOpen = ({ alwaysOpen, openingHours, timezone }: Organization): IsOpenSta
         return { open: false };
     }
 
-    const openTime = moment.tz(`${date} ${moment(openingHour.open).format('HH:mm')}`, 'YYYY-MM-DD HH:mm', timezone);
-    const closeTime = moment.tz(`${date} ${moment(openingHour.close).format('HH:mm')}`, 'YYYY-MM-DD HH:mm', timezone);
+    const openTime = moment.tz(`${date} ${openingHour.open.match(/T(\d\d:\d\d)/)[1]}`, 'YYYY-MM-DD HH:mm', timezone);
+    const closeTime = moment.tz(`${date} ${openingHour.close.match(/T(\d\d:\d\d)/)[1]}`, 'YYYY-MM-DD HH:mm', timezone);
     const open = now.isBetween(openTime, closeTime, null, '[)');
     return { open, openTime, closeTime };
 };

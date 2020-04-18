@@ -22,6 +22,7 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         appBar: {
             backgroundColor: '#181719',
+            zIndex: theme.zIndex.drawer + 2,
         },
         toolbar: {
             display: 'grid',
