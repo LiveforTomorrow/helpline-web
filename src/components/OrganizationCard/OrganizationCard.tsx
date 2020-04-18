@@ -24,6 +24,10 @@ type Category = {
     name: string;
 };
 
+type Topic = {
+    name: string;
+};
+
 export type Organization = {
     slug: string;
     name: string;
@@ -31,6 +35,7 @@ export type Organization = {
     humanSupportTypes: HumanSupportType[];
     categories: Category[];
     openingHours: OpeningHour[];
+    topics: Topic[];
     smsNumber?: string;
     phoneNumber?: string;
     url?: string;

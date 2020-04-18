@@ -4,12 +4,23 @@ describe('isOpen', () => {
     let organization;
 
     beforeEach(() => {
-        organization = { openingHours: [], timezone: 'Pacific/Auckland' };
+        organization = { alwaysOpen: false, openingHours: [], timezone: 'Pacific/Auckland' };
     });
 
     it('should return closed by default', () => {
         expect(isOpen(organization)).toEqual({ open: false });
     });
+
+    describe('alwaysOpen set', () => {
+        beforeEach(() => {
+            organization.alwaysOpen = true;
+        });
+
+        it('should return open', () => {
+            expect(isOpen(organization)).toEqual({ open: true });
+        });
+    });
+
     describe('openingHours set', () => {
         const RealDate = Date.now;
 

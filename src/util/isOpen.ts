@@ -8,11 +8,16 @@ type OpeningHour = {
 };
 
 type Organization = {
+    alwaysOpen: boolean;
     openingHours: OpeningHour[];
     timezone: string;
 };
 
-const isOpen = ({ openingHours, timezone }: Organization): IsOpenStatus => {
+const isOpen = ({ alwaysOpen, openingHours, timezone }: Organization): IsOpenStatus => {
+    if (alwaysOpen) {
+        return { open: true };
+    }
+
     const now = moment.tz(timezone);
     const date = now.format('YYYY-MM-DD');
     const openingHour = find({ day: now.format('dddd').toLowerCase() }, openingHours);
