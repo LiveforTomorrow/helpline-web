@@ -1,6 +1,7 @@
 import React, { ReactElement } from 'react';
 import { ThemeProvider } from '@material-ui/core';
 import theme from '../../theme';
+import Chrome from '../Chrome';
 import OrganizationList from '.';
 
 const organizations = [
@@ -16,7 +17,7 @@ const organizations = [
         url: 'https://youthline.co.nz/website',
         chatUrl: 'https://youthline.co.nz/chat',
         timezone: 'Auckland',
-        topics: [],
+        topics: [{ name: 'Anxiety' }],
     },
     {
         slug: 'youthline',
@@ -30,7 +31,7 @@ const organizations = [
         url: 'https://youthline.co.nz/website',
         chatUrl: 'https://youthline.co.nz/chat',
         timezone: 'Auckland',
-        topics: [],
+        topics: [{ name: 'Stress' }],
     },
 ];
 
@@ -40,28 +41,46 @@ export default {
 
 export const Default = (): ReactElement => (
     <ThemeProvider theme={theme}>
-        <OrganizationList country={{ name: 'New Zealand' }} topics={[]} organizations={organizations} />
+        <Chrome country={{ emergencyNumber: '111' }}>
+            <OrganizationList
+                country={{ name: 'New Zealand' }}
+                categories={[]}
+                humanSupportTypes={[]}
+                preselectedTopics={[]}
+                topics={[]}
+                organizations={organizations}
+            />
+        </Chrome>
     </ThemeProvider>
 );
 
 export const WithSubdivision = (): ReactElement => (
     <ThemeProvider theme={theme}>
-        <OrganizationList
-            country={{ name: 'New Zealand' }}
-            subdivision={{ name: 'Auckland' }}
-            topics={[]}
-            organizations={organizations}
-        />
+        <Chrome country={{ emergencyNumber: '111' }}>
+            <OrganizationList
+                country={{ name: 'New Zealand' }}
+                subdivision={{ name: 'Auckland' }}
+                categories={[]}
+                humanSupportTypes={[]}
+                preselectedTopics={[]}
+                topics={[]}
+                organizations={organizations}
+            />
+        </Chrome>
     </ThemeProvider>
 );
 
 export const WithTopics = (): ReactElement => (
     <ThemeProvider theme={theme}>
-        <OrganizationList
-            country={{ name: 'New Zealand' }}
-            subdivision={{ name: 'Auckland' }}
-            topics={['Anxiety', 'Stress']}
-            organizations={organizations}
-        />
+        <Chrome country={{ emergencyNumber: '111' }}>
+            <OrganizationList
+                country={{ name: 'New Zealand' }}
+                categories={[]}
+                humanSupportTypes={[]}
+                preselectedTopics={[{ name: 'Anxiety' }, { name: 'Stress' }]}
+                topics={[{ name: 'Anxiety' }, { name: 'Bullying' }, { name: 'Stress' }]}
+                organizations={organizations}
+            />
+        </Chrome>
     </ThemeProvider>
 );

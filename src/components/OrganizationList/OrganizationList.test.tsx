@@ -39,7 +39,14 @@ describe('OrganizationList', () => {
 
     it('should display country name', () => {
         const { getByText } = render(
-            <OrganizationList country={country} organizations={organizations} topics={topics} />,
+            <OrganizationList
+                country={country}
+                organizations={organizations}
+                topics={topics}
+                categories={[]}
+                humanSupportTypes={[]}
+                preselectedTopics={[]}
+            />,
         );
         expect(getByText('Best helplines in New Zealand.')).toBeTruthy();
     });
@@ -51,6 +58,9 @@ describe('OrganizationList', () => {
                 subdivision={subdivision}
                 organizations={organizations}
                 topics={topics}
+                categories={[]}
+                humanSupportTypes={[]}
+                preselectedTopics={[]}
             />,
         );
         expect(getByText('Best helplines in Auckland, New Zealand.')).toBeTruthy();
@@ -58,19 +68,33 @@ describe('OrganizationList', () => {
 
     it('should render organization items', () => {
         const { getByText } = render(
-            <OrganizationList country={country} organizations={organizations} topics={topics} />,
+            <OrganizationList
+                country={country}
+                organizations={organizations}
+                topics={topics}
+                categories={[]}
+                humanSupportTypes={[]}
+                preselectedTopics={[]}
+            />,
         );
         expect(getByText('Youthline') && getByText('KidsCan')).toBeTruthy();
     });
 
     describe('topics', () => {
         beforeEach(() => {
-            topics = ['Anxiety', 'Bullying', 'Depression'];
+            topics = [{ name: 'Anxiety' }, { name: 'Bullying' }, { name: 'Depression' }];
         });
 
         it('should display topics', () => {
             const { getByText } = render(
-                <OrganizationList country={country} organizations={organizations} topics={topics} />,
+                <OrganizationList
+                    country={country}
+                    organizations={organizations}
+                    topics={[]}
+                    categories={[]}
+                    humanSupportTypes={[]}
+                    preselectedTopics={topics}
+                />,
             );
             expect(getByText('Best helplines in New Zealand for anxiety, bullying, and depression.')).toBeTruthy();
         });
