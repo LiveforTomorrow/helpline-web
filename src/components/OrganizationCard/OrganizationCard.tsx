@@ -266,7 +266,11 @@ const OrganizationCard = ({ organization }: Props): ReactElement => {
                             >
                                 <MessageOutlinedIcon fontSize="inherit" />
                             </Fab>
-                            <Typography className={classes.fabLabel}>Web Chat</Typography>
+                            <Typography className={classes.fabLabel}>
+                                Web
+                                <br />
+                                Chat
+                            </Typography>
                         </Box>
                     )}
                 </Box>
