@@ -25,7 +25,9 @@ describe('isOpen', () => {
         const RealDate = Date.now;
 
         beforeEach(() => {
-            organization.openingHours = [{ open: '00:00', close: '23:59', day: 'wednesday' }];
+            organization.openingHours = [
+                { open: '2000-01-01T00:00:00Z', close: '2000-01-01T23:59:00Z', day: 'wednesday' },
+            ];
         });
 
         describe('current time is outside opening hours', () => {
