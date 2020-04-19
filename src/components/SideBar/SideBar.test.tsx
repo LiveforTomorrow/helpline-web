@@ -13,7 +13,7 @@ describe('SideBar', () => {
     it('should contain home link', () => {
         const { getByText, getByTestId } = render(<SideBar />);
         fireEvent.click(getByTestId('menuButton'));
-        expect(getByText('Home').parentElement.parentElement).toHaveAttribute('href', '/search');
+        expect(getByText('Home').parentElement.parentElement).toHaveAttribute('href', '/');
     });
 
     it('should contain about link', () => {

@@ -27,7 +27,7 @@ const SideBar = (): ReactElement => {
             <Drawer anchor="right" open={open} onClose={(): void => setOpen(false)}>
                 <div className={classes.list} onClick={(): void => setOpen(false)}>
                     <List>
-                        <Link href="/search" passHref>
+                        <Link href="/" passHref>
                             <ListItem button component="a">
                                 <ListItemIcon>
                                     <HomeIcon />
