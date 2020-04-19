@@ -24,6 +24,10 @@ type Category = {
     name: string;
 };
 
+type Topic = {
+    name: string;
+};
+
 export type Organization = {
     slug: string;
     name: string;
@@ -31,6 +35,7 @@ export type Organization = {
     humanSupportTypes: HumanSupportType[];
     categories: Category[];
     openingHours: OpeningHour[];
+    topics: Topic[];
     smsNumber?: string;
     phoneNumber?: string;
     url?: string;
@@ -54,6 +59,17 @@ const useStyles = makeStyles((theme: Theme) =>
             },
             '@media (max-width: 320px)': {
                 flexDirection: 'column',
+            },
+        },
+        webChatSpacing: {
+            display: 'none',
+            '@media (max-width: 320px)': {
+                display: 'inline',
+            },
+        },
+        webChatLineBreak: {
+            '@media (max-width: 320px)': {
+                display: 'none',
             },
         },
         grid: {
@@ -261,7 +277,11 @@ const OrganizationCard = ({ organization }: Props): ReactElement => {
                             >
                                 <MessageOutlinedIcon fontSize="inherit" />
                             </Fab>
-                            <Typography className={classes.fabLabel}>Web Chat</Typography>
+                            <Typography className={classes.fabLabel}>
+                                Web<span className={classes.webChatSpacing}>&nbsp;</span>
+                                <br className={classes.webChatLineBreak} />
+                                Chat
+                            </Typography>
                         </Box>
                     )}
                 </Box>
