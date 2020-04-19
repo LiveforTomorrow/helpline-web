@@ -101,28 +101,26 @@ const OrganizationList = ({
                 onClick={(): void => setShowFilters(false)}
                 data-testid="backdrop"
             >
-                {showFilters && (
-                    <Box onClick={(e): void => e.stopPropagation()}>
-                        <NavBar>
-                            <Button
-                                className={classes.filterButton}
-                                onClick={(): void => setShowFilters(false)}
-                                endIcon={<CloseIcon />}
-                            >
-                                Close
-                            </Button>
-                        </NavBar>
-                        <Box className={classes.filters}>
-                            <OrganizationFilter
-                                categories={categories}
-                                humanSupportTypes={humanSupportTypes}
-                                topics={topics}
-                                preselectedTopics={preselectedTopics}
-                                onChange={onChange}
-                            />
-                        </Box>
+                <Box onClick={(e): void => e.stopPropagation()}>
+                    <NavBar>
+                        <Button
+                            className={classes.filterButton}
+                            onClick={(): void => setShowFilters(false)}
+                            endIcon={<CloseIcon />}
+                        >
+                            Close
+                        </Button>
+                    </NavBar>
+                    <Box className={classes.filters}>
+                        <OrganizationFilter
+                            categories={categories}
+                            humanSupportTypes={humanSupportTypes}
+                            topics={topics}
+                            preselectedTopics={preselectedTopics}
+                            onChange={onChange}
+                        />
                     </Box>
-                )}
+                </Box>
             </Backdrop>
             <Container maxWidth="xs">
                 <Box my={2}>
