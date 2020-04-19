@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import OrganizationList from '.';
 
 describe('OrganizationList', () => {
@@ -80,13 +80,93 @@ describe('OrganizationList', () => {
         expect(getByText('Youthline') && getByText('KidsCan')).toBeTruthy();
     });
 
+    describe('filter', () => {
+        it('should allow organizations to be filtered', () => {
+            const { getByText, getByTestId } = render(
+                <OrganizationList
+                    country={country}
+                    organizations={organizations}
+                    topics={[]}
+                    categories={[]}
+                    humanSupportTypes={[]}
+                    preselectedTopics={[]}
+                />,
+            );
+            expect(getByText('Youthline') && getByText('KidsCan')).toBeTruthy();
+            fireEvent.click(getByTestId('filter'));
+            fireEvent.click(getByText('Phone'));
+            fireEvent.click(getByText('Apply'));
+            expect(() => getByText('Filter & Sort')).toThrow();
+            expect(() => getByText('KidsCan')).toThrow();
+        });
+
+        it('should hide filters when closed is clicked', () => {
+            const { getByText, getByTestId } = render(
+                <OrganizationList
+                    country={country}
+                    organizations={organizations}
+                    topics={[]}
+                    categories={[]}
+                    humanSupportTypes={[]}
+                    preselectedTopics={[]}
+                />,
+            );
+            fireEvent.click(getByTestId('filter'));
+            expect(getByText('Filter & Sort')).toBeTruthy();
+            fireEvent.click(getByText('Close'));
+            expect(() => getByText('Filter & Sort')).toThrow();
+        });
+
+        it('should hide filters when backdrop is clicked', () => {
+            const { getByText, getByTestId } = render(
+                <OrganizationList
+                    country={country}
+                    organizations={organizations}
+                    topics={[]}
+                    categories={[]}
+                    humanSupportTypes={[]}
+                    preselectedTopics={[]}
+                />,
+            );
+            fireEvent.click(getByTestId('filter'));
+            expect(getByText('Filter & Sort')).toBeTruthy();
+            fireEvent.click(getByTestId('backdrop'));
+            expect(() => getByText('Filter & Sort')).toThrow();
+        });
+    });
+
     describe('topics', () => {
         beforeEach(() => {
             topics = [{ name: 'Anxiety' }, { name: 'Bullying' }, { name: 'Depression' }];
         });
 
-        it('should display topics', () => {
+        it('should display preselectedTopics', () => {
             const { getByText } = render(
+                <OrganizationList
+                    country={country}
+                    organizations={organizations}
+                    topics={[]}
+                    categories={[]}
+                    humanSupportTypes={[]}
+                    preselectedTopics={topics}
+                />,
+            );
+            expect(getByText('Best helplines in New Zealand for anxiety, bullying, and depression.')).toBeTruthy();
+        });
+
+        it('should allow preselectedTopics to be updated', () => {
+            const { getByText, rerender } = render(
+                <OrganizationList
+                    country={country}
+                    organizations={organizations}
+                    topics={[]}
+                    categories={[]}
+                    humanSupportTypes={[]}
+                    preselectedTopics={[]}
+                />,
+            );
+            expect(getByText('Best helplines in New Zealand.')).toBeTruthy();
+            rerender(
                 <OrganizationList
                     country={country}
                     organizations={organizations}

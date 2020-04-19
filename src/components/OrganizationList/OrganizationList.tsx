@@ -90,29 +90,39 @@ const OrganizationList = ({
                     className={classes.filterButton}
                     onClick={(): void => setShowFilters(true)}
                     endIcon={<FilterListIcon />}
+                    data-testid="filter"
                 >
                     Filter<span className={classes.sortText}>&nbsp;&amp; Sort</span>
                 </Button>
             </NavBar>
-            <Backdrop className={classes.backdrop} open={showFilters} onClick={(): void => setShowFilters(false)}>
-                <NavBar>
-                    <Button
-                        className={classes.filterButton}
-                        onClick={(): void => setShowFilters(false)}
-                        endIcon={<CloseIcon />}
-                    >
-                        Close
-                    </Button>
-                </NavBar>
-                <Box className={classes.filters} onClick={(e): void => e.stopPropagation()}>
-                    <OrganizationFilter
-                        categories={categories}
-                        humanSupportTypes={humanSupportTypes}
-                        topics={topics}
-                        preselectedTopics={preselectedTopics}
-                        onChange={onChange}
-                    />
-                </Box>
+            <Backdrop
+                className={classes.backdrop}
+                open={showFilters}
+                onClick={(): void => setShowFilters(false)}
+                data-testid="backdrop"
+            >
+                {showFilters && (
+                    <Box onClick={(e): void => e.stopPropagation()}>
+                        <NavBar>
+                            <Button
+                                className={classes.filterButton}
+                                onClick={(): void => setShowFilters(false)}
+                                endIcon={<CloseIcon />}
+                            >
+                                Close
+                            </Button>
+                        </NavBar>
+                        <Box className={classes.filters}>
+                            <OrganizationFilter
+                                categories={categories}
+                                humanSupportTypes={humanSupportTypes}
+                                topics={topics}
+                                preselectedTopics={preselectedTopics}
+                                onChange={onChange}
+                            />
+                        </Box>
+                    </Box>
+                )}
             </Backdrop>
             <Container maxWidth="xs">
                 <Box my={2}>
