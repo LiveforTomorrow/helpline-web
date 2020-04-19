@@ -15,6 +15,7 @@ const organization = {
     url: 'https://www.youthline.co.nz/learn-and-grow.html',
     chatUrl: 'https://youthline.co.nz',
     timezone: 'Pacific/Auckland',
+    topics: [],
 };
 
 export default {

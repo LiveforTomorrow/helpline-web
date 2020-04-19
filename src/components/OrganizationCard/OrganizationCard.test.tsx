@@ -18,6 +18,7 @@ describe('OrganizationCard', () => {
             url: 'https://youthline.co.nz/website',
             chatUrl: 'https://youthline.co.nz/chat',
             timezone: 'Auckland',
+            topics: [],
         };
     });
 
