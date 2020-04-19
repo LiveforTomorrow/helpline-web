@@ -1,6 +1,6 @@
 import React, { ReactElement, Fragment, useState } from 'react';
 import { Drawer, List, ListItem, ListItemText, IconButton, Divider, ListItemIcon } from '@material-ui/core';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { createStyles, makeStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import HomeIcon from '@material-ui/icons/Home';
 import InfoIcon from '@material-ui/icons/Info';
@@ -27,7 +27,7 @@ const SideBar = (): ReactElement => {
             <Drawer anchor="right" open={open} onClose={(): void => setOpen(false)}>
                 <div className={classes.list} onClick={(): void => setOpen(false)}>
                     <List>
-                        <Link href="/search" passHref>
+                        <Link href="/" passHref>
                             <ListItem button component="a">
                                 <ListItemIcon>
                                     <HomeIcon />
