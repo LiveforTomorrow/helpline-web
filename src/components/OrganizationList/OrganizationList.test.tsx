@@ -96,7 +96,7 @@ describe('OrganizationList', () => {
             fireEvent.click(getByTestId('filter'));
             fireEvent.click(getByText('Phone'));
             fireEvent.click(getByText('Apply'));
-            expect(() => getByText('Filter & Sort')).toThrow();
+            expect(getByTestId('backdrop')).toHaveStyle({ opacity: 0 });
             expect(() => getByText('KidsCan')).toThrow();
         });
 
@@ -112,9 +112,9 @@ describe('OrganizationList', () => {
                 />,
             );
             fireEvent.click(getByTestId('filter'));
-            expect(getByText('Filter & Sort')).toBeTruthy();
+            expect(getByTestId('backdrop')).toHaveStyle({ opacity: 1 });
             fireEvent.click(getByText('Close'));
-            expect(() => getByText('Filter & Sort')).toThrow();
+            expect(getByTestId('backdrop')).toHaveStyle({ opacity: 0 });
         });
 
         it('should hide filters when backdrop is clicked', () => {
@@ -129,9 +129,9 @@ describe('OrganizationList', () => {
                 />,
             );
             fireEvent.click(getByTestId('filter'));
-            expect(getByText('Filter & Sort')).toBeTruthy();
+            expect(getByTestId('backdrop')).toHaveStyle({ opacity: 1 });
             fireEvent.click(getByTestId('backdrop'));
-            expect(() => getByText('Filter & Sort')).toThrow();
+            expect(getByTestId('backdrop')).toHaveStyle({ opacity: 0 });
         });
     });
 
