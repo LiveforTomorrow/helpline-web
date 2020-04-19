@@ -41,6 +41,11 @@ const useStyles = makeStyles((theme: Theme) =>
             paddingLeft: theme.spacing(2),
             paddingRight: theme.spacing(2),
         },
+        sortText: {
+            '@media (max-width: 320px)': {
+                display: 'none',
+            },
+        },
     }),
 );
 
@@ -86,7 +91,7 @@ const OrganizationList = ({
                     onClick={(): void => setShowFilters(true)}
                     endIcon={<FilterListIcon />}
                 >
-                    Filter &amp; Sort
+                    Filter<span className={classes.sortText}>&nbsp;&amp; Sort</span>
                 </Button>
             </NavBar>
             <Backdrop className={classes.backdrop} open={showFilters} onClick={(): void => setShowFilters(false)}>

@@ -61,6 +61,17 @@ const useStyles = makeStyles((theme: Theme) =>
                 flexDirection: 'column',
             },
         },
+        webChatSpacing: {
+            display: 'none',
+            '@media (max-width: 320px)': {
+                display: 'inline',
+            },
+        },
+        webChatLineBreak: {
+            '@media (max-width: 320px)': {
+                display: 'none',
+            },
+        },
         grid: {
             flex: 1,
             display: 'flex',
@@ -267,8 +278,8 @@ const OrganizationCard = ({ organization }: Props): ReactElement => {
                                 <MessageOutlinedIcon fontSize="inherit" />
                             </Fab>
                             <Typography className={classes.fabLabel}>
-                                Web
-                                <br />
+                                Web<span className={classes.webChatSpacing}>&nbsp;</span>
+                                <br className={classes.webChatLineBreak} />
                                 Chat
                             </Typography>
                         </Box>
