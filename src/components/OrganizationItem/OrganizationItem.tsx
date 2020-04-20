@@ -116,7 +116,7 @@ const OrganizationItem = ({ organization }: Props): ReactElement => {
     const classes = useStyles();
 
     return (
-        <Container className={classes.container}>
+        <Container className={classes.container} maxWidth="sm">
             <Box className={classes.grid}>
                 <Box ml={1}>
                     <Typography variant="h6">
@@ -230,6 +230,9 @@ const OrganizationItem = ({ organization }: Props): ReactElement => {
                         size="small"
                         className={[classes.button, classes.buttonLink].join(' ')}
                         startIcon={<CreateIcon />}
+                        href={`https://zealnz.typeform.com/to/mMLYXV?remote_id=${organization.slug}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
                     >
                         Suggest an edit
                     </Button>

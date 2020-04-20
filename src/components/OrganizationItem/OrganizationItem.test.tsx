@@ -141,4 +141,12 @@ describe('OrganizationItem', () => {
             expect(() => getByTestId('categories')).toThrow();
         });
     });
+
+    it('should contain suggest an edit link', () => {
+        const { getByText } = render(<OrganizationItem organization={organization} />);
+        expect(getByText('Suggest an edit').parentElement).toHaveAttribute(
+            'href',
+            'https://zealnz.typeform.com/to/mMLYXV?remote_id=youthline',
+        );
+    });
 });
