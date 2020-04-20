@@ -27,8 +27,10 @@ const organization = {
 
 export const Default = (): ReactElement => (
     <OrganizationCarousel>
-        {[1, 2, 3, 4, 5, 6].map((v, index) => (
-            <OrganizationCard key={index + organization.slug} organization={organization} />
+        {[1, 2, 3, 4, 5, 6, 7].map((v, index) => (
+            <Box key={index + organization.slug} p={1}>
+                <OrganizationCard key={index + organization.slug} organization={organization} />
+            </Box>
         ))}
     </OrganizationCarousel>
 );
