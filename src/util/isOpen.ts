@@ -8,11 +8,16 @@ type OpeningHour = {
 };
 
 type Organization = {
+    alwaysOpen: boolean;
     openingHours: OpeningHour[];
     timezone: string;
 };
 
-const isOpen = ({ openingHours, timezone }: Organization): IsOpenStatus => {
+const isOpen = ({ alwaysOpen, openingHours, timezone }: Organization): IsOpenStatus => {
+    if (alwaysOpen) {
+        return { open: true };
+    }
+
     const now = moment.tz(timezone);
     const date = now.format('YYYY-MM-DD');
     const openingHour = find({ day: now.format('dddd').toLowerCase() }, openingHours);
@@ -21,8 +26,8 @@ const isOpen = ({ openingHours, timezone }: Organization): IsOpenStatus => {
         return { open: false };
     }
 
-    const openTime = moment.tz(`${date} ${openingHour.open}`, 'YYYY-MM-DD HH:mm', timezone);
-    const closeTime = moment.tz(`${date} ${openingHour.close}`, 'YYYY-MM-DD HH:mm', timezone);
+    const openTime = moment.tz(`${date} ${openingHour.open.match(/T(\d\d:\d\d)/)[1]}`, 'YYYY-MM-DD HH:mm', timezone);
+    const closeTime = moment.tz(`${date} ${openingHour.close.match(/T(\d\d:\d\d)/)[1]}`, 'YYYY-MM-DD HH:mm', timezone);
     const open = now.isBetween(openTime, closeTime, null, '[)');
     return { open, openTime, closeTime };
 };
