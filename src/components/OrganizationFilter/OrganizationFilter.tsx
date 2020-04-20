@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useState, useEffect } from 'react';
 import { Box, Container, Typography, Button } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import ItemSelect from '../ItemSelect/ItemSelect';
@@ -80,6 +80,10 @@ const OrganizationFilter = ({
             sorts: selectedSorts,
         });
     };
+
+    useEffect(() => {
+        setSelectedTopics(preselectedTopics);
+    }, [preselectedTopics]);
 
     return (
         <Container className={classes.container}>
