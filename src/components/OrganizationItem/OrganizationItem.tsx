@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, Fragment } from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { Typography, Chip, Button, Box, Container } from '@material-ui/core';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
@@ -9,6 +9,8 @@ import PublicIcon from '@material-ui/icons/Public';
 import CreateIcon from '@material-ui/icons/Create';
 import MessageOutlinedIcon from '@material-ui/icons/MessageOutlined';
 import OrganizationOpen from '../OrganizationOpen';
+import NavBar from '../NavBar';
+import SideBar from '../SideBar';
 
 type OpeningHour = {
     day: string;
@@ -116,129 +118,136 @@ const OrganizationItem = ({ organization }: Props): ReactElement => {
     const classes = useStyles();
 
     return (
-        <Container className={classes.container} maxWidth="sm">
-            <Box className={classes.grid}>
-                <Box ml={1}>
-                    <Typography variant="h6">
-                        <a className={classes.heading}>{organization.name}</a>
-                        {organization.alwaysOpen && <Chip className={classes.chipAlwaysOpen} label="24/7" />}
-                        <span className={classes.country}>{organization.country.name}</span>
-                    </Typography>
-                </Box>
-                {(organization.alwaysOpen || organization.openingHours.length > 0) && (
-                    <Box data-testid="open">
-                        <Button
-                            size="large"
-                            classes={{ root: classes.button, disabled: classes.buttonDisabled }}
-                            startIcon={<AccessTimeIcon />}
-                            disabled
-                        >
-                            <OrganizationOpen organization={organization} />
-                        </Button>
-                    </Box>
-                )}
-                {organization.humanSupportTypes.length > 0 && (
-                    <Box>
-                        <Button
-                            size="large"
-                            classes={{ root: classes.button, disabled: classes.buttonDisabled }}
-                            startIcon={<AccountCircleIcon />}
-                            disabled
-                            data-testid="humanSupportTypes"
-                        >
-                            {organization.humanSupportTypes.map((humanSupportType) => humanSupportType.name).join(', ')}
-                        </Button>
-                    </Box>
-                )}
-                {organization.url && (
-                    <Box>
-                        <Button
-                            size="large"
-                            href={organization.url}
-                            className={[classes.button, classes.buttonLink].join(' ')}
-                            startIcon={<PublicIcon />}
-                            data-testid="url"
-                        >
-                            {
-                                organization.url
-                                    .replace('http://', '')
-                                    .replace('https://', '')
-                                    .replace('www.', '')
-                                    .split(/[/?#]/)[0]
-                            }
-                        </Button>
-                    </Box>
-                )}
-                {(organization.smsNumber || organization.phoneNumber || organization.chatUrl) && (
+        <Fragment>
+            <NavBar>
+                <SideBar />
+            </NavBar>
+            <Container className={classes.container} maxWidth="sm">
+                <Box className={classes.grid}>
                     <Box ml={1}>
-                        {organization.smsNumber && (
+                        <Typography variant="h6">
+                            <a className={classes.heading}>{organization.name}</a>
+                            {organization.alwaysOpen && <Chip className={classes.chipAlwaysOpen} label="24/7" />}
+                            <span className={classes.country}>{organization.country.name}</span>
+                        </Typography>
+                    </Box>
+                    {(organization.alwaysOpen || organization.openingHours.length > 0) && (
+                        <Box data-testid="open">
                             <Button
-                                variant="contained"
-                                href={`sms:${organization.smsNumber}`}
                                 size="large"
-                                color="primary"
-                                className={[classes.button, classes.buttonHighlight].join(' ')}
-                                startIcon={<SmsOutlinedIcon />}
-                                data-testid="smsNumber"
+                                classes={{ root: classes.button, disabled: classes.buttonDisabled }}
+                                startIcon={<AccessTimeIcon />}
+                                disabled
                             >
-                                {organization.smsNumber}
+                                <OrganizationOpen organization={organization} />
                             </Button>
-                        )}
-                        {organization.phoneNumber && (
+                        </Box>
+                    )}
+                    {organization.humanSupportTypes.length > 0 && (
+                        <Box>
                             <Button
-                                variant="contained"
-                                href={`tel:${organization.phoneNumber}`}
                                 size="large"
-                                color="primary"
-                                className={[classes.button, classes.buttonHighlight].join(' ')}
-                                startIcon={<PhoneIcon />}
-                                data-testid="phoneNumber"
+                                classes={{ root: classes.button, disabled: classes.buttonDisabled }}
+                                startIcon={<AccountCircleIcon />}
+                                disabled
+                                data-testid="humanSupportTypes"
                             >
-                                {organization.phoneNumber}
+                                {organization.humanSupportTypes
+                                    .map((humanSupportType) => humanSupportType.name)
+                                    .join(', ')}
                             </Button>
-                        )}
-                        {organization.chatUrl && (
+                        </Box>
+                    )}
+                    {organization.url && (
+                        <Box>
                             <Button
-                                variant="contained"
-                                href={organization.chatUrl}
                                 size="large"
-                                color="primary"
-                                className={[classes.button, classes.buttonHighlight].join(' ')}
-                                startIcon={<MessageOutlinedIcon />}
-                                data-testid="chatUrl"
+                                href={organization.url}
+                                className={[classes.button, classes.buttonLink].join(' ')}
+                                startIcon={<PublicIcon />}
+                                data-testid="url"
                             >
                                 {
-                                    organization.chatUrl
+                                    organization.url
                                         .replace('http://', '')
                                         .replace('https://', '')
                                         .replace('www.', '')
                                         .split(/[/?#]/)[0]
                                 }
                             </Button>
-                        )}
+                        </Box>
+                    )}
+                    {(organization.smsNumber || organization.phoneNumber || organization.chatUrl) && (
+                        <Box ml={1}>
+                            {organization.smsNumber && (
+                                <Button
+                                    variant="contained"
+                                    href={`sms:${organization.smsNumber}`}
+                                    size="large"
+                                    color="primary"
+                                    className={[classes.button, classes.buttonHighlight].join(' ')}
+                                    startIcon={<SmsOutlinedIcon />}
+                                    data-testid="smsNumber"
+                                >
+                                    {organization.smsNumber}
+                                </Button>
+                            )}
+                            {organization.phoneNumber && (
+                                <Button
+                                    variant="contained"
+                                    href={`tel:${organization.phoneNumber}`}
+                                    size="large"
+                                    color="primary"
+                                    className={[classes.button, classes.buttonHighlight].join(' ')}
+                                    startIcon={<PhoneIcon />}
+                                    data-testid="phoneNumber"
+                                >
+                                    {organization.phoneNumber}
+                                </Button>
+                            )}
+                            {organization.chatUrl && (
+                                <Button
+                                    variant="contained"
+                                    href={organization.chatUrl}
+                                    size="large"
+                                    color="primary"
+                                    className={[classes.button, classes.buttonHighlight].join(' ')}
+                                    startIcon={<MessageOutlinedIcon />}
+                                    data-testid="chatUrl"
+                                >
+                                    {
+                                        organization.chatUrl
+                                            .replace('http://', '')
+                                            .replace('https://', '')
+                                            .replace('www.', '')
+                                            .split(/[/?#]/)[0]
+                                    }
+                                </Button>
+                            )}
+                        </Box>
+                    )}
+                    {organization.categories.length > 0 && (
+                        <Box ml={1} className={classes.chips} data-testid="categories">
+                            {organization.categories.map((category, index) => (
+                                <Chip className={classes.chip} key={index} label={category.name} />
+                            ))}
+                        </Box>
+                    )}
+                    <Box my={1} ml={1}>
+                        <Button
+                            size="small"
+                            className={[classes.button, classes.buttonLink].join(' ')}
+                            startIcon={<CreateIcon />}
+                            href={`https://zealnz.typeform.com/to/mMLYXV?remote_id=${organization.slug}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Suggest an edit
+                        </Button>
                     </Box>
-                )}
-                {organization.categories.length > 0 && (
-                    <Box ml={1} className={classes.chips} data-testid="categories">
-                        {organization.categories.map((category, index) => (
-                            <Chip className={classes.chip} key={index} label={category.name} />
-                        ))}
-                    </Box>
-                )}
-                <Box my={1} ml={1}>
-                    <Button
-                        size="small"
-                        className={[classes.button, classes.buttonLink].join(' ')}
-                        startIcon={<CreateIcon />}
-                        href={`https://zealnz.typeform.com/to/mMLYXV?remote_id=${organization.slug}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        Suggest an edit
-                    </Button>
                 </Box>
-            </Box>
-        </Container>
+            </Container>
+        </Fragment>
     );
 };
 
