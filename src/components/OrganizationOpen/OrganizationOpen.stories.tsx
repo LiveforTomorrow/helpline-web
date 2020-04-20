@@ -10,13 +10,13 @@ const organization = {
 };
 
 const completeOpeningHours = [
-    { day: 'monday', open: '00:00', close: '23:59' },
-    { day: 'tuesday', open: '00:00', close: '23:59' },
-    { day: 'wednesday', open: '00:00', close: '23:59' },
-    { day: 'thursday', open: '00:00', close: '23:59' },
-    { day: 'friday', open: '00:00', close: '23:59' },
-    { day: 'saturday', open: '00:00', close: '23:59' },
-    { day: 'sunday', open: '00:00', close: '23:59' },
+    { day: 'monday', open: 'T00:00', close: 'T23:59' },
+    { day: 'tuesday', open: 'T00:00', close: 'T23:59' },
+    { day: 'wednesday', open: 'T00:00', close: 'T23:59' },
+    { day: 'thursday', open: 'T00:00', close: 'T23:59' },
+    { day: 'friday', open: 'T00:00', close: 'T23:59' },
+    { day: 'saturday', open: 'T00:00', close: 'T23:59' },
+    { day: 'sunday', open: 'T00:00', close: 'T23:59' },
 ];
 
 export default {
