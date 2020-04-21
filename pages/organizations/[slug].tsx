@@ -17,7 +17,6 @@ const OrganizationPage = ({ organization }: GetOrganizationSlugProps): ReactElem
                 <title>Find A Helpline | {organization.name}</title>
             </Head>
             <Chrome country={organization.country}>
-                <NavBar />
                 <OrganizationItem organization={organization} />
                 <Footer />
             </Chrome>
