@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme: Theme) =>
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(0, 1fr))',
             gridGap: theme.spacing(1),
-            [theme.breakpoints.down('xs')]: {
+            [theme.breakpoints.down(420)]: {
                 gridTemplateColumns: '1fr',
             },
         },
@@ -61,6 +61,9 @@ const useStyles = makeStyles((theme: Theme) =>
             },
             '& fieldset': {
                 border: 0,
+            },
+            [theme.breakpoints.down('xs')]: {
+                fontSize: '12px',
             },
         },
         option: {

@@ -31,16 +31,18 @@ const useStyles = makeStyles((theme: Theme) =>
             gridGap: theme.spacing(2),
             paddingRight: 0,
             paddingLeft: 0,
+            minHeight: (props: Props): string => props.widget && '56px',
             [theme.breakpoints.down('xs')]: {
                 gridGap: theme.spacing(1),
                 gridRowGap: 0,
                 height: (props: Props): string => (props.widget ? 'auto' : '80px'),
+                minHeight: (props: Props): string => props.widget && '44px',
             },
         },
         toolbarWithCountry: {
             gridTemplateColumns: '1fr auto auto',
             [theme.breakpoints.down('xs')]: {
-                textAlign: (props: Props): string => (props.widget ? 'left' : 'center'),
+                textAlign: 'center',
                 gridTemplateColumns: (props: Props): string => (props.widget ? '1fr auto' : '1fr 1fr'),
                 alignItems: 'flex-start',
             },
@@ -51,7 +53,7 @@ const useStyles = makeStyles((theme: Theme) =>
         title: {
             minWidth: '80px',
             [theme.breakpoints.down('xs')]: {
-                fontSize: '0.8rem',
+                fontSize: '12px',
             },
         },
         titleWithCountry: {

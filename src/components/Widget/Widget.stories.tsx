@@ -16,7 +16,7 @@ export const Default = (): ReactElement => (
 export const WithActiveCountry = (): ReactElement => (
     <ThemeProvider theme={theme}>
         {withMockOrganizationProvider(<Widget />, {
-            activeCountry: { code: 'AU', name: 'Australia', subdivisions: [], emergencyNumber: '0712' },
+            activeCountry: { code: 'AU', name: 'Australia', subdivisions: [], emergencyNumber: '111' },
         })}
     </ThemeProvider>
 );
