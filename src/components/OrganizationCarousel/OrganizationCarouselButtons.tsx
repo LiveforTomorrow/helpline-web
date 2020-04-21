@@ -19,6 +19,7 @@ const useStyles = makeStyles((theme: Theme) =>
             flexShrink: 0,
             zIndex: theme.zIndex.mobileStepper,
             top: '15em',
+            fontSize: '4em',
         },
         prevIcon: {
             left: '0em',
@@ -33,7 +34,7 @@ const useStyles = makeStyles((theme: Theme) =>
             },
         },
         icon: {
-            fontSize: '4em',
+            fontSize: 'inherit',
         },
     }),
 );

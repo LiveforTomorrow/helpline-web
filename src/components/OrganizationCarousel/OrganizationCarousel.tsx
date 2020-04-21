@@ -1,19 +1,40 @@
-import React, { useState, useEffect, useCallback, ReactElement, ReactNode } from 'react';
+import React, { useState, useEffect, useCallback, useContext, ReactElement, ReactNode } from 'react';
 import EmblaCarouselReact from 'embla-carousel-react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import { Container } from '@material-ui/core';
+import { Box } from '@material-ui/core';
 import useWindowSize from '../../util/useWindowSize';
 import ConditionalWrapper from '../../util/conditionalWrapper';
+import OrganizationContext from '../../context/organizationContext';
+import OrganizationCard from '../OrganizationCard/OrganizationCard';
 import { PrevButton, NextButton } from './OrganizationCarouselButtons';
-
-type Props = {
-    children: ReactNode;
-};
 
 type size = {
     height?: number;
     width?: number;
 };
+
+// const organizations = [
+//     {
+//         slug: 'youthline',
+//         name: 'Youthline',
+//         alwaysOpen: true,
+//         smsNumber: '234',
+//         phoneNumber: '0800 376 633',
+//         url: 'https://www.youthline.co.nz',
+//         chatUrl: 'https://www.youthline.co.nz/web-chat-counselling.html',
+//         timezone: 'Pacific/Auckland',
+//         topics: [{ name: 'Topic 1' }],
+//         categories: [{ name: 'Category 1' }],
+//         humanSupportTypes: [],
+//         openingHours: [
+//             {
+//                 day: 'monday',
+//                 open: '2000-01-01T00:00:00Z',
+//                 close: '2000-01-01T23:59:00Z',
+//             },
+//         ],
+//     },
+// ];
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -28,9 +49,11 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-const OrganizationCarousel = ({ children }: Props): ReactElement => {
+const OrganizationCarousel = (): ReactElement => {
     const classes = useStyles();
     const size = useWindowSize();
+    const { organizations } = useContext(OrganizationContext);
+
     const [embla, setEmbla] = useState(null);
     const scrollPrev = useCallback(() => embla.scrollPrev(), [embla]);
     const scrollNext = useCallback(() => embla.scrollNext(), [embla]);
@@ -52,7 +75,7 @@ const OrganizationCarousel = ({ children }: Props): ReactElement => {
         <div>
             <ConditionalWrapper
                 condition={size && size.width >= 320}
-                wrapper={(children): JSX.Element => (
+                wrapper={(children): ReactElement => (
                     <EmblaCarouselReact
                         emblaRef={setEmbla}
                         options={{ loop: false, align: 'start', containScroll: true }}
@@ -61,7 +84,14 @@ const OrganizationCarousel = ({ children }: Props): ReactElement => {
                     </EmblaCarouselReact>
                 )}
             >
-                <Container className={classes.carouselWrapper}>{children}</Container>
+                <Box>
+                    {organizations &&
+                        organizations.map((organization) => (
+                            <Box key={organization.slug} p={2}>
+                                <OrganizationCard organization={organization} />
+                            </Box>
+                        ))}
+                </Box>
             </ConditionalWrapper>
             {prevBtnEnabled && <PrevButton onClick={scrollPrev} enabled={prevBtnEnabled} />}
             {nextBtnEnabled && <NextButton onClick={scrollNext} enabled={nextBtnEnabled} />}

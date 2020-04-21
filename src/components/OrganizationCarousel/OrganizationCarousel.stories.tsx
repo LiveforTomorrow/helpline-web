@@ -1,36 +1,63 @@
-import React, { Fragment, ReactElement } from 'react';
-import { Box, Typography } from '@material-ui/core';
-import * as Faker from 'faker';
-import OrganizationCard from '../OrganizationCard/OrganizationCard';
+import React, { ReactElement } from 'react';
+import { ThemeProvider } from '@material-ui/core';
+import theme from '../../theme';
+import { OrganizationProvider } from '../../context/organizationContext';
 import OrganizationCarousel from './OrganizationCarousel';
-
-Faker.seed(30);
 
 export default {
     title: 'OrganizationCarousel',
 };
 
-const organization = {
-    slug: 'youthline',
-    name: 'Youthline',
-    alwaysOpen: true,
-    openingHours: [],
-    humanSupportTypes: [{ name: 'Volunteers' }, { name: 'Staff' }],
-    categories: [{ name: 'For youth' }, { name: 'All issues' }],
-    smsNumber: '234',
-    phoneNumber: '0800 376 633',
-    url: 'https://www.youthline.co.nz/learn-and-grow.html',
-    chatUrl: 'https://youthline.co.nz',
-    timezone: 'Pacific/Auckland',
-    topics: [],
-};
-
 export const Default = (): ReactElement => (
-    <OrganizationCarousel>
-        {[1, 2, 3, 4, 5, 6, 7].map((v, index) => (
-            <Box key={index + organization.slug} p={1}>
-                <OrganizationCard key={index + organization.slug} organization={organization} />
-            </Box>
-        ))}
-    </OrganizationCarousel>
+    <ThemeProvider theme={theme}>
+        <OrganizationProvider
+            allOrganizations={[
+                {
+                    slug: 'youthline',
+                    name: 'Youthline',
+                    alwaysOpen: true,
+                    smsNumber: '234',
+                    phoneNumber: '0800 376 633',
+                    url: 'https://www.youthline.co.nz',
+                    chatUrl: 'https://www.youthline.co.nz/web-chat-counselling.html',
+                    timezone: 'Pacific/Auckland',
+                    topics: [{ name: 'Topic 1' }],
+                    categories: [{ name: 'Category 1' }],
+                    humanSupportTypes: [],
+                    openingHours: [
+                        {
+                            day: 'monday',
+                            open: '2000-01-01T00:00:00Z',
+                            close: '2000-01-01T23:59:00Z',
+                        },
+                    ],
+                },
+            ]}
+            countries={[
+                { code: 'AU', name: 'Australia', subdivisions: [] },
+                {
+                    code: 'NZ',
+                    name: 'New Zealand',
+                    subdivisions: [
+                        { name: 'Bay of Plenty', code: 'BOP' },
+                        { name: 'Auckland', code: 'AUK' },
+                    ],
+                },
+            ]}
+            filterOptions={{
+                topics: [{ name: 'Topic 1' }, { name: 'Topic 2' }, { name: 'Topic 3' }],
+                categories: [{ name: 'Category 1' }, { name: 'Category 2' }],
+                humanSupportTypes: [],
+                contactMethods: [],
+                sorts: [],
+            }}
+        >
+            <OrganizationCarousel />
+        </OrganizationProvider>
+    </ThemeProvider>
 );
+
+Default.story = {
+    name: 'default',
+    parameters: { chromatic: { diffThreshold: 0.7 } },
+};
