@@ -16,6 +16,7 @@ type Country = {
     code: string;
     name: string;
     subdivisions: Subdivision[];
+    emergencyNumber?: string;
 };
 
 type Props = {
@@ -23,7 +24,7 @@ type Props = {
     onCountryChange: (country: Country) => void;
     onSubdivisionChange: (subdivision: Subdivision) => void;
     inline?: boolean;
-    defaultCountryCode?: string;
+    defaultCountry?: Country;
 };
 
 // ISO 3166-1 alpha-2
@@ -92,14 +93,10 @@ const CountrySelect = ({
     onCountryChange,
     onSubdivisionChange,
     inline,
-    defaultCountryCode,
+    defaultCountry,
 }: Props): ReactElement => {
     const classes = useStyles();
-    const [selectedCountry, setSelectedCountry] = useState<Country | null>(
-        countries.filter((country: Country) => {
-            return country.code === defaultCountryCode;
-        })[0] ?? null,
-    );
+    const [selectedCountry, setSelectedCountry] = useState<Country | null>(defaultCountry ?? null);
     const setSelectedSubdivision = useState<Subdivision | undefined>(undefined)[1];
 
     const localOnCountryChange = (country: Country): void => {
