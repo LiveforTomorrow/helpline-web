@@ -34,13 +34,13 @@ const useStyles = makeStyles((theme: Theme) =>
             [theme.breakpoints.down('xs')]: {
                 gridGap: theme.spacing(1),
                 gridRowGap: 0,
-                height: '80px',
+                height: (props: Props): string => (props.widget ? 'auto' : '80px'),
             },
         },
         toolbarWithCountry: {
             gridTemplateColumns: '1fr auto auto',
             [theme.breakpoints.down('xs')]: {
-                textAlign: 'center',
+                textAlign: (props: Props): string => (props.widget ? 'left' : 'center'),
                 gridTemplateColumns: (props: Props): string => (props.widget ? '1fr auto' : '1fr 1fr'),
                 alignItems: 'flex-start',
             },
@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         titleWithCountry: {
             [theme.breakpoints.down('xs')]: {
-                gridColumn: '1 / span 2',
+                gridColumn: (props: Props): string => !props.widget && '1 / span 2',
                 alignSelf: 'center',
             },
         },
@@ -67,9 +67,9 @@ const useStyles = makeStyles((theme: Theme) =>
             borderRadius: '1000px',
             paddingLeft: theme.spacing(2),
             paddingRight: theme.spacing(2),
+            alignSelf: 'center',
             [theme.breakpoints.down('xs')]: {
                 fontSize: '0.7rem',
-                margin: (props: Props): string => props.widget && '0 auto',
             },
             '&:hover': {
                 backgroundColor: '#CC001E',
@@ -107,7 +107,7 @@ const TopBar = ({ country, widget }: Props): ReactElement => {
                                 href={`tel:${country?.emergencyNumber || 911}`}
                                 data-testid="emergencyServicesButton"
                             >
-                                <Hidden smUp>Call {country.emergencyNumber}</Hidden>
+                                <Hidden smUp>Call {country.emergencyNumber || 911}</Hidden>
                                 <Hidden only="xs">Emergency Services</Hidden>
                             </Button>
                         </Fragment>

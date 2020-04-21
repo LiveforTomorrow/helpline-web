@@ -47,6 +47,9 @@ const useStyles = makeStyles((theme: Theme) =>
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(0, 1fr))',
             gridGap: theme.spacing(1),
+            [theme.breakpoints.down('xs')]: {
+                gridTemplateColumns: '1fr',
+            },
         },
         inputRoot: {
             borderRadius: '48px',
