@@ -6,7 +6,7 @@ type Subdivision = {
     name: string;
 };
 
-type Country = {
+export type Country = {
     code: string;
     name: string;
     subdivisions: Subdivision[];
@@ -17,7 +17,7 @@ type Filter = {
     name: string;
 };
 
-type Filters = {
+export type Filters = {
     topics: Filter[] | [];
     categories: Filter[] | [];
     humanSupportTypes: Filter[] | [];
@@ -31,7 +31,7 @@ type OpeningHour = {
     close: string;
 };
 
-type Organization = {
+export type Organization = {
     slug: string;
     name: string;
     alwaysOpen: boolean;
