@@ -104,7 +104,7 @@ const TopBar = ({ country, widget }: Props): ReactElement => {
                                 color="inherit"
                                 classes={{ root: classes.button, endIcon: classes.buttonEndIcon }}
                                 endIcon={<CallIcon />}
-                                href={`tel:${country.emergencyNumber}`}
+                                href={`tel:${country?.emergencyNumber || 911}`}
                                 data-testid="emergencyServicesButton"
                             >
                                 <Hidden smUp>Call {country.emergencyNumber}</Hidden>
