@@ -23,8 +23,9 @@ const useStyles = makeStyles((theme: Theme) =>
             justifyContent: 'center',
             paddingTop: theme.spacing(5),
             paddingBottom: theme.spacing(5),
-            height: '100%',
+            height: 'calc(100vh - 130px)',
             textAlign: 'center',
+            color: '#FFFFFF',
         },
         button: {
             borderRadius: '1000px',
@@ -64,15 +65,13 @@ const useStyles = makeStyles((theme: Theme) =>
             fontSize: '4rem',
             paddingBottom: theme.spacing(1),
         },
-        background: {
-            color: '#FFFFFF',
+        background0: {
+            background: 'linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/bg0.jpg) center center',
             backgroundSize: 'cover',
         },
-        background0: {
-            backgroundImage: 'url(/bg0.jpg)',
-        },
         background1: {
-            backgroundImage: 'url(/bg1.jpg)',
+            background: 'linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/bg1.jpg) center center',
+            backgroundSize: 'cover',
         },
     }),
 );
@@ -85,7 +84,7 @@ const About = (): ReactElement => {
             <NavBar>
                 <SideBar />
             </NavBar>
-            <Box className={[classes.container, classes.background, classes.background0].join(' ')}>
+            <Box className={[classes.container, classes.background0].join(' ')}>
                 <Container maxWidth="xs">
                     <Box mb={3}>
                         <Typography variant="h5">
@@ -152,7 +151,7 @@ const About = (): ReactElement => {
                         </Typography>
                     </Container>
                 </Box>
-                <Box className={[classes.background, classes.background1].join(' ')}>
+                <Box className={[classes.container, classes.background1].join(' ')}>
                     <Box className={classes.content}>
                         <Container maxWidth="xs">
                             <Typography variant="h6">
