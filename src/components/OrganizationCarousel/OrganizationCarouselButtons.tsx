@@ -12,13 +12,13 @@ type Props = {
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         fab: {
-            position: 'absolute',
+            position: 'fixed',
             border: '1px solid black',
             backgroundColor: '#FFFFFF',
             borderRadius: '50%',
             flexShrink: 0,
             zIndex: theme.zIndex.mobileStepper,
-            top: '15em',
+            top: '20%',
             fontSize: '4em',
         },
         prevIcon: {

@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useCallback, useContext, ReactElement, ReactNode } from 'react';
+import React, { useState, useEffect, useCallback, useContext, ReactElement } from 'react';
 import EmblaCarouselReact from 'embla-carousel-react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { Box, Container } from '@material-ui/core';
-import { useWindowResize, useThrottledFn } from 'beautiful-react-hooks';
+import { useWindowResize } from 'beautiful-react-hooks';
 import ConditionalWrapper from '../../util/conditionalWrapper';
-import OrganizationContext from '../../context/organizationContext';
+// import organizationContext from '../../context/organizationContext';
 import OrganizationCard from '../OrganizationCard/OrganizationCard';
 import { PrevButton, NextButton } from './OrganizationCarouselButtons';
 
@@ -14,46 +14,6 @@ type size = {
 };
 
 const organizations = [
-    {
-        slug: 'youthline',
-        name: 'Youthline',
-        alwaysOpen: true,
-        smsNumber: '234',
-        phoneNumber: '0800 376 633',
-        url: 'https://www.youthline.co.nz',
-        chatUrl: 'https://www.youthline.co.nz/web-chat-counselling.html',
-        timezone: 'Pacific/Auckland',
-        topics: [{ name: 'Topic 1' }],
-        categories: [{ name: 'Category 1' }],
-        humanSupportTypes: [],
-        openingHours: [
-            {
-                day: 'monday',
-                open: '2000-01-01T00:00:00Z',
-                close: '2000-01-01T23:59:00Z',
-            },
-        ],
-    },
-    {
-        slug: 'youthline',
-        name: 'Youthline',
-        alwaysOpen: true,
-        smsNumber: '234',
-        phoneNumber: '0800 376 633',
-        url: 'https://www.youthline.co.nz',
-        chatUrl: 'https://www.youthline.co.nz/web-chat-counselling.html',
-        timezone: 'Pacific/Auckland',
-        topics: [{ name: 'Topic 1' }],
-        categories: [{ name: 'Category 1' }],
-        humanSupportTypes: [],
-        openingHours: [
-            {
-                day: 'monday',
-                open: '2000-01-01T00:00:00Z',
-                close: '2000-01-01T23:59:00Z',
-            },
-        ],
-    },
     {
         slug: 'youthline',
         name: 'Youthline',
@@ -112,7 +72,7 @@ const useStyles = makeStyles((theme: Theme) =>
 const OrganizationCarousel = (): ReactElement => {
     const classes = useStyles();
 
-    // const { organizations } = useContext(OrganizationContext);
+    // const { organizations } = useContext(organizationContext);
     const [embla, setEmbla] = useState(null);
 
     const scrollPrev = useCallback(() => embla.scrollPrev(), [embla]);
@@ -127,23 +87,22 @@ const OrganizationCarousel = (): ReactElement => {
     });
 
     useEffect(() => {
+        console.log(width);
+
         if (embla) {
-            // const onSelect = (): void => {
-            //     setPrevBtnEnabled(embla.canScrollPrev());
-            //     setNextBtnEnabled(embla.canScrollNext());
-            // };
-            // embla.on('select', () => {
-            //     console.log(`Current index is ${embla.selectedScrollSnap()}`);
-            // });
-            // embla.on('select', onSelect);
-            // onSelect();
+            const onSelect = (): void => {
+                setPrevBtnEnabled(embla.canScrollPrev());
+                setNextBtnEnabled(embla.canScrollNext());
+            };
+            embla.on('select', onSelect);
+            onSelect();
         }
     }, [embla]);
 
     return (
-        <Container>
+        <>
             <ConditionalWrapper
-                condition={true}
+                condition={width >= 320}
                 wrapper={(children): ReactElement => (
                     <EmblaCarouselReact
                         emblaRef={setEmbla}
@@ -153,18 +112,18 @@ const OrganizationCarousel = (): ReactElement => {
                     </EmblaCarouselReact>
                 )}
             >
-                <EmblaCarouselReact emblaRef={setEmbla} options={{ loop: false, align: 'start', containScroll: true }}>
+                <Container className={classes.carouselWrapper}>
                     {organizations &&
-                        organizations.map((organization) => (
-                            <Box key={organization.slug} p={2}>
+                        organizations.map((organization, index) => (
+                            <Box key={index + organization.slug} p={2}>
                                 <OrganizationCard organization={organization} />
                             </Box>
                         ))}
-                </EmblaCarouselReact>
+                </Container>
             </ConditionalWrapper>
             {prevBtnEnabled && <PrevButton onClick={scrollPrev} enabled={prevBtnEnabled} />}
             {nextBtnEnabled && <NextButton onClick={scrollNext} enabled={nextBtnEnabled} />}
-        </Container>
+        </>
     );
 };
 
