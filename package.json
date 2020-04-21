@@ -3,8 +3,8 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "dev": "next dev",
-        "build": "next build",
+        "dev": "STAGING=-1 npx webpack --config webpack.config.js && next dev",
+        "build": "npx webpack --config webpack.config.js && next build",
         "start": "next start",
         "lint": "tsc --noEmit && eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
         "lint:ci": "tsc --noEmit && eslint '*/**/*.{js,ts,tsx}'",
@@ -56,11 +56,14 @@
         "eslint-plugin-react": "^7.19.0",
         "husky": "^4.2.3",
         "jest": "^25.2.6",
+        "jsx-dom": "^6.4.14-beta.3",
         "lint-staged": "^10.0.9",
         "prettier": "^2.0.2",
         "storybook-chromatic": "^3.5.2",
         "ts-jest": "^25.3.0",
-        "typescript": "^3.8.3"
+        "typescript": "^3.8.3",
+        "webpack-cli": "^3.3.11",
+        "zoid": "^6.0.79"
     },
     "husky": {
         "hooks": {
