@@ -1,6 +1,8 @@
 import React, { ReactElement } from 'react';
-import { ThemeProvider, Box } from '@material-ui/core';
+import { ThemeProvider } from '@material-ui/core';
 import theme from '../../theme';
+import withMockOrganizationProvider from '../../context/organizationProviderMock';
+
 import Widget from '.';
 
 export default {
@@ -8,8 +10,14 @@ export default {
 };
 
 export const Default = (): ReactElement => (
+    <ThemeProvider theme={theme}>{withMockOrganizationProvider(<Widget />, { organizations: [] })}</ThemeProvider>
+);
+
+export const WithActiveCountry = (): ReactElement => (
     <ThemeProvider theme={theme}>
-        <Widget />
+        {withMockOrganizationProvider(<Widget />, {
+            activeCountry: { code: 'AU', name: 'Australia', subdivisions: [], emergencyNumber: '111' },
+        })}
     </ThemeProvider>
 );
 

@@ -1,81 +1,48 @@
-import React, { ReactElement } from 'react';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import { Container, Box } from '@material-ui/core';
-import OrganizationCard from '../OrganizationCard/OrganizationCard';
-import TopBar from '../TopBar/TopBar';
+import React, { ReactElement, useContext } from 'react';
+import { createStyles, makeStyles } from '@material-ui/core/styles';
+import { Container, Box, Theme } from '@material-ui/core';
+import OrganizationContext from '../../context/organizationContext';
+import TopBar from '../TopBar';
+import SearchHeader from '../SearchHeader';
 
-const organization = {
-    slug: 'youthline',
-    name: 'Youthline',
-    alwaysOpen: true,
-    openingHours: [],
-    humanSupportTypes: [{ name: 'Volunteers' }, { name: 'Staff' }],
-    categories: [{ name: 'For youth' }, { name: 'All issues' }],
-    smsNumber: '234',
-    phoneNumber: '0800 376 633',
-    url: 'https://www.youthline.co.nz/learn-and-grow.html',
-    chatUrl: 'https://youthline.co.nz',
-    timezone: 'Auckland',
-};
-
-type Country = {
-    emergencyNumber: string;
-};
-
-type Props = {
-    country?: Country;
-};
+type Props = {};
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
-        box: {
-            display: 'flex',
-            flex: '0 0 auto',
-            border: '1px solid #000',
-            borderRadius: '10px',
-            overflow: 'scroll',
-        },
-        topbar: {
-            maxHeight: '20%',
-        },
         container: {
-            borderRadius: '10px',
+            height: '100vh',
+            paddingLeft: 0,
+            paddingRight: 0,
         },
-        carousel: {
-            flex: '0 0 auto',
-            display: 'flex',
-            alignItems: 'flex-start',
-            touchAction: 'manipulation',
-            overflow: 'scroll',
-            flexDirection: 'column',
-            '@media (min-width: 480px)': {
-                flexDirection: 'row',
-            },
-            minWidth: 0,
+        header: {
+            position: 'relative',
+            marginBottom: theme.spacing(2),
+        },
+        organizations: {
+            maxHeight: '100vh',
+            borderRadius: '0 0 10px 10px',
         },
     }),
 );
 
-const Widget = ({ country }: Props): ReactElement => {
+const Widget = ({}: Props): ReactElement => {
     const classes = useStyles();
+    const { countries, activeCountry, organizations } = useContext(OrganizationContext);
 
     return (
-        <>
-            <Container className={classes.topbar}>
-                <Box maxWidth="md">
-                    <div className={classes.topbar}>
-                        <TopBar country={{ emergencyNumber: '111' }} />
-                    </div>
-                    <Box className={classes.box}>
-                        <Box className={classes.carousel} m={2}>
-                            <OrganizationCard organization={organization} />
-                            <OrganizationCard organization={organization} />
-                            <OrganizationCard organization={organization} />
-                        </Box>
-                    </Box>
-                </Box>
-            </Container>
-        </>
+        <Container className={classes.container}>
+            <Box maxWidth="md">
+                <div className={classes.header}>
+                    <SearchHeader countries={countries} parentPage="widget" />
+                    <TopBar widget country={{ emergencyNumber: activeCountry?.emergencyNumber }} />
+                </div>
+                <Container className={classes.organizations}>
+                    {organizations.map((item) => (
+                        <strong key={item.name}>{item.name} - </strong>
+                    ))}
+                </Container>
+            </Box>
+        </Container>
     );
 };
 

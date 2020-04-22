@@ -16,8 +16,9 @@ describe('OrganizationItem', () => {
             smsNumber: '234',
             phoneNumber: '0800 376 633',
             url: 'https://youthline.co.nz/website',
-            chatUrl: 'https://youthline.co.nz/chat',
+            chatUrl: 'https://chatyouthline.co.nz/chat',
             timezone: 'Auckland',
+            country: { name: 'New Zealand' },
         };
     });
 
@@ -53,17 +54,29 @@ describe('OrganizationItem', () => {
         });
     });
 
+    it('should contain url', () => {
+        const { getByTestId } = render(<OrganizationItem organization={organization} />);
+        const element = getByTestId('url');
+        expect(element).toHaveAttribute('href', 'https://youthline.co.nz/website');
+        expect(element).toHaveTextContent('youthline.co.nz');
+    });
+
+    describe('no url', () => {
+        beforeEach(() => {
+            organization = { ...organization, url: undefined };
+        });
+
+        it('should not have url element', () => {
+            const { getByTestId } = render(<OrganizationItem organization={organization} />);
+            expect(() => getByTestId('url')).toThrow();
+        });
+    });
+
     it('should contain smsNumber', () => {
         const { getByTestId } = render(<OrganizationItem organization={organization} />);
         const element = getByTestId('smsNumber');
         expect(element).toHaveAttribute('href', 'sms:234');
         expect(element).toHaveTextContent('234');
-    });
-
-    it('should contain smsNumberFab', () => {
-        const { getByTestId } = render(<OrganizationItem organization={organization} />);
-        const element = getByTestId('smsNumberFab');
-        expect(element).toHaveAttribute('href', 'sms:234');
     });
 
     describe('no smsNumber', () => {
@@ -84,12 +97,6 @@ describe('OrganizationItem', () => {
         expect(element).toHaveTextContent('0800 376 633');
     });
 
-    it('should contain phoneNumberFab', () => {
-        const { getByTestId } = render(<OrganizationItem organization={organization} />);
-        const element = getByTestId('phoneNumberFab');
-        expect(element).toHaveAttribute('href', 'tel:0800 376 633');
-    });
-
     describe('no phoneNumber', () => {
         beforeEach(() => {
             organization = { ...organization, phoneNumber: undefined };
@@ -101,21 +108,21 @@ describe('OrganizationItem', () => {
         });
     });
 
-    it('should contain url', () => {
+    it('should contain chatUrl', () => {
         const { getByTestId } = render(<OrganizationItem organization={organization} />);
-        const element = getByTestId('url');
-        expect(element).toHaveAttribute('href', 'https://youthline.co.nz/website');
-        expect(element).toHaveTextContent('youthline.co.nz');
+        const element = getByTestId('chatUrl');
+        expect(element).toHaveAttribute('href', 'https://chatyouthline.co.nz/chat');
+        expect(element).toHaveTextContent('chatyouthline.co.nz');
     });
 
-    describe('no url', () => {
+    describe('no chatUrl', () => {
         beforeEach(() => {
-            organization = { ...organization, url: undefined };
+            organization = { ...organization, chatUrl: undefined };
         });
 
-        it('should not have url element', () => {
+        it('should not have chatUrl element', () => {
             const { getByTestId } = render(<OrganizationItem organization={organization} />);
-            expect(() => getByTestId('url')).toThrow();
+            expect(() => getByTestId('chatUrl')).toThrow();
         });
     });
 
@@ -135,31 +142,11 @@ describe('OrganizationItem', () => {
         });
     });
 
-    it('should contain chatUrlFab', () => {
-        const { getByTestId } = render(<OrganizationItem organization={organization} />);
-        const element = getByTestId('chatUrlFab');
-        expect(element).toHaveAttribute('href', 'https://youthline.co.nz/chat');
-    });
-
-    describe('no chatUrl', () => {
-        beforeEach(() => {
-            organization = { ...organization, chatUrl: undefined };
-        });
-
-        it('should not have chatUrlFab element', () => {
-            const { getByTestId } = render(<OrganizationItem organization={organization} />);
-            expect(() => getByTestId('chatUrlFab')).toThrow();
-        });
-    });
-
-    describe('no fab related attributes', () => {
-        beforeEach(() => {
-            organization = { ...organization, smsNumber: undefined, phoneNumber: undefined, chatUrl: undefined };
-        });
-
-        it('should not have fabs element', () => {
-            const { getByTestId } = render(<OrganizationItem organization={organization} />);
-            expect(() => getByTestId('fabs')).toThrow();
-        });
+    it('should contain suggest an edit link', () => {
+        const { getByText } = render(<OrganizationItem organization={organization} />);
+        expect(getByText('Suggest an edit').parentElement).toHaveAttribute(
+            'href',
+            'https://zealnz.typeform.com/to/mMLYXV?remote_id=youthline',
+        );
     });
 });
