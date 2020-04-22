@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, ReactElement } from 'react';
 import EmblaCarouselReact from 'embla-carousel-react';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { createStyles, makeStyles } from '@material-ui/core/styles';
 import { Box, Container } from '@material-ui/core';
 import { useWindowResize } from 'beautiful-react-hooks';
 import ConditionalWrapper from '../../util/conditionalWrapper';
