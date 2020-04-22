@@ -54,6 +54,26 @@ const organizations = [
             },
         ],
     },
+    {
+        slug: 'youthline',
+        name: 'Youthline',
+        alwaysOpen: true,
+        smsNumber: '234',
+        phoneNumber: '0800 376 633',
+        url: 'https://www.youthline.co.nz',
+        chatUrl: 'https://www.youthline.co.nz/web-chat-counselling.html',
+        timezone: 'Pacific/Auckland',
+        topics: [{ name: 'Topic 1' }],
+        categories: [{ name: 'Category 1' }],
+        humanSupportTypes: [],
+        openingHours: [
+            {
+                day: 'monday',
+                open: '2000-01-01T00:00:00Z',
+                close: '2000-01-01T23:59:00Z',
+            },
+        ],
+    },
 ];
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -87,13 +107,11 @@ const OrganizationCarousel = (): ReactElement => {
     });
 
     useEffect(() => {
-        console.log(width);
-
+        const onSelect = (): void => {
+            setPrevBtnEnabled(embla.canScrollPrev());
+            setNextBtnEnabled(embla.canScrollNext());
+        };
         if (embla) {
-            const onSelect = (): void => {
-                setPrevBtnEnabled(embla.canScrollPrev());
-                setNextBtnEnabled(embla.canScrollNext());
-            };
             embla.on('select', onSelect);
             onSelect();
         }
