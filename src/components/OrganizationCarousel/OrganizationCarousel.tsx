@@ -91,7 +91,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const OrganizationCarousel = (): ReactElement => {
     const classes = useStyles();
-
+    // TODO using context causes storybook error
     // const { organizations } = useContext(organizationContext);
     const [embla, setEmbla] = useState(null);
 
