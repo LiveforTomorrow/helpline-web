@@ -9,6 +9,9 @@ import { GetWidgetCountryCodeProps } from '../../types/GetWidgetCountryCodeProps
 import { OrganizationProvider } from '../../src/context/organizationContext';
 import Widget from '../../src/components/Widget';
 
+interface Props extends GetWidgetCountryCodeProps {
+    key: string | string[];
+}
 const WidgetCountryCodePage = ({
     country,
     organizations,
@@ -16,7 +19,7 @@ const WidgetCountryCodePage = ({
     humanSupportTypes,
     topics,
     countries,
-}: GetWidgetCountryCodeProps): ReactElement => {
+}: Props): ReactElement => {
     const router = useRouter();
     const queryCountyCode = router.query.widgetCountyCode;
     const preselectedTopics: { name: string }[] = [];
@@ -46,7 +49,7 @@ const WidgetCountryCodePage = ({
     );
 };
 
-export const getStaticProps: GetStaticProps = async (context): Promise<{ props: GetWidgetCountryCodeProps }> => {
+export const getStaticProps: GetStaticProps = async (context): Promise<{ props: Props }> => {
     const query = gql`
         query GetWidgetCountryCodeProps($countryCode: String!) {
             country(code: $countryCode) {

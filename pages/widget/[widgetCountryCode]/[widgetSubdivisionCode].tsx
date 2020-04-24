@@ -16,6 +16,7 @@ import Widget from '../../../src/components/Widget';
 
 interface Props extends GetWidgetSubdivisionCodeProps {
     subdivision: Subdivision;
+    key: string | string[];
 }
 
 const WidgetSubdivisionCodePage = ({

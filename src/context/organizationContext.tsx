@@ -62,7 +62,6 @@ type Props = {
 };
 
 type State = {
-    // loading: boolean;
     countries: Country[];
     activeCountry?: Country;
     activeSubdivision?: Subdivision;
@@ -74,7 +73,6 @@ type State = {
 };
 
 const initialState: State = {
-    // loading: false,
     countries: [],
     activeCountry: null,
     activeSubdivision: null,
@@ -103,7 +101,6 @@ export const OrganizationProvider = ({
 }: Props): ReactElement => {
     const [organizations, setOrganizations] = useState<Organization[] | undefined>(allOrganizations);
     const [activeFilters, applyFilters] = useState<Filters>(initialState.activeFilters);
-    // const [loading, setLoading] = useState<boolean>(false);
     const [_activeCountry, setActiveCountry] = useState<Country>(activeCountry);
 
     useEffect(() => {
@@ -111,7 +108,6 @@ export const OrganizationProvider = ({
     }, [activeFilters]);
 
     const ctx = {
-        // loading,
         countries,
         activeCountry: _activeCountry,
         activeSubdivision,
@@ -119,6 +115,7 @@ export const OrganizationProvider = ({
         filterOptions,
         activeFilters,
         applyFilters,
+        setActiveCountry,
     };
 
     return <OrganizationContext.Provider value={ctx}>{children}</OrganizationContext.Provider>;
