@@ -62,7 +62,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const EmbedInfo = ({ countries }: Props): ReactElement => {
     const [selectedCountryCode, setSelectedCountryCode] = useState<string>('US');
-    const domainUrl = typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000';
+    const domainUrl = process.env.NOW_URL ? JSON.stringify(`https://${process.env.NOW_URL}`) : 'http://localhost:3000';
     const classes = useStyles();
 
     const snippet = `<div id="widget"></div>
@@ -127,7 +127,7 @@ const EmbedInfo = ({ countries }: Props): ReactElement => {
                         page’s HTML where you want the widget to appear.
                     </p>
                 </Typography>
-                <Typography className={classes.code} data-testid="typographyThree" component="span">
+                <Typography className={classes.code} data-testid="typographyThree">
                     <pre>
                         <code>{snippet}</code>
                     </pre>
