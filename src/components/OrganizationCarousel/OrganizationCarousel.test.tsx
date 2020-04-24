@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import { organizationData } from '../../context/organizationProviderMock';
-import OrganizationCarousel from './OrganizationCarousel';
+import OrganizationCarousel from '.';
 
 const organizations = Array(8).fill(organizationData[0]);
 
