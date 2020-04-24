@@ -47,7 +47,6 @@ const useStyles = makeStyles((theme: Theme) =>
             },
         },
         logo: {
-            // maxWidth: '200px',
             width: '200px',
         },
         subheader: {
@@ -64,24 +63,20 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         inputConatainer: {
             display: 'flex',
-            alignItems: 'center',
+            justifyContent: 'space-between',
         },
         button: {
             textAlign: 'left',
             borderRadius: '1000px',
             paddingLeft: theme.spacing(2),
             paddingRight: theme.spacing(2),
-            margin: `0 ${theme.spacing(1)}px`,
             [theme.breakpoints.down('xs')]: {
                 fontSize: '12px',
-            },
-            [theme.breakpoints.down(420)]: {
-                paddingTop: '4px',
-                paddingBottom: '4px',
             },
         },
         searchButton: {
             flexGrow: 1,
+            marginRight: theme.spacing(1),
         },
         filterButton: {
             backgroundColor: 'white',
@@ -97,19 +92,23 @@ const useStyles = makeStyles((theme: Theme) =>
                 display: 'none',
             },
         },
-        filter: {
+        filterContainer: {
             position: 'absolute',
             top: '100%',
             left: 0,
             right: 0,
             zIndex: 1200,
             background: 'white',
+            boxShadow: '0px 2px 5px 0px #EEEDF4',
+            overflowY: 'scroll',
         },
     }),
 );
 
 const SearchHeader = ({ countries, parentPage }: Props): ReactElement => {
-    const { activeCountry, filterOptions, applyFilters } = useContext(OrganizationContext);
+    const { activeCountry, activeSubdivision, filterOptions, activeFilters, applyFilters } = useContext(
+        OrganizationContext,
+    );
     const [selectedCountry, setSelectedCountry] = useState<Country | undefined>(activeCountry || undefined);
     const [selectedSubdivision, setSelectedSubdivision] = useState<Subdivision | undefined>(undefined);
     const [showFilter, setShowFilter] = useState<boolean>(false);
@@ -129,15 +128,19 @@ const SearchHeader = ({ countries, parentPage }: Props): ReactElement => {
                     onCountryChange={setSelectedCountry}
                     onSubdivisionChange={setSelectedSubdivision}
                     defaultCountry={activeCountry || null}
+                    defaultSubdivision={activeSubdivision || null}
                 />
                 {selectedCountry && (
                     <Box className={classes.inputConatainer}>
                         <Link
                             href={{
-                                pathname: `${parentPage ? '/' + parentPage : ''}/${selectedCountry.code.toLowerCase()}${
-                                    selectedSubdivision ? `/${selectedSubdivision.code.toLowerCase()}` : ''
+                                pathname: `${parentPage ? '/' + parentPage : ''}/[widgetCountryCode]${
+                                    selectedSubdivision ? `/[widgetSubdivisionCode]` : ''
                                 }`,
                             }}
+                            as={`${parentPage ? '/' + parentPage : ''}/${selectedCountry.code.toLowerCase()}${
+                                selectedSubdivision ? `/${selectedSubdivision.code.toLowerCase()}` : ''
+                            }`}
                             passHref
                         >
                             <Button
@@ -172,14 +175,19 @@ const SearchHeader = ({ countries, parentPage }: Props): ReactElement => {
                 )}
             </Box>
             {showFilter && (
-                <div className={classes.filter}>
+                <Box className={classes.filterContainer}>
                     <OrganizationFilter
                         topics={filterOptions.topics}
                         categories={filterOptions.categories}
                         humanSupportTypes={filterOptions.humanSupportTypes}
+                        preselectedTopics={activeFilters.topics}
+                        preselectedCategories={activeFilters.categories}
+                        preselectedHumanSupportTypes={activeFilters.humanSupportTypes}
+                        showMax={7}
                         onChange={(filters): void => applyFilters(filters)}
+                        onApply={setShowFilter}
                     />
-                </div>
+                </Box>
             )}
         </Container>
     );

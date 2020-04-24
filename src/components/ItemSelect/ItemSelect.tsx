@@ -83,7 +83,8 @@ const ItemSelect = ({ items, preselectedItems, onChange, single, hideUnselected,
             {hide && items.length - showAmount > 0 && (
                 <Chip
                     onClick={(): void => setHide(false)}
-                    label={`+${differenceBy('name', items, selectedItems).length} more`}
+                    label={`+${items.length - showAmount} more`}
+                    data-testid="showMoreChip"
                     classes={{
                         root: classes.chipRoot,
                     }}

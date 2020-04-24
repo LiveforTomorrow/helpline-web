@@ -6,8 +6,8 @@ import Head from 'next/head';
 import gql from 'graphql-tag';
 import { print } from 'graphql';
 import { GetWidgetCountryCodeProps } from '../../types/GetWidgetCountryCodeProps';
-import OrganizationList from '../../src/components/OrganizationList';
-import Footer from '../../src/components/Footer';
+import { OrganizationProvider } from '../../src/context/organizationContext';
+import Widget from '../../src/components/Widget';
 
 const WidgetCountryCodePage = ({
     country,
@@ -18,31 +18,30 @@ const WidgetCountryCodePage = ({
     countries,
 }: GetWidgetCountryCodeProps): ReactElement => {
     const router = useRouter();
-    const query = router.query;
+    const queryCountyCode = router.query.widgetCountyCode;
     const preselectedTopics: { name: string }[] = [];
+    const activeCountry = countries.find((_country) => {
+        return _country.code === country.code;
+    });
 
     return (
         <Fragment>
             <Head>
                 <title>Find A Helpline | {country.name}</title>
-                <script src="/widget.min.js"></script>
             </Head>
-            <div className="widget">
-                <div className="search">
-                    countries count: {countries.length} - selected country: {country.name} - query:{' '}
-                    {query.widgetCountyCode}
-                </div>
 
-                <OrganizationList
-                    organizations={organizations.nodes}
-                    country={country}
-                    preselectedTopics={preselectedTopics}
-                    categories={categories}
-                    humanSupportTypes={humanSupportTypes}
-                    topics={topics}
-                />
-                <Footer />
-            </div>
+            <OrganizationProvider
+                activeCountry={activeCountry}
+                countries={countries}
+                allOrganizations={organizations.nodes}
+                filterOptions={{
+                    topics: topics,
+                    categories: categories,
+                    humanSupportTypes: humanSupportTypes,
+                }}
+            >
+                <Widget />
+            </OrganizationProvider>
         </Fragment>
     );
 };
@@ -55,7 +54,7 @@ export const getStaticProps: GetStaticProps = async (context): Promise<{ props: 
                 name
                 emergencyNumber
             }
-            organizations(countryCode: $countryCode) {
+            organizations(countryCode: $countryCode, subdivisionCodes: []) {
                 nodes {
                     slug
                     name
@@ -93,6 +92,7 @@ export const getStaticProps: GetStaticProps = async (context): Promise<{ props: 
             countries {
                 code
                 name
+                emergencyNumber
                 subdivisions {
                     code
                     name
@@ -104,9 +104,11 @@ export const getStaticProps: GetStaticProps = async (context): Promise<{ props: 
         'https://api.findahelpline.com',
         print(query),
         {
-            countryCode: context.params.widgetCountyCode,
+            countryCode: context.params.widgetCountryCode,
         },
     );
+
+    // key is needed here for link router to work - https://github.com/zeit/next.js/issues/9992
     return {
         props: {
             country,
@@ -115,13 +117,14 @@ export const getStaticProps: GetStaticProps = async (context): Promise<{ props: 
             humanSupportTypes,
             topics,
             countries,
+            key: context.params.widgetCountryCode,
         },
     };
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
     const query = gql`
-        query GetCountries {
+        query GetCountriesForWidget {
             countries {
                 code
             }
@@ -133,7 +136,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
         paths: countries.map((country) => {
             return {
                 params: {
-                    widgetCountyCode: country.code.toLowerCase(),
+                    widgetCountryCode: country.code.toLowerCase(),
                 },
             };
         }),

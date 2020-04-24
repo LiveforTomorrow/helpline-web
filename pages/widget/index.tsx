@@ -4,7 +4,7 @@ import { Container } from '@material-ui/core';
 import { request } from 'graphql-request';
 import gql from 'graphql-tag';
 import { print } from 'graphql';
-import { GetWidgetCountriesAndSubdivisions } from '../../types/GetWidgetCountriesAndSubdivisions';
+import { GetWidgetProps } from '../../types/GetWidgetProps';
 
 declare global {
     interface Window {
@@ -19,7 +19,7 @@ type Xprops = {
     };
 };
 
-class WidgetPage extends Component<GetWidgetCountriesAndSubdivisions, Xprops> {
+class WidgetPage extends Component<GetWidgetProps, Xprops> {
     constructor(props) {
         super(props);
         this.state = {
@@ -67,9 +67,9 @@ class WidgetPage extends Component<GetWidgetCountriesAndSubdivisions, Xprops> {
     }
 }
 
-export const getStaticProps = async (): Promise<{ props: GetWidgetCountriesAndSubdivisions }> => {
+export const getStaticProps = async (): Promise<{ props: GetWidgetProps }> => {
     const query = gql`
-        query GetWidgetCountriesAndSubdivisions {
+        query GetWidgetProps {
             countries {
                 code
                 name

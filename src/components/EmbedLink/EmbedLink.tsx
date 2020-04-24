@@ -35,6 +35,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const EmbedLink = (): ReactElement => {
+    const domainUrl = typeof window !== 'undefined' ? `${window.location.origin}/embed` : 'http://localhost:3000/embed';
     const classes = useStyles();
 
     return (
@@ -42,7 +43,7 @@ const EmbedLink = (): ReactElement => {
             <Button
                 startIcon={<CodeIcon className={classes.codeIcon} />}
                 classes={{ root: classes.buttonRoot, label: classes.link }}
-                href="https://www.findahelpline.com/embed"
+                href={domainUrl}
                 target="_blank"
                 color="primary"
                 data-testid="embedHelplineWidget"

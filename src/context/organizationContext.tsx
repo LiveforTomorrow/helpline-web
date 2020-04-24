@@ -17,6 +17,12 @@ type Filter = {
     name: string;
 };
 
+export type FilterOptions = {
+    topics: Filter[] | [];
+    categories: Filter[] | [];
+    humanSupportTypes: Filter[] | [];
+};
+
 export type Filters = {
     topics: Filter[] | [];
     categories: Filter[] | [];
@@ -50,24 +56,28 @@ type Props = {
     children: ReactNode;
     countries: Country[];
     activeCountry?: Country;
-    allOrganizations: Organization[];
-    filterOptions: Filters;
+    activeSubdivision?: Subdivision;
+    allOrganizations?: Organization[];
+    filterOptions: FilterOptions;
 };
 
 type State = {
     // loading: boolean;
     countries: Country[];
     activeCountry?: Country;
+    activeSubdivision?: Subdivision;
     organizations: Organization[];
-    filterOptions: Filters;
+    filterOptions: FilterOptions;
     activeFilters: Filters;
     applyFilters: (selectedFilters: Filters) => void;
+    setActiveCountry: (country: Country) => void;
 };
 
 const initialState: State = {
     // loading: false,
     countries: [],
     activeCountry: null,
+    activeSubdivision: null,
     organizations: [],
     filterOptions: null,
     activeFilters: {
@@ -78,6 +88,7 @@ const initialState: State = {
         sorts: [],
     },
     applyFilters: undefined,
+    setActiveCountry: undefined,
 };
 
 const OrganizationContext = createContext(initialState);
@@ -88,10 +99,12 @@ export const OrganizationProvider = ({
     allOrganizations,
     filterOptions,
     activeCountry,
+    activeSubdivision,
 }: Props): ReactElement => {
     const [organizations, setOrganizations] = useState<Organization[] | undefined>(allOrganizations);
     const [activeFilters, applyFilters] = useState<Filters>(initialState.activeFilters);
     // const [loading, setLoading] = useState<boolean>(false);
+    const [_activeCountry, setActiveCountry] = useState<Country>(activeCountry);
 
     useEffect(() => {
         setOrganizations(filterAndSortOrganizations(organizations, activeFilters));
@@ -100,7 +113,8 @@ export const OrganizationProvider = ({
     const ctx = {
         // loading,
         countries,
-        activeCountry,
+        activeCountry: _activeCountry,
+        activeSubdivision,
         organizations,
         filterOptions,
         activeFilters,
