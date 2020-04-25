@@ -1,6 +1,5 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
-import { OrganizationProvider } from '../../context/organizationContext';
 import CountrySelect from '.';
 
 describe('CountrySelect', () => {
@@ -16,41 +15,16 @@ describe('CountrySelect', () => {
         { code: 'AU', name: 'Australia', subdivisions: [] },
     ];
 
-    const withContextProvider = (WrappedSearchHeader, props) => {
-        return (
-            <OrganizationProvider
-                activeCountry={countries[0]}
-                countries={countries}
-                allOrganizations={[]}
-                filterOptions={{
-                    topics: undefined,
-                    categories: undefined,
-                    humanSupportTypes: undefined,
-                }}
-            >
-                <WrappedSearchHeader {...props} />
-            </OrganizationProvider>
-        );
-    };
-
     it('should contain placeholder', () => {
         const { getByTestId } = render(
-            withContextProvider(CountrySelect, {
-                countries: countries,
-                onCountryChange: jest.fn(),
-                onSubdivisionChange: jest.fn(),
-            }),
+            <CountrySelect countries={countries} onCountryChange={jest.fn()} onSubdivisionChange={jest.fn()} />,
         );
         expect(getByTestId('countryInput')).toHaveAttribute('placeholder', 'Start typing your country...');
     });
 
     it('should show flag', () => {
         const { getByRole, getByTestId } = render(
-            withContextProvider(CountrySelect, {
-                countries: countries,
-                onCountryChange: jest.fn(),
-                onSubdivisionChange: jest.fn(),
-            }),
+            <CountrySelect countries={countries} onCountryChange={jest.fn()} onSubdivisionChange={jest.fn()} />,
         );
         const element = getByRole('textbox');
         fireEvent.click(element);
@@ -64,11 +38,7 @@ describe('CountrySelect', () => {
         };
 
         const { getAllByRole } = render(
-            withContextProvider(CountrySelect, {
-                countries: countries,
-                onCountryChange: onCountryChange,
-                onSubdivisionChange: jest.fn(),
-            }),
+            <CountrySelect countries={countries} onCountryChange={onCountryChange} onSubdivisionChange={jest.fn()} />,
         );
         const countryElement = getAllByRole('textbox')[0];
         fireEvent.click(countryElement);
@@ -87,11 +57,11 @@ describe('CountrySelect', () => {
         };
 
         const { getAllByRole } = render(
-            withContextProvider(CountrySelect, {
-                countries: countries,
-                onCountryChange: jest.fn(),
-                onSubdivisionChange: onSubdivisionChange,
-            }),
+            <CountrySelect
+                countries={countries}
+                onCountryChange={jest.fn()}
+                onSubdivisionChange={onSubdivisionChange}
+            />,
         );
         const countryElement = getAllByRole('textbox')[0];
         fireEvent.click(countryElement);
