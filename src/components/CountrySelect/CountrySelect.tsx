@@ -5,7 +5,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import { Box } from '@material-ui/core';
-import { sortBy } from 'lodash/fp';
+import { sortBy, compact } from 'lodash/fp';
 import OrganizationContext from '../../context/organizationContext';
 
 type Subdivision = {
@@ -25,8 +25,8 @@ type Props = {
     onCountryChange: (country: Country) => void;
     onSubdivisionChange: (subdivision: Subdivision) => void;
     inline?: boolean;
-    defaultCountry?: Country;
-    defaultSubdivision?: Subdivision;
+    preselectedCountry?: Country;
+    preselectedSubdivision?: Subdivision;
 };
 
 // ISO 3166-1 alpha-2
@@ -46,11 +46,9 @@ const useStyles = makeStyles((theme: Theme) =>
             display: 'grid',
             gridGap: theme.spacing(1),
         },
-        inlineGrid: {
-            display: 'grid',
+        inline: {
             gridTemplateColumns: 'repeat(auto-fit, minmax(0, 1fr))',
-            gridGap: theme.spacing(1),
-            [theme.breakpoints.down(420)]: {
+            [theme.breakpoints.down('xs')]: {
                 gridTemplateColumns: '1fr',
             },
         },
@@ -60,16 +58,9 @@ const useStyles = makeStyles((theme: Theme) =>
             '&[class*="MuiOutlinedInput-root"]': {
                 paddingTop: '5px',
                 paddingBottom: '5px',
-                [theme.breakpoints.down(420)]: {
-                    paddingTop: '0',
-                    paddingBottom: '0',
-                },
             },
             '& fieldset': {
                 border: 0,
-            },
-            [theme.breakpoints.down('xs')]: {
-                fontSize: '12px',
             },
         },
         option: {
@@ -102,13 +93,13 @@ const CountrySelect = ({
     onCountryChange,
     onSubdivisionChange,
     inline,
-    defaultCountry,
-    defaultSubdivision,
+    preselectedCountry,
+    preselectedSubdivision,
 }: Props): ReactElement => {
     const classes = useStyles();
     const { setActiveCountry } = useContext(OrganizationContext);
-    const [selectedCountry, setSelectedCountry] = useState<Country | null>(defaultCountry ?? null);
-    const [selectedSubdivision, setSelectedSubdivision] = useState<Subdivision | null>(defaultSubdivision ?? null);
+    const [selectedCountry, setSelectedCountry] = useState<Country | null>(preselectedCountry ?? null);
+    const [selectedSubdivision, setSelectedSubdivision] = useState<Subdivision | null>(preselectedSubdivision ?? null);
 
     const localOnCountryChange = (country: Country): void => {
         setSelectedCountry(country);
@@ -124,7 +115,7 @@ const CountrySelect = ({
     };
 
     return (
-        <Box className={inline ? classes.inlineGrid : classes.box}>
+        <Box className={compact([classes.box, inline && classes.inline]).join(' ')}>
             <Autocomplete
                 value={selectedCountry}
                 style={{ width: 300 }}
@@ -175,7 +166,16 @@ const CountrySelect = ({
                     openOnFocus={true}
                     onChange={(_e, value: Subdivision): void => localOnSubdivisionChange(value)}
                     renderInput={(params): ReactElement => (
-                        <TextField {...params} placeholder="State or province (optional)" variant="outlined" />
+                        <TextField
+                            {...params}
+                            placeholder="State or province (optional)"
+                            variant="outlined"
+                            inputProps={{
+                                ...params.inputProps,
+                                autoComplete: 'new-password', // disable autocomplete and autofill
+                                'data-testid': 'subdivisionInput',
+                            }}
+                        />
                     )}
                 />
             )}

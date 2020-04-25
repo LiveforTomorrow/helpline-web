@@ -1,77 +1,182 @@
-import React, { ReactElement, useContext } from 'react';
-import { createStyles, makeStyles } from '@material-ui/core/styles';
-import { Container, Box, Theme, Typography } from '@material-ui/core';
-import OrganizationContext from '../../context/organizationContext';
+import CloseIcon from '@material-ui/icons/Close';
+import React, { ReactElement, useState } from 'react';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { Box, Button, Backdrop } from '@material-ui/core';
+import FilterListIcon from '@material-ui/icons/FilterList';
+import Link from 'next/link';
+import CodeIcon from '@material-ui/icons/Code';
+import NavBar from '../NavBar';
+import filterAndSortOrganizations from '../../util/filterAndSortOrganizations';
+import OrganizationFilter from '../OrganizationFilter';
+import WidgetOrganizationList from '../WidgetOrganizationList';
 import TopBar from '../TopBar';
-import SearchHeader from '../SearchHeader';
-import OrganizationCarousel from '../OrganizationCarousel/OrganizationCarousel';
-import EmbedLink from '../EmbedLink';
+import WidgetSearch from '../WidgetSearch';
+import { Organization } from '../OrganizationCard/OrganizationCard';
 
-type Props = {};
+type Subdivision = {
+    name: string;
+    code: string;
+};
+
+type Country = {
+    name: string;
+    code: string;
+    emergencyNumber: string;
+    subdivisions: Subdivision[];
+};
+
+type Props = {
+    preselectedCountry: Country;
+    countries: Country[];
+    preselectedSubdivision?: Subdivision;
+    categories: { name: string }[];
+    humanSupportTypes: { name: string }[];
+    topics: { name: string }[];
+    organizations: Organization[];
+};
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
-        container: {
-            height: '100%',
-            paddingLeft: 0,
-            paddingRight: 0,
-            border: '1px solid #000',
-            borderRadius: '0 0 10px 10px',
-            overflowY: 'scroll',
+        box: {
+            border: '1px solid #181719',
+            borderBottomLeftRadius: '5px',
+            borderBottomRightRadius: '5px',
         },
-        header: {
-            position: 'relative',
-            marginBottom: theme.spacing(2),
+        backdrop: {
+            display: 'block',
+            zIndex: theme.zIndex.drawer + 1,
+            top: 0,
+            overflow: 'auto',
         },
-        organizations: {
-            maxHeight: '100vh',
-            borderRadius: '0 0 10px 10px',
+        filters: {
+            paddingTop: theme.spacing(1),
+            paddingBottom: theme.spacing(2),
+            background: '#FFFFFF',
         },
-        carousel: {
-            display: 'flex',
-            flex: '0 0 auto',
-            alignItems: 'flex-start',
-            flexDirection: 'column',
-            '@media (min-width: 400px)': {
-                overflow: 'scroll',
-                flexDirection: 'row',
+        filterButton: {
+            background: '#FFFFFF',
+            borderRadius: '1000px',
+            paddingLeft: theme.spacing(2),
+            paddingRight: theme.spacing(2),
+            '&:hover': {
+                backgroundColor: '#CCCCCC',
             },
-            minWidth: 0,
-            padding: theme.spacing(1),
         },
-        noResults: {
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-            padding: theme.spacing(10),
+        sortText: {
+            '@media (max-width: 320px)': {
+                display: 'none',
+            },
+        },
+        embed: {
+            textAlign: 'center',
+            margin: theme.spacing(1),
+        },
+        embedButton: {
+            color: '#000',
+            textDecoration: 'underline',
+            textTransform: 'none',
+            textAlign: 'left',
+            '&:hover': {
+                textDecoration: 'underline',
+                color: theme.palette.primary.main,
+            },
+        },
+        link: {
+            color: '#000',
         },
     }),
 );
 
-const Widget = ({}: Props): ReactElement => {
+const OrganizationList = ({
+    preselectedCountry,
+    preselectedSubdivision,
+    countries,
+    categories,
+    humanSupportTypes,
+    topics,
+    organizations,
+}: Props): ReactElement => {
     const classes = useStyles();
-    const { countries, activeCountry, organizations } = useContext(OrganizationContext);
+    const [showFilters, setShowFilters] = useState(false);
+    const [filteredOrganizations, setOrganizations] = useState(
+        filterAndSortOrganizations(organizations, {
+            contactMethods: [],
+            categories: [],
+            humanSupportTypes: [],
+            topics: [],
+            sorts: [{ name: 'A – Z' }],
+        }),
+    );
+
+    const onChange = (changes): void => {
+        setOrganizations(filterAndSortOrganizations(organizations, changes));
+        setShowFilters(false);
+    };
 
     return (
-        <Container className={classes.container}>
-            <Box maxWidth="md">
-                <div className={classes.header}>
-                    <SearchHeader countries={countries} parentPage="widget" />
-                    <TopBar widget country={{ emergencyNumber: activeCountry?.emergencyNumber }} />
-                </div>
-                {!activeCountry && organizations.length > 0 && (
-                    <Container className={classes.noResults}>
-                        <Typography>Sorry, no results found</Typography>
-                    </Container>
-                )}
-                <Container className={classes.carousel}>
-                    <OrganizationCarousel widget organizations={organizations} />
-                </Container>
+        <>
+            <Box className={classes.box}>
+                <NavBar variant="widget">
+                    <Button
+                        className={classes.filterButton}
+                        onClick={(): void => setShowFilters(true)}
+                        endIcon={<FilterListIcon />}
+                        data-testid="filter"
+                    >
+                        Filter<span className={classes.sortText}>&nbsp;&amp; Sort</span>
+                    </Button>
+                </NavBar>
+                <WidgetSearch
+                    preselectedCountry={preselectedCountry}
+                    countries={countries}
+                    preselectedSubdivision={preselectedSubdivision}
+                />
+                <TopBar variant="widget" country={preselectedCountry} />
+                <WidgetOrganizationList organizations={filteredOrganizations} />
             </Box>
-            <EmbedLink />
-        </Container>
+            <Box className={classes.embed}>
+                <Link href="/embed" passHref>
+                    <Button
+                        startIcon={<CodeIcon />}
+                        color="primary"
+                        component="a"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        size="small"
+                        classes={{ root: classes.embedButton, label: classes.link }}
+                    >
+                        Embed Find A Helpline on your website
+                    </Button>
+                </Link>
+            </Box>
+            <Backdrop
+                className={classes.backdrop}
+                open={showFilters}
+                onClick={(): void => setShowFilters(false)}
+                data-testid="backdrop"
+            >
+                <Box onClick={(e): void => e.stopPropagation()}>
+                    <NavBar variant="widget">
+                        <Button
+                            className={classes.filterButton}
+                            onClick={(): void => setShowFilters(false)}
+                            endIcon={<CloseIcon />}
+                        >
+                            Close
+                        </Button>
+                    </NavBar>
+                    <Box className={classes.filters}>
+                        <OrganizationFilter
+                            categories={categories}
+                            humanSupportTypes={humanSupportTypes}
+                            topics={topics}
+                            onChange={onChange}
+                        />
+                    </Box>
+                </Box>
+            </Backdrop>
+        </>
     );
 };
 
-export default Widget;
+export default OrganizationList;
