@@ -9,6 +9,7 @@ import Chrome from '../src/components/Chrome';
 import { GetCountryCodeProps } from '../types/GetCountryCodeProps';
 import OrganizationList from '../src/components/OrganizationList';
 import Footer from '../src/components/Footer';
+import { GetCountryCodePaths } from '../types/GetCountryCodePaths';
 
 const CountryCodePage = ({
     country,
@@ -92,13 +93,13 @@ export const getStaticProps: GetStaticProps = async (context): Promise<{ props: 
             }
         }
     `;
-    const { country, organizations, categories, humanSupportTypes, topics } = await request(
+    const { country, organizations, categories, humanSupportTypes, topics } = (await request(
         'https://api.findahelpline.com',
         print(query),
         {
             countryCode: context.params.countryCode,
         },
-    );
+    )) as GetCountryCodeProps;
     return {
         props: {
             country,
@@ -112,13 +113,13 @@ export const getStaticProps: GetStaticProps = async (context): Promise<{ props: 
 
 export const getStaticPaths: GetStaticPaths = async () => {
     const query = gql`
-        query GetCountries {
+        query GetCountryCodePaths {
             countries {
                 code
             }
         }
     `;
-    const { countries } = await request('https://api.findahelpline.com', print(query));
+    const { countries } = (await request('https://api.findahelpline.com', print(query))) as GetCountryCodePaths;
 
     return {
         paths: countries.map((country) => {

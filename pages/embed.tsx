@@ -5,9 +5,9 @@ import { print } from 'graphql';
 import Head from 'next/head';
 import EmbedInfo from '../src/components/EmbedInfo';
 import Chrome from '../src/components/Chrome';
-import { GetCountryCodesAndNames } from '../types/GetCountryCodesAndNames';
+import { GetEmbedProps } from '../types/GetEmbedProps';
 
-const EmbedPage = ({ countries }: GetCountryCodesAndNames): ReactElement => {
+const EmbedPage = ({ countries }: GetEmbedProps): ReactElement => {
     return (
         <Fragment>
             <Head>
@@ -20,16 +20,16 @@ const EmbedPage = ({ countries }: GetCountryCodesAndNames): ReactElement => {
     );
 };
 
-export const getStaticProps = async (): Promise<{ props: GetCountryCodesAndNames }> => {
+export const getStaticProps = async (): Promise<{ props: GetEmbedProps }> => {
     const query = gql`
-        query GetCountryCodesAndNames {
+        query GetEmbedProps {
             countries {
                 code
                 name
             }
         }
     `;
-    const { countries } = await request('https://api.findahelpline.com', print(query));
+    const { countries } = (await request('https://api.findahelpline.com', print(query))) as GetEmbedProps;
     return {
         props: {
             countries,

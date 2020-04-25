@@ -5,12 +5,12 @@ import Head from 'next/head';
 import gql from 'graphql-tag';
 import { print } from 'graphql';
 import Chrome from '../../src/components/Chrome';
-import { GetOrganizationSlugProps } from '../../types/GetOrganizationSlugProps';
+import { GetOrganizationsSlugProps } from '../../types/GetOrganizationsSlugProps';
 import OrganizationItem from '../../src/components/OrganizationItem';
 import Footer from '../../src/components/Footer';
-import NavBar from '../../src/components/NavBar';
+import { GetOrganizationsSlugPaths } from '../../types/GetOrganizationsSlugPaths';
 
-const OrganizationPage = ({ organization }: GetOrganizationSlugProps): ReactElement => {
+const OrganizationPage = ({ organization }: GetOrganizationsSlugProps): ReactElement => {
     return (
         <Fragment>
             <Head>
@@ -24,9 +24,9 @@ const OrganizationPage = ({ organization }: GetOrganizationSlugProps): ReactElem
     );
 };
 
-export const getStaticProps: GetStaticProps = async (context): Promise<{ props: GetOrganizationSlugProps }> => {
+export const getStaticProps: GetStaticProps = async (context): Promise<{ props: GetOrganizationsSlugProps }> => {
     const query = gql`
-        query GetOrganizationSlugProps($slug: String!) {
+        query GetOrganizationsSlugProps($slug: String!) {
             organization(slug: $slug) {
                 slug
                 name
@@ -70,7 +70,7 @@ export const getStaticProps: GetStaticProps = async (context): Promise<{ props: 
 
 export const getStaticPaths: GetStaticPaths = async () => {
     const query = gql`
-        query GetOrganizations {
+        query GetOrganizationsSlugPaths {
             organizations {
                 nodes {
                     slug
@@ -78,7 +78,10 @@ export const getStaticPaths: GetStaticPaths = async () => {
             }
         }
     `;
-    const { organizations } = await request('https://api.findahelpline.com', print(query));
+    const { organizations } = (await request(
+        'https://api.findahelpline.com',
+        print(query),
+    )) as GetOrganizationsSlugPaths;
 
     return {
         paths: organizations.nodes.map((organization) => {

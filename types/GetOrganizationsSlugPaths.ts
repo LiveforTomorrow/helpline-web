@@ -4,25 +4,25 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: GetOrganizations
+// GraphQL query operation: GetOrganizationsSlugPaths
 // ====================================================
 
-export interface GetOrganizations_organizations_nodes {
+export interface GetOrganizationsSlugPaths_organizations_nodes {
   __typename: "Organization";
   slug: string;
 }
 
-export interface GetOrganizations_organizations {
+export interface GetOrganizationsSlugPaths_organizations {
   __typename: "OrganizationConnection";
   /**
    * A list of nodes.
    */
-  nodes: (GetOrganizations_organizations_nodes | null)[] | null;
+  nodes: (GetOrganizationsSlugPaths_organizations_nodes | null)[] | null;
 }
 
-export interface GetOrganizations {
+export interface GetOrganizationsSlugPaths {
   /**
    * Find all organizations
    */
-  organizations: GetOrganizations_organizations;
+  organizations: GetOrganizationsSlugPaths_organizations;
 }

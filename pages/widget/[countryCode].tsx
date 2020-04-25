@@ -1,52 +1,37 @@
 import React, { ReactElement, Fragment } from 'react';
 import { request } from 'graphql-request';
 import { GetStaticPaths, GetStaticProps } from 'next';
-import { useRouter } from 'next/router';
 import Head from 'next/head';
 import gql from 'graphql-tag';
 import { print } from 'graphql';
-import { find, flatten } from 'lodash/fp';
-import { GetCountriesAndSubdivisions } from '../../../types/GetCountriesAndSubdivisions';
-import {
-    GetWidgetSubdivisionCodeProps,
-    GetWidgetSubdivisionCodeProps_country_subdivisions as Subdivision,
-} from '../../../types/GetWidgetSubdivisionCodeProps';
-import { OrganizationProvider } from '../../../src/context/organizationContext';
-import Widget from '../../../src/components/Widget';
+import { GetWidgetCountryCodeProps } from '../../types/GetWidgetCountryCodeProps';
+import { OrganizationProvider } from '../../src/context/organizationContext';
+import Widget from '../../src/components/Widget';
+import { GetWidgetCountryCodePaths } from '../../types/GetWidgetCountryCodePaths';
 
-interface Props extends GetWidgetSubdivisionCodeProps {
-    subdivision: Subdivision;
+interface Props extends GetWidgetCountryCodeProps {
     key: string | string[];
 }
-
-const WidgetSubdivisionCodePage = ({
+const WidgetCountryCodePage = ({
     country,
-    subdivision,
     organizations,
     categories,
     humanSupportTypes,
     topics,
     countries,
 }: Props): ReactElement => {
-    const router = useRouter();
-
     const activeCountry = countries.find((_country) => {
         return _country.code === country.code;
-    });
-    const activeSubdivision = activeCountry.subdivisions.find((_subdivision) => {
-        return _subdivision.code === subdivision.code;
     });
 
     return (
         <Fragment>
             <Head>
-                <title>
-                    Find A Helpline | {subdivision.name}, {country.name}
-                </title>
+                <title>Find A Helpline | {country.name}</title>
             </Head>
+
             <OrganizationProvider
                 activeCountry={activeCountry}
-                activeSubdivision={activeSubdivision}
                 countries={countries}
                 allOrganizations={organizations.nodes}
                 filterOptions={{
@@ -63,17 +48,13 @@ const WidgetSubdivisionCodePage = ({
 
 export const getStaticProps: GetStaticProps = async (context): Promise<{ props: Props }> => {
     const query = gql`
-        query GetWidgetSubdivisionCodeProps($countryCode: String!, $subdivisionCode: String!) {
+        query GetWidgetCountryCodeProps($countryCode: String!) {
             country(code: $countryCode) {
                 code
                 name
                 emergencyNumber
-                subdivisions {
-                    code
-                    name
-                }
             }
-            organizations(countryCode: $countryCode, subdivisionCodes: [$subdivisionCode]) {
+            organizations(countryCode: $countryCode, subdivisionCodes: []) {
                 nodes {
                     slug
                     name
@@ -123,57 +104,44 @@ export const getStaticProps: GetStaticProps = async (context): Promise<{ props: 
         'https://api.findahelpline.com',
         print(query),
         {
-            countryCode: context.params.widgetCountryCode,
-            subdivisionCode: context.params.widgetSubdivisionCode,
+            countryCode: context.params.countryCode,
         },
     );
-    const subdivision = find(
-        { code: context.params.widgetSubdivisionCode.toString().toUpperCase() },
-        country.subdivisions,
-    );
+
     // key is needed here for link router to work - https://github.com/zeit/next.js/issues/9992
     return {
         props: {
             country,
-            subdivision,
             organizations,
             categories,
             humanSupportTypes,
             topics,
             countries,
-            key: context.params.widgetSubdivisionCode,
+            key: context.params.countryCode,
         },
     };
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
     const query = gql`
-        query GetWidgetCountriesAndSubdivisions {
+        query GetWidgetCountryCodePaths {
             countries {
                 code
-                subdivisions {
-                    code
-                }
             }
         }
     `;
-    const { countries } = (await request('https://api.findahelpline.com', print(query))) as GetCountriesAndSubdivisions;
+    const { countries } = (await request('https://api.findahelpline.com', print(query))) as GetWidgetCountryCodePaths;
 
     return {
-        paths: flatten(
-            countries.map((country) => {
-                return country.subdivisions.map((subdivision) => {
-                    return {
-                        params: {
-                            widgetCountryCode: country.code.toLowerCase(),
-                            widgetSubdivisionCode: subdivision.code.toLowerCase(),
-                        },
-                    };
-                });
-            }),
-        ),
+        paths: countries.map((country) => {
+            return {
+                params: {
+                    countryCode: country.code.toLowerCase(),
+                },
+            };
+        }),
         fallback: false,
     };
 };
 
-export default WidgetSubdivisionCodePage;
+export default WidgetCountryCodePage;

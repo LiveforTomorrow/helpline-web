@@ -4,17 +4,18 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: GetCountriesForWidget
+// GraphQL query operation: GetEmbedProps
 // ====================================================
 
-export interface GetCountriesForWidget_countries {
+export interface GetEmbedProps_countries {
   __typename: "Country";
   code: string;
+  name: string;
 }
 
-export interface GetCountriesForWidget {
+export interface GetEmbedProps {
   /**
    * Find all countries
    */
-  countries: GetCountriesForWidget_countries[];
+  countries: GetEmbedProps_countries[];
 }

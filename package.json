@@ -3,7 +3,7 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "dev": "STAGING=-1 npx webpack --config webpack.config.js && next dev",
+        "dev": "npx webpack --config webpack.config.js && next dev",
         "build": "npx webpack --config webpack.config.js && next build",
         "start": "next start",
         "lint": "tsc --noEmit && eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
