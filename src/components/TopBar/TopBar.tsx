@@ -1,4 +1,4 @@
-import React, { ReactElement, Fragment } from 'react';
+import React, { ReactElement } from 'react';
 import { AppBar, Container, Toolbar, Typography, Button, Hidden } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import DirectionsRunIcon from '@material-ui/icons/DirectionsRun';
@@ -98,7 +98,7 @@ const TopBar = ({ country, widget }: Props): ReactElement => {
                     ].join(' ')}
                 >
                     {country ? (
-                        <Fragment>
+                        <>
                             <Typography className={[classes.title, classes.titleWithCountry].join(' ')}>
                                 Are you or someone else in immediate danger?
                             </Typography>
@@ -112,7 +112,7 @@ const TopBar = ({ country, widget }: Props): ReactElement => {
                                 <Hidden smUp>Call {country.emergencyNumber || 911}</Hidden>
                                 <Hidden only="xs">Emergency Services</Hidden>
                             </Button>
-                        </Fragment>
+                        </>
                     ) : (
                         <Typography className={classes.title}>
                             Need to leave quickly? Click to leave this site and open the weather.

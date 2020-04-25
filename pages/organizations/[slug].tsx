@@ -1,4 +1,4 @@
-import React, { ReactElement, Fragment } from 'react';
+import React, { ReactElement } from 'react';
 import { request } from 'graphql-request';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import Head from 'next/head';
@@ -12,7 +12,7 @@ import { GetOrganizationsSlugPaths } from '../../types/GetOrganizationsSlugPaths
 
 const OrganizationPage = ({ organization }: GetOrganizationsSlugProps): ReactElement => {
     return (
-        <Fragment>
+        <>
             <Head>
                 <title>Find A Helpline | {organization.name}</title>
             </Head>
@@ -20,7 +20,7 @@ const OrganizationPage = ({ organization }: GetOrganizationsSlugProps): ReactEle
                 <OrganizationItem organization={organization} />
                 <Footer />
             </Chrome>
-        </Fragment>
+        </>
     );
 };
 

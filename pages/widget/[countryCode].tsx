@@ -1,4 +1,4 @@
-import React, { ReactElement, Fragment } from 'react';
+import React, { ReactElement } from 'react';
 import { request } from 'graphql-request';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import Head from 'next/head';
@@ -25,7 +25,7 @@ const WidgetCountryCodePage = ({
     });
 
     return (
-        <Fragment>
+        <>
             <Head>
                 <title>Find A Helpline | {country.name}</title>
             </Head>
@@ -42,7 +42,7 @@ const WidgetCountryCodePage = ({
             >
                 <Widget />
             </OrganizationProvider>
-        </Fragment>
+        </>
     );
 };
 

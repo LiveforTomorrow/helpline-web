@@ -10,7 +10,7 @@ export default {
 };
 
 export const Default = (): ReactElement => (
-    <Fragment>
+    <>
         <Chrome>
             <Container>
                 {[1, 2, 3, 4, 5].map((v) => (
@@ -18,11 +18,11 @@ export const Default = (): ReactElement => (
                 ))}
             </Container>
         </Chrome>
-    </Fragment>
+    </>
 );
 
 export const WithCountry = (): ReactElement => (
-    <Fragment>
+    <>
         <Chrome country={{ emergencyNumber: '111' }}>
             <Container>
                 {[1, 2, 3, 4, 5].map((v) => (
@@ -30,5 +30,5 @@ export const WithCountry = (): ReactElement => (
                 ))}
             </Container>
         </Chrome>
-    </Fragment>
+    </>
 );

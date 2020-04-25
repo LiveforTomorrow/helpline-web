@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import React, { ReactElement, Fragment } from 'react';
+import React, { ReactElement } from 'react';
 import { request } from 'graphql-request';
 import gql from 'graphql-tag';
 import { print } from 'graphql';
@@ -9,14 +9,14 @@ import { GetSearchProps } from '../types/GetSearchProps';
 
 const SearchPage = ({ topics, countries }: GetSearchProps): ReactElement => {
     return (
-        <Fragment>
+        <>
             <Head>
                 <title>Find A Helpline</title>
             </Head>
             <Chrome footer={true}>
                 <Search countries={countries} topics={topics} />
             </Chrome>
-        </Fragment>
+        </>
     );
 };
 

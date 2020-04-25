@@ -1,4 +1,4 @@
-import React, { ReactElement, Fragment } from 'react';
+import React, { ReactElement } from 'react';
 import { request } from 'graphql-request';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { useRouter } from 'next/router';
@@ -38,7 +38,7 @@ const SubdivisionCodePage = ({
     }
 
     return (
-        <Fragment>
+        <>
             <Head>
                 <title>
                     Find A Helpline | {subdivision.name}, {country.name}
@@ -56,7 +56,7 @@ const SubdivisionCodePage = ({
                 />
                 <Footer />
             </Chrome>
-        </Fragment>
+        </>
     );
 };
 

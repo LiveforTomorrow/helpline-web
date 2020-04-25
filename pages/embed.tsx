@@ -1,4 +1,4 @@
-import React, { ReactElement, Fragment } from 'react';
+import React, { ReactElement } from 'react';
 import { request } from 'graphql-request';
 import gql from 'graphql-tag';
 import { print } from 'graphql';
@@ -9,14 +9,14 @@ import { GetEmbedProps } from '../types/GetEmbedProps';
 
 const EmbedPage = ({ countries }: GetEmbedProps): ReactElement => {
     return (
-        <Fragment>
+        <>
             <Head>
                 <title>Find A Helpline</title>
             </Head>
             <Chrome footer={true}>
                 <EmbedInfo countries={countries} />
             </Chrome>
-        </Fragment>
+        </>
     );
 };
 

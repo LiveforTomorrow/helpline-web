@@ -1,5 +1,5 @@
 /* eslint-disable no-use-before-define */
-import React, { ReactElement, Fragment, useState, useContext } from 'react';
+import React, { ReactElement, useState, useContext } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
@@ -141,10 +141,10 @@ const CountrySelect = ({
                 autoHighlight
                 getOptionLabel={(option): string => option.name}
                 renderOption={(option): ReactElement => (
-                    <Fragment>
+                    <>
                         <span data-testid="countryFlag">{countryToFlag(option.code)}</span>
                         {option.name}
-                    </Fragment>
+                    </>
                 )}
                 openOnFocus={true}
                 onChange={(_e, value: Country): void => localOnCountryChange(value)}
