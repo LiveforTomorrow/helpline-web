@@ -30,25 +30,16 @@ const organizations = [
 ];
 
 describe('WidgetOrganizationList', () => {
-    it('should toggle previousButton disabled state', () => {
+    it('should toggle buttons disabled state', () => {
         const { getByTestId } = render(<WidgetOrganizationList organizations={organizations} />);
         const previousButton = getByTestId('previousButton');
         const nextButton = getByTestId('nextButton');
         expect(previousButton).toBeDisabled();
         fireEvent.click(nextButton);
         expect(previousButton).not.toBeDisabled();
-        fireEvent.click(previousButton);
-        expect(previousButton).toBeDisabled();
-    });
-
-    it('should toggle nextButton disabled state', () => {
-        const { getByTestId } = render(<WidgetOrganizationList organizations={organizations} />);
-        const previousButton = getByTestId('previousButton');
-        const nextButton = getByTestId('nextButton');
-        expect(nextButton).not.toBeDisabled();
-        fireEvent.click(nextButton);
         expect(nextButton).toBeDisabled();
         fireEvent.click(previousButton);
+        expect(previousButton).toBeDisabled();
         expect(nextButton).not.toBeDisabled();
     });
 });
