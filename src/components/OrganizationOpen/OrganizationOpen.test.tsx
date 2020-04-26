@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, waitFor } from '@testing-library/react';
+import { render, waitFor, act } from '@testing-library/react';
 import { mocked } from 'ts-jest/utils';
 import moment from 'moment-timezone';
 import isOpen from '../../util/isOpen';
@@ -70,8 +70,10 @@ describe('OrganizationOpen', () => {
                 mocked(isOpen).mockReturnValue({
                     open: false,
                 });
-                jest.runTimersToTime(1000);
-                await waitFor(() => expect(() => getByText('Closed')).not.toThrow());
+                act(() => {
+                    jest.runTimersToTime(1000);
+                });
+                expect(getByText('Closed')).toBeTruthy();
             });
         });
     });
