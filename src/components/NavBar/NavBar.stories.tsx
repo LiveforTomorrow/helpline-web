@@ -7,6 +7,7 @@ export default {
 };
 
 export const Default = (): ReactElement => <NavBar />;
+export const WithVariant = (): ReactElement => <NavBar variant="widget" />;
 export const WithChildren = (): ReactElement => (
     <NavBar>
         <Button>Test Button</Button>

@@ -62,7 +62,7 @@ const useStyles = makeStyles((theme: Theme) =>
             },
         },
         sortText: {
-            '@media (max-width: 320px)': {
+            [theme.breakpoints.down('xs')]: {
                 display: 'none',
             },
         },
