@@ -95,6 +95,7 @@ const WidgetOrganizationList = ({ organizations }: Props): ReactElement => {
                         disabled={!showPreviousButton}
                         onClick={(): void => embla.scrollPrev()}
                         data-testid="previousButton"
+                        aria-label="previous"
                     >
                         <ChevronLeftIcon fontSize="inherit" />
                     </Fab>
@@ -103,6 +104,7 @@ const WidgetOrganizationList = ({ organizations }: Props): ReactElement => {
                         disabled={!showNextButton}
                         onClick={(): void => embla.scrollNext()}
                         data-testid="nextButton"
+                        aria-label="next"
                     >
                         <ChevronRightIcon fontSize="inherit" />
                     </Fab>

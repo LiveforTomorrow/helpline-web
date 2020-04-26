@@ -145,6 +145,7 @@ const CountrySelect = ({
                             ...params.inputProps,
                             autoComplete: 'new-password', // disable autocomplete and autofill
                             'data-testid': 'countryInput',
+                            'aria-label': 'Start typing your country...',
                         }}
                     />
                 )}
@@ -171,6 +172,7 @@ const CountrySelect = ({
                                 ...params.inputProps,
                                 autoComplete: 'new-password', // disable autocomplete and autofill
                                 'data-testid': 'subdivisionInput',
+                                'aria-label': 'State or province (optional)',
                             }}
                         />
                     )}

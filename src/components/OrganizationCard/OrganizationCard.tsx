@@ -272,7 +272,7 @@ const OrganizationCard = ({ organization }: Props): ReactElement => {
                             <Fab
                                 href={organization.chatUrl}
                                 color="primary"
-                                aria-label="text"
+                                aria-label="web chat"
                                 data-testid="chatUrlFab"
                                 className={classes.fab}
                             >
