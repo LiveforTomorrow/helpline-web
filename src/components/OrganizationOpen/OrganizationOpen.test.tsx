@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, wait } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import { mocked } from 'ts-jest/utils';
 import moment from 'moment-timezone';
 import isOpen from '../../util/isOpen';
@@ -64,15 +64,14 @@ describe('OrganizationOpen', () => {
             beforeEach(() => jest.useFakeTimers());
 
             it('should update open status', async () => {
-                const { getByText, findByText } = render(<OrganizationOpen organization={organization} />);
+                const { getByText } = render(<OrganizationOpen organization={organization} />);
                 expect(isOpen).toHaveBeenCalledWith(organization);
                 expect(getByText('12:00 AM - 11:59 PM')).toBeTruthy();
                 mocked(isOpen).mockReturnValue({
                     open: false,
                 });
                 jest.runTimersToTime(1000);
-                expect(await findByText('Closed')).toBeTruthy();
-                await wait();
+                await waitFor(() => expect(() => getByText('Closed')).not.toThrow());
             });
         });
     });
