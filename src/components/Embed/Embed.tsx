@@ -120,7 +120,7 @@ const Embed = ({ countries }: Props): ReactElement => {
                         page’s HTML where you want the widget to appear.
                     </p>
                 </Typography>
-                <Typography className={classes.code} data-testid="typographyThree">
+                <Typography className={classes.code} data-testid="typographyThree" component="div">
                     <pre>
                         <code>{snippet}</code>
                     </pre>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, wait } from '@testing-library/react';
 import { mocked } from 'ts-jest/utils';
 import moment from 'moment-timezone';
 import isOpen from '../../util/isOpen';
@@ -72,6 +72,7 @@ describe('OrganizationOpen', () => {
                 });
                 jest.runTimersToTime(1000);
                 expect(await findByText('Closed')).toBeTruthy();
+                await wait();
             });
         });
     });

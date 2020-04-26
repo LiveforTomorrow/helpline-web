@@ -118,7 +118,7 @@ describe('OrganizationList', () => {
         });
 
         it('should hide filters when backdrop is clicked', () => {
-            const { getByText, getByTestId } = render(
+            const { getByTestId } = render(
                 <OrganizationList
                     country={country}
                     organizations={organizations}
