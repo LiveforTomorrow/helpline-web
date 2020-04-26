@@ -59,18 +59,18 @@ const useStyles = makeStyles((theme: Theme) =>
             '& > div': {
                 padding: theme.spacing(2),
             },
-            '@media (max-width: 320px)': {
+            [theme.breakpoints.down('xs')]: {
                 flexDirection: 'column',
             },
         },
         webChatSpacing: {
             display: 'none',
-            '@media (max-width: 320px)': {
+            [theme.breakpoints.down('xs')]: {
                 display: 'inline',
             },
         },
         webChatLineBreak: {
-            '@media (max-width: 320px)': {
+            [theme.breakpoints.down('xs')]: {
                 display: 'none',
             },
         },
@@ -128,7 +128,7 @@ const useStyles = makeStyles((theme: Theme) =>
             textAlign: 'center',
             gridRowGap: theme.spacing(2),
             gridAutoRows: 'min-content',
-            '@media (max-width: 320px)': {
+            [theme.breakpoints.down('xs')]: {
                 borderTopRightRadius: '0',
                 borderBottomLeftRadius: '10px',
                 gridAutoFlow: 'column',
