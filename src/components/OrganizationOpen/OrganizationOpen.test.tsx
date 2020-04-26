@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, waitFor, act } from '@testing-library/react';
+import { render, act } from '@testing-library/react';
 import { mocked } from 'ts-jest/utils';
 import moment from 'moment-timezone';
 import isOpen from '../../util/isOpen';
