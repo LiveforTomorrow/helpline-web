@@ -94,3 +94,11 @@ export const NotAlwaysOpen = (): ReactElement => (
         </Box>
     </ThemeProvider>
 );
+
+export const WithVariant = (): ReactElement => (
+    <ThemeProvider theme={theme}>
+        <Box m={2}>
+            <OrganizationCard organization={organization} variant="widget" />
+        </Box>
+    </ThemeProvider>
+);

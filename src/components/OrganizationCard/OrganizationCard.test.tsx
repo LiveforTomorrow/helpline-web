@@ -163,4 +163,11 @@ describe('OrganizationCard', () => {
             expect(() => getByTestId('fabs')).toThrow();
         });
     });
+
+    describe('variant is widget', () => {
+        it('should not have fabs element', () => {
+            const { getByText } = render(<OrganizationCard organization={organization} variant="widget" />);
+            expect(getByText(organization.name)).not.toHaveAttribute('href');
+        });
+    });
 });

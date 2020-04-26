@@ -85,7 +85,7 @@ const WidgetOrganizationList = ({ organizations }: Props): ReactElement => {
                         <Box className={classes.container}>
                             {organizations.map((organization) => (
                                 <Box key={organization.slug} className={classes.slide}>
-                                    <OrganizationCard organization={organization} />
+                                    <OrganizationCard organization={organization} variant="widget" />
                                 </Box>
                             ))}
                         </Box>

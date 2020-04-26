@@ -45,6 +45,7 @@ export type Organization = {
 
 type Props = {
     organization: Organization;
+    variant?: 'widget';
 };
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -145,7 +146,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-const OrganizationCard = ({ organization }: Props): ReactElement => {
+const OrganizationCard = ({ organization, variant }: Props): ReactElement => {
     const classes = useStyles();
 
     return (
@@ -153,9 +154,12 @@ const OrganizationCard = ({ organization }: Props): ReactElement => {
             <Box className={classes.grid}>
                 <Box ml={1}>
                     <Typography variant="h6">
-                        <Link href="/organizations/[slug]" as={`/organizations/${organization.slug}`} passHref>
-                            <a className={classes.heading}>{organization.name}</a>
-                        </Link>
+                        {variant === 'widget' && <a className={classes.heading}>{organization.name}</a>}
+                        {!variant && (
+                            <Link href="/organizations/[slug]" as={`/organizations/${organization.slug}`} passHref>
+                                <a className={classes.heading}>{organization.name}</a>
+                            </Link>
+                        )}
                         {organization.alwaysOpen && <Chip className={classes.chipAlwaysOpen} label="24/7" />}
                     </Typography>
                 </Box>
@@ -218,6 +222,8 @@ const OrganizationCard = ({ organization }: Props): ReactElement => {
                             className={[classes.button, classes.buttonLink].join(' ')}
                             startIcon={<PublicIcon />}
                             data-testid="url"
+                            target="_blank"
+                            rel="noopener noreferrer"
                         >
                             {
                                 organization.url
@@ -275,6 +281,8 @@ const OrganizationCard = ({ organization }: Props): ReactElement => {
                                 aria-label="web chat"
                                 data-testid="chatUrlFab"
                                 className={classes.fab}
+                                target="_blank"
+                                rel="noopener noreferrer"
                             >
                                 <MessageOutlinedIcon fontSize="inherit" />
                             </Fab>
