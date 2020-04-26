@@ -3,7 +3,6 @@ import React, { ReactElement, useState } from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { Box, Button, Backdrop } from '@material-ui/core';
 import FilterListIcon from '@material-ui/icons/FilterList';
-import Link from 'next/link';
 import CodeIcon from '@material-ui/icons/Code';
 import NavBar from '../NavBar';
 import filterAndSortOrganizations from '../../util/filterAndSortOrganizations';
@@ -135,19 +134,18 @@ const OrganizationList = ({
                 <WidgetOrganizationList organizations={filteredOrganizations} />
             </Box>
             <Box className={classes.embed}>
-                <Link href="/embed" passHref>
-                    <Button
-                        startIcon={<CodeIcon />}
-                        color="primary"
-                        component="a"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        size="small"
-                        classes={{ root: classes.embedButton, label: classes.link }}
-                    >
-                        Embed Find A Helpline on your website
-                    </Button>
-                </Link>
+                <Button
+                    href="https://zealnz.typeform.com/to/enT1Qk"
+                    startIcon={<CodeIcon />}
+                    color="primary"
+                    component="a"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    size="small"
+                    classes={{ root: classes.embedButton, label: classes.link }}
+                >
+                    Embed Find A Helpline on your website
+                </Button>
             </Box>
             <Backdrop
                 className={classes.backdrop}
