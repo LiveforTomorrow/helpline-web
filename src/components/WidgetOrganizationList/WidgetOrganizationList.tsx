@@ -27,8 +27,14 @@ const useStyles = makeStyles((theme: Theme) =>
             width: '80%',
             position: 'relative',
             paddingLeft: '1rem',
+            '&:first-child': {
+                marginLeft: '2.6rem',
+            },
             [theme.breakpoints.up('sm')]: {
                 width: '40%',
+                '&:first-child': {
+                    marginLeft: '4.8rem',
+                },
             },
         },
         button: {
@@ -60,7 +66,7 @@ const useStyles = makeStyles((theme: Theme) =>
 const WidgetOrganizationList = ({ organizations }: Props): ReactElement => {
     const classes = useStyles();
     const [EmblaCarouselReact, embla] = useEmblaCarousel({
-        loop: false,
+        align: 'start',
     });
 
     const [showPreviousButton, setShowPreviousButton] = useState(false);
