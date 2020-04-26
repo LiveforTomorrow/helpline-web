@@ -115,22 +115,22 @@ const OrganizationList = ({
 
     return (
         <>
+            <NavBar variant="widget">
+                <Button
+                    className={classes.filterButton}
+                    onClick={(): void => setShowFilters(true)}
+                    endIcon={<FilterListIcon />}
+                    data-testid="filter"
+                >
+                    Filter<span className={classes.sortText}>&nbsp;&amp; Sort</span>
+                </Button>
+            </NavBar>
+            <WidgetSearch
+                preselectedCountry={preselectedCountry}
+                countries={countries}
+                preselectedSubdivision={preselectedSubdivision}
+            />
             <Box className={classes.box}>
-                <NavBar variant="widget">
-                    <Button
-                        className={classes.filterButton}
-                        onClick={(): void => setShowFilters(true)}
-                        endIcon={<FilterListIcon />}
-                        data-testid="filter"
-                    >
-                        Filter<span className={classes.sortText}>&nbsp;&amp; Sort</span>
-                    </Button>
-                </NavBar>
-                <WidgetSearch
-                    preselectedCountry={preselectedCountry}
-                    countries={countries}
-                    preselectedSubdivision={preselectedSubdivision}
-                />
                 <TopBar variant="widget" country={preselectedCountry} />
                 <WidgetOrganizationList organizations={filteredOrganizations} />
             </Box>

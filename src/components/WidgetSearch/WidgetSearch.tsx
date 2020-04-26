@@ -1,5 +1,5 @@
 import React, { ReactElement, useState } from 'react';
-import { Button, Container } from '@material-ui/core';
+import { Button, Container, Box } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Link from 'next/link';
 import CountrySelect from '../CountrySelect';
@@ -23,12 +23,14 @@ type Props = {
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
+        box: {
+            backgroundColor: '#181719',
+        },
         container: {
             paddingTop: theme.spacing(1),
             paddingBottom: theme.spacing(2),
             display: 'grid',
             gridGap: theme.spacing(1),
-            backgroundColor: '#181719',
             gridTemplateColumns: '1fr auto',
             [theme.breakpoints.down('xs')]: {
                 gridTemplateColumns: '1fr',
@@ -47,31 +49,33 @@ const WidgetSearch = ({ preselectedCountry, preselectedSubdivision, countries }:
     const classes = useStyles();
 
     return (
-        <Container className={classes.container}>
-            <CountrySelect
-                countries={countries}
-                onCountryChange={setSelectedCountry}
-                onSubdivisionChange={setSelectedSubdivision}
-                preselectedCountry={preselectedCountry}
-                preselectedSubdivision={preselectedSubdivision}
-                inline
-            />
-            {selectedCountry && (
-                <Link
-                    href={{
-                        pathname: `/widget/[countryCode]${selectedSubdivision ? `/[subdivisionCode]` : ''}`,
-                    }}
-                    as={`/widget/${selectedCountry.code.toLowerCase()}${
-                        selectedSubdivision ? `/${selectedSubdivision.code.toLowerCase()}` : ''
-                    }`}
-                    passHref
-                >
-                    <Button className={classes.button} variant="contained" color="primary" size="large">
-                        Search
-                    </Button>
-                </Link>
-            )}
-        </Container>
+        <Box className={classes.box}>
+            <Container className={classes.container}>
+                <CountrySelect
+                    countries={countries}
+                    onCountryChange={setSelectedCountry}
+                    onSubdivisionChange={setSelectedSubdivision}
+                    preselectedCountry={preselectedCountry}
+                    preselectedSubdivision={preselectedSubdivision}
+                    inline
+                />
+                {selectedCountry && (
+                    <Link
+                        href={{
+                            pathname: `/widget/[countryCode]${selectedSubdivision ? `/[subdivisionCode]` : ''}`,
+                        }}
+                        as={`/widget/${selectedCountry.code.toLowerCase()}${
+                            selectedSubdivision ? `/${selectedSubdivision.code.toLowerCase()}` : ''
+                        }`}
+                        passHref
+                    >
+                        <Button className={classes.button} variant="contained" color="primary" size="large">
+                            Search
+                        </Button>
+                    </Link>
+                )}
+            </Container>
+        </Box>
     );
 };
 
