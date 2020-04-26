@@ -60,15 +60,19 @@ describe('OrganizationOpen', () => {
             expect(getByText('12:00 AM - 11:59 PM')).toBeTruthy();
         });
 
-        it('should update open status', async () => {
-            const { getByText, findByText } = render(<OrganizationOpen organization={organization} />);
-            expect(isOpen).toHaveBeenCalledWith(organization);
-            expect(getByText('12:00 AM - 11:59 PM')).toBeTruthy();
-            mocked(isOpen).mockReturnValue({
-                open: false,
+        describe('useFakeTimers', () => {
+            beforeEach(() => jest.useFakeTimers());
+
+            it('should update open status', async () => {
+                const { getByText, findByText } = render(<OrganizationOpen organization={organization} />);
+                expect(isOpen).toHaveBeenCalledWith(organization);
+                expect(getByText('12:00 AM - 11:59 PM')).toBeTruthy();
+                mocked(isOpen).mockReturnValue({
+                    open: false,
+                });
+                jest.runTimersToTime(1000);
+                expect(await findByText('Closed')).toBeTruthy();
             });
-            jest.runTimersToTime(1000);
-            expect(await findByText('Closed')).toBeTruthy();
         });
     });
 });

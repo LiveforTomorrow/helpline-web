@@ -13,7 +13,7 @@ describe('filterAndSortOrganizations', () => {
         phoneNumber: '0800 376 633',
         url: 'https://youthline.co.nz/website',
         chatUrl: 'https://youthline.co.nz/chat',
-        timezone: 'Auckland',
+        timezone: 'Pacific/Auckland',
     };
     const filteredOrganization = {
         slug: 'aaa',
@@ -27,7 +27,7 @@ describe('filterAndSortOrganizations', () => {
         phoneNumber: null,
         url: 'https://test.co.nz/website',
         chatUrl: undefined,
-        timezone: 'Auckland',
+        timezone: 'Pacific/Auckland',
     };
     const organizations = [organization, filteredOrganization];
     let changes;
@@ -112,7 +112,7 @@ describe('filterAndSortOrganizations', () => {
             phoneNumber: null,
             url: 'https://test.co.nz/website',
             chatUrl: undefined,
-            timezone: 'Auckland',
+            timezone: 'Pacific/Auckland',
         };
 
         const closedLastOrganization = {
@@ -127,7 +127,7 @@ describe('filterAndSortOrganizations', () => {
             phoneNumber: null,
             url: 'https://test.co.nz/website',
             chatUrl: undefined,
-            timezone: 'Auckland',
+            timezone: 'Pacific/Auckland',
         };
 
         it('sorts by A – Z', () => {

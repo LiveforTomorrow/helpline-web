@@ -14,7 +14,7 @@ const organizations = Array(8).fill({
     phoneNumber: '0800 376 633',
     url: 'https://youthline.co.nz/website',
     chatUrl: 'https://youthline.co.nz/chat',
-    timezone: 'Auckland',
+    timezone: 'Pacific/Auckland',
     topics: [],
 });
 

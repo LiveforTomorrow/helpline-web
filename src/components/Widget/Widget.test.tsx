@@ -18,7 +18,7 @@ describe('Widget', () => {
                 phoneNumber: '0800 376 633',
                 url: 'https://website.co.nz/website',
                 chatUrl: 'https://website.co.nz/chat',
-                timezone: 'Auckland',
+                timezone: 'Pacific/Auckland',
                 topics: [],
             },
             {
@@ -28,7 +28,7 @@ describe('Widget', () => {
                 openingHours: [],
                 humanSupportTypes: [],
                 categories: [],
-                timezone: 'Auckland',
+                timezone: 'Pacific/Auckland',
                 topics: [],
             },
         ];

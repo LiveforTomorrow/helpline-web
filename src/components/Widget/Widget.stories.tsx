@@ -15,7 +15,7 @@ const organizations = [
         phoneNumber: '0800 376 633',
         url: 'https://youthline.co.nz/website',
         chatUrl: 'https://youthline.co.nz/chat',
-        timezone: 'Auckland',
+        timezone: 'Pacific/Auckland',
         topics: [{ name: 'Anxiety' }],
     },
     {
@@ -25,7 +25,7 @@ const organizations = [
         openingHours: [],
         humanSupportTypes: [],
         categories: [],
-        timezone: 'Auckland',
+        timezone: 'Pacific/Auckland',
         topics: [],
     },
 ];
