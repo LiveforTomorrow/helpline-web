@@ -1,7 +1,7 @@
 import React, { ReactElement, useState } from 'react';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
-import { useInterval } from 'beautiful-react-hooks';
+import { useTimeout } from 'beautiful-react-hooks';
 import isOpen, { IsOpenStatus } from '../../util/isOpen';
 
 type OpeningHour = {
@@ -37,7 +37,7 @@ const OrganizationOpen = ({ organization }: Props): ReactElement => {
     const [openStatus, setOpenStatus] = useState<IsOpenStatus>(isOpen(organization));
 
     if (!organization.alwaysOpen) {
-        useInterval(() => setOpenStatus(isOpen(organization)), 1000);
+        useTimeout(() => setOpenStatus(isOpen(organization)), 1000);
     }
 
     return (

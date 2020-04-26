@@ -59,7 +59,7 @@ const WidgetSearch = ({ preselectedCountry, preselectedSubdivision, countries }:
             {selectedCountry && (
                 <Link
                     href={{
-                        pathname: `/widget/[widgetCountryCode]${selectedSubdivision ? `/[widgetSubdivisionCode]` : ''}`,
+                        pathname: `/widget/[countryCode]${selectedSubdivision ? `/[subdivisionCode]` : ''}`,
                     }}
                     as={`/widget/${selectedCountry.code.toLowerCase()}${
                         selectedSubdivision ? `/${selectedSubdivision.code.toLowerCase()}` : ''
