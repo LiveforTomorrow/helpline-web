@@ -28,6 +28,12 @@ export const Default = (): ReactElement => (
     </ThemeProvider>
 );
 
+export const WhenEmpty = (): ReactElement => (
+    <ThemeProvider theme={theme}>
+        <WidgetOrganizationList organizations={[]} />
+    </ThemeProvider>
+);
+
 Default.story = {
     parameters: { chromatic: { diffThreshold: 0.7 } },
 };

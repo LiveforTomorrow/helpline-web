@@ -8,6 +8,7 @@ import formatArrayIntoSentence from '../../util/formatArrayIntoSentence';
 import NavBar from '../NavBar';
 import filterAndSortOrganizations from '../../util/filterAndSortOrganizations';
 import OrganizationFilter from '../OrganizationFilter';
+import OrganizationEmpty from '../OrganizationEmpty';
 
 type Props = {
     country: { name: string };
@@ -137,6 +138,7 @@ const OrganizationList = ({
                         <OrganizationCard organization={organization} />
                     </Box>
                 ))}
+                {filteredOrganizations.length == 0 && <OrganizationEmpty />}
             </Container>
         </>
     );

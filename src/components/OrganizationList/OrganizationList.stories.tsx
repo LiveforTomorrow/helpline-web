@@ -84,3 +84,18 @@ export const WithTopics = (): ReactElement => (
         </Chrome>
     </ThemeProvider>
 );
+
+export const WhenEmpty = (): ReactElement => (
+    <ThemeProvider theme={theme}>
+        <Chrome country={{ emergencyNumber: '111' }}>
+            <OrganizationList
+                country={{ name: 'New Zealand' }}
+                categories={[]}
+                humanSupportTypes={[]}
+                preselectedTopics={[]}
+                topics={[]}
+                organizations={[]}
+            />
+        </Chrome>
+    </ThemeProvider>
+);

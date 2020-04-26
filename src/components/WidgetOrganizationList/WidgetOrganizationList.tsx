@@ -5,6 +5,7 @@ import { Box, Fab } from '@material-ui/core';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import OrganizationCard, { Organization } from '../OrganizationCard/OrganizationCard';
+import OrganizationEmpty from '../OrganizationEmpty';
 
 type Props = {
     organizations: Organization[];
@@ -110,6 +111,7 @@ const WidgetOrganizationList = ({ organizations }: Props): ReactElement => {
                     </Fab>
                 </>
             )}
+            {organizations && organizations.length == 0 && <OrganizationEmpty />}
         </Box>
     );
 };
