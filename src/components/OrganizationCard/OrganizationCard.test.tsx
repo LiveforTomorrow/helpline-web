@@ -122,7 +122,7 @@ describe('OrganizationCard', () => {
 
     it('should contain categories', () => {
         const { getByTestId } = render(<OrganizationCard organization={organization} />);
-        expect(getByTestId('categories')).toHaveTextContent('1234+1 more');
+        expect(getByTestId('categories')).toHaveTextContent('123+2 more');
     });
 
     describe('no categories', () => {

@@ -245,7 +245,7 @@ const OrganizationCard = ({ organization, variant }: Props): ReactElement => {
                 )}
                 {organization.categories.length > 0 && (
                     <Box ml={1} data-testid="categories">
-                        <Chips items={organization.categories} max={4} />
+                        <Chips items={organization.categories} max={3} />
                     </Box>
                 )}
             </Box>
