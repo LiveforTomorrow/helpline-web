@@ -114,6 +114,25 @@ export const WithLongTitle = (): ReactElement => (
     </ThemeProvider>
 );
 
+export const WithManyCategories = (): ReactElement => (
+    <ThemeProvider theme={theme}>
+        <Box m={2}>
+            <OrganizationCard
+                organization={{
+                    ...organization,
+                    categories: [
+                        { name: 'For everyone' },
+                        { name: 'For youth' },
+                        { name: 'All issues' },
+                        { name: 'For women' },
+                        { name: 'For men' },
+                    ],
+                }}
+            />
+        </Box>
+    </ThemeProvider>
+);
+
 export const WhenVariant = (): ReactElement => (
     <ThemeProvider theme={theme}>
         <Box m={2}>
