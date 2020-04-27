@@ -112,7 +112,7 @@ const OrganizationFilter = ({
             </Box>
             {humanSupportTypes && humanSupportTypes.length > 0 && (
                 <Box my={2}>
-                    <Typography className={classes.title}>Human Support Type</Typography>
+                    <Typography className={classes.title}>Live Support Type</Typography>
                     <ItemSelect items={humanSupportTypes} onChange={setSelectedHumanSupportTypes} max={7} />
                 </Box>
             )}
