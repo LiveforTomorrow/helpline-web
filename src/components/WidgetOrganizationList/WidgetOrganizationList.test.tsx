@@ -32,6 +32,18 @@ const organizations = [
 ];
 
 describe('WidgetOrganizationList', () => {
+    beforeEach(() => {
+        const createElement = document.createElement.bind(document);
+        // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+        document.createElement = (tagName: string) => {
+            const element = createElement(tagName);
+            if (tagName === 'canvas') {
+                element.getContext = (): {} => ({});
+            }
+            return element;
+        };
+    });
+
     it('should toggle buttons disabled state', () => {
         const { getByTestId } = render(<WidgetOrganizationList organizations={organizations} />);
         const previousButton = getByTestId('previousButton');

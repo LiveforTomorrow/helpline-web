@@ -8,7 +8,7 @@ import PhoneIcon from '@material-ui/icons/Phone';
 import PublicIcon from '@material-ui/icons/Public';
 import MessageOutlinedIcon from '@material-ui/icons/MessageOutlined';
 import Link from 'next/link';
-import BookmarkIcon from '@material-ui/icons/Bookmark';
+import WhatshotIcon from '@material-ui/icons/Whatshot';
 import TextTruncate from 'react-text-truncate';
 import OrganizationOpen from '../OrganizationOpen';
 import Chips from '../Chips';
@@ -149,7 +149,7 @@ const OrganizationCard = ({ organization, variant }: Props): ReactElement => {
     const classes = useStyles();
 
     return (
-        <Box className={classes.box}>
+        <Box data-testid={organization.slug} className={classes.box}>
             <Box className={classes.grid}>
                 <Box className={classes.header}>
                     <Typography variant="h6" className={classes.heading}>
@@ -168,7 +168,7 @@ const OrganizationCard = ({ organization, variant }: Props): ReactElement => {
                     </Typography>
                     {organization.featured && (
                         <Box className={classes.featured}>
-                            <BookmarkIcon />
+                            <WhatshotIcon />
                         </Box>
                     )}
                 </Box>
