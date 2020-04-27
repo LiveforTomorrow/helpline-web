@@ -90,6 +90,9 @@ const useStyles = makeStyles((theme: Theme) =>
             alignItems: 'center',
         },
         heading: {
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
             '& a': {
                 fontWeight: 'bold',
                 textDecoration: 'underline',
