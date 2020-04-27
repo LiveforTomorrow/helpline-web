@@ -3,22 +3,31 @@ import { render } from '@testing-library/react';
 import OrganizationCard from '.';
 
 describe('OrganizationCard', () => {
-    let organization;
+    let organization = {
+        slug: 'youthline',
+        name: 'Youthline',
+        alwaysOpen: true,
+        openingHours: [],
+        humanSupportTypes: [{ name: 'Volunteers' }, { name: 'Staff' }],
+        categories: [{ name: '1' }, { name: '2' }, { name: '3' }, { name: '4' }, { name: '5' }],
+        smsNumber: '234',
+        phoneNumber: '0800 376 633',
+        url: 'https://youthline.co.nz/website',
+        chatUrl: 'https://youthline.co.nz/chat',
+        timezone: 'Pacific/Auckland',
+        topics: [],
+        featured: false,
+    };
 
     beforeEach(() => {
-        organization = {
-            slug: 'youthline',
-            name: 'Youthline',
-            alwaysOpen: true,
-            openingHours: [],
-            humanSupportTypes: [{ name: 'Volunteers' }, { name: 'Staff' }],
-            categories: [{ name: '1' }, { name: '2' }, { name: '3' }, { name: '4' }, { name: '5' }],
-            smsNumber: '234',
-            phoneNumber: '0800 376 633',
-            url: 'https://youthline.co.nz/website',
-            chatUrl: 'https://youthline.co.nz/chat',
-            timezone: 'Pacific/Auckland',
-            topics: [],
+        const createElement = document.createElement.bind(document);
+        // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+        document.createElement = (tagName: string) => {
+            const element = createElement(tagName);
+            if (tagName === 'canvas') {
+                element.getContext = (): {} => ({});
+            }
+            return element;
         };
     });
 
@@ -164,10 +173,15 @@ describe('OrganizationCard', () => {
         });
     });
 
+    it('should have href', () => {
+        const { getByTestId } = render(<OrganizationCard organization={organization} />);
+        expect(getByTestId('headingLink')).toHaveAttribute('href', `/organizations/${organization.slug}`);
+    });
+
     describe('variant is widget', () => {
-        it('should not have fabs element', () => {
-            const { getByText } = render(<OrganizationCard organization={organization} variant="widget" />);
-            expect(getByText(organization.name)).not.toHaveAttribute('href');
+        it('should not have href', () => {
+            const { getByTestId } = render(<OrganizationCard organization={organization} variant="widget" />);
+            expect(getByTestId('headingLink')).not.toHaveAttribute('href');
         });
     });
 });

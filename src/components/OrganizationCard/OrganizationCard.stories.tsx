@@ -108,7 +108,11 @@ export const WithLongTitle = (): ReactElement => (
     <ThemeProvider theme={theme}>
         <Box m={2}>
             <OrganizationCard
-                organization={{ ...organization, name: 'The quick brown fox jumps over the lazy dog', featured: true }}
+                organization={{
+                    ...organization,
+                    name: 'The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog',
+                    featured: true,
+                }}
             />
         </Box>
     </ThemeProvider>

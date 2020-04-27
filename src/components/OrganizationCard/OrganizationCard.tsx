@@ -9,6 +9,7 @@ import PublicIcon from '@material-ui/icons/Public';
 import MessageOutlinedIcon from '@material-ui/icons/MessageOutlined';
 import Link from 'next/link';
 import BookmarkIcon from '@material-ui/icons/Bookmark';
+import TextTruncate from 'react-text-truncate';
 import OrganizationOpen from '../OrganizationOpen';
 import Chips from '../Chips';
 
@@ -88,12 +89,8 @@ const useStyles = makeStyles((theme: Theme) =>
             gridTemplateColumns: '1fr auto',
             marginLeft: theme.spacing(1),
             gridGap: theme.spacing(1),
-            alignItems: 'center',
         },
         heading: {
-            whiteSpace: 'nowrap',
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
             '& a': {
                 fontWeight: 'bold',
                 textDecoration: 'underline',
@@ -102,6 +99,7 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         featured: {
             color: '#FFD300',
+            paddingTop: '2px',
         },
         button: {
             textTransform: 'none',
@@ -155,17 +153,23 @@ const OrganizationCard = ({ organization, variant }: Props): ReactElement => {
             <Box className={classes.grid}>
                 <Box className={classes.header}>
                     <Typography variant="h6" className={classes.heading}>
-                        {variant === 'widget' && <a>{organization.name}</a>}
+                        {variant === 'widget' && (
+                            <a data-testid="headingLink">
+                                <TextTruncate line={2} text={organization.name} />
+                            </a>
+                        )}
                         {!variant && (
                             <Link href="/organizations/[slug]" as={`/organizations/${organization.slug}`} passHref>
-                                <a>{organization.name}</a>
+                                <a data-testid="headingLink">
+                                    <TextTruncate line={2} text={organization.name} />
+                                </a>
                             </Link>
                         )}
                     </Typography>
                     {organization.featured && (
-                        <span className={classes.featured}>
+                        <Box className={classes.featured}>
                             <BookmarkIcon />
-                        </span>
+                        </Box>
                     )}
                 </Box>
                 {(organization.alwaysOpen || organization.openingHours.length > 0) && (
