@@ -3,6 +3,16 @@ require('dotenv').config();
 const path = require('path');
 const webpack = require('webpack');
 
+let widgetUrl;
+
+if (process.env.WIDGET_URL) {
+    widgetUrl = `https://${process.env.WIDGET_URL}`;
+} else if (process.env.NOW_URL) {
+    widgetUrl = `https://${process.env.NOW_URL}`;
+} else {
+    widgetUrl = 'http://localhost:3000';
+}
+
 module.exports = {
     mode: 'production',
     entry: {
@@ -49,7 +59,7 @@ module.exports = {
     },
     plugins: [
         new webpack.EnvironmentPlugin({
-            WIDGET_URL: process.env.WIDGET_URL || process.env.NOW_URL || 'localhost:3000',
+            WIDGET_URL: widgetUrl,
         }),
     ],
 };
