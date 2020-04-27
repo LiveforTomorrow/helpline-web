@@ -49,7 +49,7 @@ module.exports = {
     },
     plugins: [
         new webpack.EnvironmentPlugin({
-            NOW_URL: 'localhost:3000',
+            WIDGET_URL: process.env.NOW_URL || 'localhost:3000',
         }),
     ],
 };

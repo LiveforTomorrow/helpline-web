@@ -1,4 +1,4 @@
-import React, { ReactElement, useState, ChangeEvent } from 'react';
+import React, { ReactElement, useState, ChangeEvent, useEffect } from 'react';
 import { Container, Box, Typography, FormControl, MenuItem, InputLabel, Select } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 
@@ -64,10 +64,15 @@ const Embed = ({ countries }: Props): ReactElement => {
     const [selectedCountryCode, setSelectedCountryCode] = useState<string>('US');
     const classes = useStyles();
 
-    const snippet = `<div id="widget"></div>
+    const [snippet, setSnippet] = useState('');
 
-<script src="//${process.env.NOW_URL}/widget.min.js"></script>
-<script>Widget.default({ countryCode: '${selectedCountryCode.toLowerCase()}' }).render('#widget');</script>`;
+    const updateSnippet = (): void => {
+        setSnippet(`<div id="widget"></div>
+        <script src="${window.location.protocol}//${window.location.host}/widget.min.js"></script>
+        <script>Widget.default({ countryCode: '${selectedCountryCode.toLowerCase()}' }).render('#widget');</script>`);
+    };
+
+    useEffect(updateSnippet);
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
         setSelectedCountryCode(event.target.value);
