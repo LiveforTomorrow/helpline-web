@@ -1,5 +1,5 @@
 module.exports = {
     env: {
-        NOW_URL: 'localhost:3000',
+        NOW_URL: process.env.NOW_URL || 'localhost:3000',
     },
 };
