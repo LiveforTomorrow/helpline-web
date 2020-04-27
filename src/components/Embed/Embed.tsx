@@ -67,9 +67,11 @@ const Embed = ({ countries }: Props): ReactElement => {
     const [snippet, setSnippet] = useState('');
 
     const updateSnippet = (): void => {
-        setSnippet(`<div id="widget"></div>
-        <script src="${window.location.protocol}//${window.location.host}/widget.min.js"></script>
-        <script>Widget.default({ countryCode: '${selectedCountryCode.toLowerCase()}' }).render('#widget');</script>`);
+        setSnippet(
+            `<div id="widget"></div>
+<script src="${window.location.protocol}//${window.location.host}/widget.min.js"></script>
+<script>Widget.default({ countryCode: '${selectedCountryCode.toLowerCase()}' }).render('#widget');</script>`,
+        );
     };
 
     useEffect(updateSnippet);
