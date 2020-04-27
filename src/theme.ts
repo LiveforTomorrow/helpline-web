@@ -27,6 +27,9 @@ const theme = createMuiTheme({
         text: {
             primary: '#202020',
         },
+        background: {
+            default: '#fff',
+        },
     },
 });
 
