@@ -209,6 +209,7 @@ const OrganizationCard = ({ organization, variant }: Props): ReactElement => {
                                 className={[classes.button, classes.buttonLink].join(' ')}
                                 startIcon={<SmsOutlinedIcon />}
                                 data-testid="smsNumber"
+                                target="_parent"
                             >
                                 {organization.smsNumber}
                             </Button>
@@ -220,6 +221,7 @@ const OrganizationCard = ({ organization, variant }: Props): ReactElement => {
                                 className={[classes.button, classes.buttonLink].join(' ')}
                                 startIcon={<PhoneIcon />}
                                 data-testid="phoneNumber"
+                                target="_parent"
                             >
                                 {organization.phoneNumber}
                             </Button>
@@ -263,6 +265,7 @@ const OrganizationCard = ({ organization, variant }: Props): ReactElement => {
                                 aria-label="text"
                                 data-testid="smsNumberFab"
                                 className={classes.fab}
+                                target="_parent"
                             >
                                 <SmsOutlinedIcon fontSize="inherit" />
                             </Fab>
@@ -277,6 +280,7 @@ const OrganizationCard = ({ organization, variant }: Props): ReactElement => {
                                 aria-label="call"
                                 data-testid="phoneNumberFab"
                                 className={classes.fab}
+                                target="_parent"
                             >
                                 <PhoneIcon fontSize="inherit" />
                             </Fab>
