@@ -68,7 +68,7 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         embed: {
             textAlign: 'center',
-            margin: theme.spacing(1),
+            padding: theme.spacing(1),
         },
         embedButton: {
             color: '#000',
