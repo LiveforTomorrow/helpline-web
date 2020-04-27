@@ -113,7 +113,7 @@ const OrganizationFilter = ({
             {humanSupportTypes && humanSupportTypes.length > 0 && (
                 <Box my={2}>
                     <Typography className={classes.title}>Human Support Type</Typography>
-                    <ItemSelect items={humanSupportTypes} onChange={setSelectedHumanSupportTypes} />
+                    <ItemSelect items={humanSupportTypes} onChange={setSelectedHumanSupportTypes} max={7} />
                 </Box>
             )}
             {topics && topics.length > 0 && (
@@ -123,14 +123,14 @@ const OrganizationFilter = ({
                         items={topics}
                         preselectedItems={preselectedTopics}
                         onChange={setSelectedTopics}
-                        hideUnselected={preselectedTopics && preselectedTopics.length > 0}
+                        max={7}
                     />
                 </Box>
             )}
             {categories && categories.length > 0 && (
                 <Box my={2}>
                     <Typography className={classes.title}>Categories</Typography>
-                    <ItemSelect items={categories} onChange={setSelectedCategories} />
+                    <ItemSelect items={categories} onChange={setSelectedCategories} max={7} />
                 </Box>
             )}
             <Box my={2}>

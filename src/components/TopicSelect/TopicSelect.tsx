@@ -56,7 +56,7 @@ const TopicSelect = ({ topics, onChange }: Props): ReactElement => {
             <Box mb={1} className={classes.heading}>
                 <Typography className={classes.text}>Select topics (optional)</Typography>
             </Box>
-            <ItemSelect items={topics} onChange={onChange} />
+            <ItemSelect items={topics} onChange={onChange} max={10} />
         </Box>
     );
 };
