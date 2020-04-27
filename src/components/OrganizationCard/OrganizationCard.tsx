@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import { Typography, Chip, Button, Box, Fab } from '@material-ui/core';
+import { Typography, Button, Box, Fab } from '@material-ui/core';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import SmsOutlinedIcon from '@material-ui/icons/SmsOutlined';
@@ -10,6 +10,7 @@ import MessageOutlinedIcon from '@material-ui/icons/MessageOutlined';
 import Link from 'next/link';
 import BookmarkIcon from '@material-ui/icons/Bookmark';
 import OrganizationOpen from '../OrganizationOpen';
+import Chips from '../Chips';
 
 type OpeningHour = {
     day: string;
@@ -119,21 +120,6 @@ const useStyles = makeStyles((theme: Theme) =>
             '&:hover': {
                 textDecoration: 'underline',
             },
-        },
-        chips: {
-            display: 'flex',
-            justifyContent: 'left',
-            flexWrap: 'wrap',
-            marginTop: theme.spacing(1),
-            '& > *': {
-                marginRight: theme.spacing(0.5),
-                marginBottom: theme.spacing(0.5),
-            },
-        },
-        chip: {
-            color: '#FFFFFF',
-            backgroundColor: theme.palette.text.primary,
-            fontWeight: 600,
         },
         side: {
             display: 'grid',
@@ -258,10 +244,8 @@ const OrganizationCard = ({ organization, variant }: Props): ReactElement => {
                     </Box>
                 )}
                 {organization.categories.length > 0 && (
-                    <Box ml={1} className={classes.chips} data-testid="categories">
-                        {organization.categories.map((category, index) => (
-                            <Chip className={classes.chip} key={index} label={category.name} />
-                        ))}
+                    <Box ml={1} data-testid="categories">
+                        <Chips items={organization.categories} max={4} />
                     </Box>
                 )}
             </Box>

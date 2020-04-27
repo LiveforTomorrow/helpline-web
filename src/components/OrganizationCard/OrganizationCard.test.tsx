@@ -12,7 +12,7 @@ describe('OrganizationCard', () => {
             alwaysOpen: true,
             openingHours: [],
             humanSupportTypes: [{ name: 'Volunteers' }, { name: 'Staff' }],
-            categories: [{ name: 'For youth' }, { name: 'All issues' }],
+            categories: [{ name: '1' }, { name: '2' }, { name: '3' }, { name: '4' }, { name: '5' }],
             smsNumber: '234',
             phoneNumber: '0800 376 633',
             url: 'https://youthline.co.nz/website',
@@ -122,7 +122,7 @@ describe('OrganizationCard', () => {
 
     it('should contain categories', () => {
         const { getByTestId } = render(<OrganizationCard organization={organization} />);
-        expect(getByTestId('categories')).toHaveTextContent('For youthAll issues');
+        expect(getByTestId('categories')).toHaveTextContent('1234+1 more');
     });
 
     describe('no categories', () => {
