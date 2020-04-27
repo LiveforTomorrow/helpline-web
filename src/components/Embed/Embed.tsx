@@ -81,7 +81,7 @@ const Embed = ({ countries }: Props): ReactElement => {
     };
 
     return (
-        <Container maxWidth="xs" className={classes.container} data-testid="embedContainer">
+        <Container maxWidth="sm" className={classes.container} data-testid="embedContainer">
             <Box className={classes.box}>
                 <Box className={classes.logo}>
                     <img src="/logo.svg" alt="find a helpline" />
