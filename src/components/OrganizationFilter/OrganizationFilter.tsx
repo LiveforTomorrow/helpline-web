@@ -103,17 +103,6 @@ const OrganizationFilter = ({
                 </Button>
             </Box>
             <hr />
-            {topics && topics.length > 0 && (
-                <Box my={2}>
-                    <Typography className={classes.title}>Topics</Typography>
-                    <ItemSelect
-                        items={topics}
-                        preselectedItems={preselectedTopics}
-                        onChange={setSelectedTopics}
-                        hideUnselected={preselectedTopics && preselectedTopics.length > 0}
-                    />
-                </Box>
-            )}
             <Box my={2}>
                 <Typography className={classes.title}>Contact Method</Typography>
                 <ItemSelect
@@ -125,6 +114,17 @@ const OrganizationFilter = ({
                 <Box my={2}>
                     <Typography className={classes.title}>Human Support Type</Typography>
                     <ItemSelect items={humanSupportTypes} onChange={setSelectedHumanSupportTypes} />
+                </Box>
+            )}
+            {topics && topics.length > 0 && (
+                <Box my={2}>
+                    <Typography className={classes.title}>Topics</Typography>
+                    <ItemSelect
+                        items={topics}
+                        preselectedItems={preselectedTopics}
+                        onChange={setSelectedTopics}
+                        hideUnselected={preselectedTopics && preselectedTopics.length > 0}
+                    />
                 </Box>
             )}
             {categories && categories.length > 0 && (
