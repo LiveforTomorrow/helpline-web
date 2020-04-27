@@ -103,7 +103,7 @@ const OrganizationList = ({
             categories: [],
             humanSupportTypes: [],
             topics: [],
-            sorts: [{ name: 'A – Z' }],
+            sorts: [{ name: 'Featured' }],
         }),
     );
 
