@@ -21,8 +21,10 @@ const useStyles = makeStyles((theme: Theme) =>
             color: '#FFFFFF',
         },
         container: {
-            display: 'flex',
+            display: 'grid',
             alignItems: 'center',
+            gridTemplateColumns: '1fr auto',
+            gridGap: theme.spacing(1),
         },
         logo: {
             display: 'grid',
