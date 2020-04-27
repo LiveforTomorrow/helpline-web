@@ -5,8 +5,8 @@ const webpack = require('webpack');
 
 let widgetUrl;
 
-if (process.env.WIDGET_URL) {
-    widgetUrl = `https://${process.env.WIDGET_URL}`;
+if (process.env.BASE_URL) {
+    widgetUrl = `https://${process.env.BASE_URL}`;
 } else if (process.env.NOW_URL) {
     widgetUrl = `https://${process.env.NOW_URL}`;
 } else {
