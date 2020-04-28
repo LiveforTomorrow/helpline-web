@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme: Theme) =>
             gridGap: theme.spacing(2),
             textAlign: 'center',
             marginTop: theme.spacing(5),
-            marginBottom: theme.spacing(5),
+            marginBottom: theme.spacing(6),
         },
         emoji: {
             fontSize: '4rem',

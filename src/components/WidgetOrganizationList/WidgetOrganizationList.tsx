@@ -84,9 +84,18 @@ const WidgetOrganizationList = ({ organizations }: Props): ReactElement => {
         }
     }, [embla]);
 
+    useEffect(() => {
+        if (embla) {
+            embla.scrollTo(0);
+            embla.changeOptions({
+                align: 'start',
+            });
+        }
+    }, [organizations]);
+
     return (
         <Box className={classes.box}>
-            {organizations && organizations.length > 0 && (
+            {organizations.length > 0 && (
                 <>
                     <EmblaCarouselReact>
                         <Box className={classes.container}>
@@ -117,7 +126,7 @@ const WidgetOrganizationList = ({ organizations }: Props): ReactElement => {
                     </Fab>
                 </>
             )}
-            {organizations && organizations.length == 0 && <OrganizationEmpty />}
+            {organizations.length == 0 && <OrganizationEmpty />}
         </Box>
     );
 };
