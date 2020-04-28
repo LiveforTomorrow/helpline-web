@@ -129,7 +129,7 @@ const TopBar = ({ country, variant }: Props): ReactElement => {
                         endIcon={<DirectionsRunIcon />}
                         href="https://accuweather.com"
                         data-testid="leaveQuicklyButton"
-                        target="_blank"
+                        target="_parent"
                         rel="noopener noreferrer"
                     >
                         Leave Quickly
