@@ -170,13 +170,13 @@ const CountrySelect = ({
                     renderInput={(params): ReactElement => (
                         <TextField
                             {...params}
-                            placeholder="State or province (optional)"
+                            placeholder="Search by state or province (optional)"
                             variant="outlined"
                             inputProps={{
                                 ...params.inputProps,
                                 autoComplete: 'new-password', // disable autocomplete and autofill
                                 'data-testid': 'subdivisionInput',
-                                'aria-label': 'State or province (optional)',
+                                'aria-label': 'Search by state or province (optional)',
                             }}
                         />
                     )}
