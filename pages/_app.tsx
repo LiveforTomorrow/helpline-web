@@ -23,8 +23,11 @@ export default class MyApp extends App {
         return (
             <React.Fragment>
                 <Head>
-                    <title>My page</title>
-                    <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
+                    <title>Find A Helpline</title>
+                    <meta
+                        name="viewport"
+                        content="minimum-scale=1, initial-scale=1, width=device-width, user-scalable=no"
+                    />
                 </Head>
                 <ThemeProvider theme={theme}>
                     <CssBaseline />
