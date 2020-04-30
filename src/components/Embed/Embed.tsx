@@ -67,9 +67,13 @@ const Embed = ({ countries }: Props): ReactElement => {
     const [snippet, setSnippet] = useState('');
 
     const updateSnippet = (): void => {
+        let host = window.location.host;
+        if (host.includes('chromatic')) {
+            host = 'findahelpline.com';
+        }
         setSnippet(
             `<div id="widget"></div>
-<script src="${window.location.protocol}//${window.location.host}/widget.min.js"></script>
+<script src="${window.location.protocol}//${host}/widget.min.js"></script>
 <script>Widget.default({ countryCode: '${selectedCountryCode.toLowerCase()}' }).render('#widget');</script>`,
         );
     };
