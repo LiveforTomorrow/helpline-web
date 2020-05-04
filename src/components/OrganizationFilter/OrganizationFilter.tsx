@@ -45,6 +45,11 @@ const useStyles = makeStyles((theme: Theme) =>
             marginTop: theme.spacing(2),
             marginBottom: theme.spacing(2),
         },
+        header: {
+            display: 'grid',
+            gridTemplateColumns: '1fr auto',
+            alignItems: 'center',
+        },
         heading: {
             fontWeight: 'bold',
         },
@@ -69,7 +74,7 @@ const OrganizationFilter = ({
     const [selectedCategories, setSelectedCategories] = useState<Category[]>([]);
     const [selectedHumanSupportTypes, setSelectedHumanSupportTypes] = useState<HumanSupportType[]>([]);
     const [selectedTopics, setSelectedTopics] = useState<Topic[]>([]);
-    const [selectedSorts, setSelectedSorts] = useState<Sort[]>([{ name: 'A – Z' }]);
+    const [selectedSorts, setSelectedSorts] = useState<Sort[]>([{ name: 'Featured' }]);
 
     const onClick = (): void => {
         onChange({
@@ -89,53 +94,54 @@ const OrganizationFilter = ({
 
     return (
         <Container className={classes.container}>
-            <Typography className={classes.heading} variant="h6">
-                Filter &amp; Sort
-            </Typography>
-            <Box mt={2} mb={3}>
-                {topics && topics.length > 0 && (
-                    <Box my={2}>
-                        <Typography className={classes.title}>Topics</Typography>
-                        <ItemSelect
-                            items={topics}
-                            preselectedItems={preselectedTopics}
-                            onChange={setSelectedTopics}
-                            hideUnselected={preselectedTopics && preselectedTopics.length > 0}
-                        />
-                    </Box>
-                )}
-                <Box my={2}>
-                    <Typography className={classes.title}>Contact Method</Typography>
-                    <ItemSelect
-                        items={[{ name: 'Phone' }, { name: 'Text' }, { name: 'Web Chat' }]}
-                        onChange={setSelectedContactMethods}
-                    />
-                </Box>
-                {humanSupportTypes && humanSupportTypes.length > 0 && (
-                    <Box my={2}>
-                        <Typography className={classes.title}>Human Support Type</Typography>
-                        <ItemSelect items={humanSupportTypes} onChange={setSelectedHumanSupportTypes} />
-                    </Box>
-                )}
-                {categories && categories.length > 0 && (
-                    <Box my={2}>
-                        <Typography className={classes.title}>Categories</Typography>
-                        <ItemSelect items={categories} onChange={setSelectedCategories} />
-                    </Box>
-                )}
-                <Box my={2}>
-                    <Typography className={classes.title}>Sort by</Typography>
-                    <ItemSelect
-                        items={[{ name: 'A – Z' }, { name: 'Open now' }]}
-                        preselectedItems={selectedSorts}
-                        onChange={setSelectedSorts}
-                        single
-                    />
-                </Box>
+            <Box my={2} className={classes.header}>
+                <Typography className={classes.heading} variant="h6">
+                    Filter &amp; Sort
+                </Typography>
+                <Button className={classes.button} variant="contained" color="primary" onClick={onClick} size="large">
+                    Apply
+                </Button>
             </Box>
-            <Button className={classes.button} variant="contained" color="primary" onClick={onClick} size="large">
-                Apply
-            </Button>
+            <hr />
+            <Box my={2}>
+                <Typography className={classes.title}>Contact Method</Typography>
+                <ItemSelect
+                    items={[{ name: 'Phone' }, { name: 'Text' }, { name: 'Web Chat' }]}
+                    onChange={setSelectedContactMethods}
+                />
+            </Box>
+            {humanSupportTypes && humanSupportTypes.length > 0 && (
+                <Box my={2}>
+                    <Typography className={classes.title}>Live Support Type</Typography>
+                    <ItemSelect items={humanSupportTypes} onChange={setSelectedHumanSupportTypes} max={7} />
+                </Box>
+            )}
+            {topics && topics.length > 0 && (
+                <Box my={2}>
+                    <Typography className={classes.title}>Topics</Typography>
+                    <ItemSelect
+                        items={topics}
+                        preselectedItems={preselectedTopics}
+                        onChange={setSelectedTopics}
+                        max={7}
+                    />
+                </Box>
+            )}
+            {categories && categories.length > 0 && (
+                <Box my={2}>
+                    <Typography className={classes.title}>Categories</Typography>
+                    <ItemSelect items={categories} onChange={setSelectedCategories} max={7} />
+                </Box>
+            )}
+            <Box my={2}>
+                <Typography className={classes.title}>Sort by</Typography>
+                <ItemSelect
+                    items={[{ name: 'Featured' }, { name: 'A – Z' }, { name: 'Open now' }]}
+                    preselectedItems={selectedSorts}
+                    onChange={setSelectedSorts}
+                    single
+                />
+            </Box>
         </Container>
     );
 };

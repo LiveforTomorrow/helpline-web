@@ -3,12 +3,12 @@ import { render, fireEvent } from '@testing-library/react';
 import ItemSelect from '.';
 
 describe('ItemSelect', () => {
-    const items = [{ name: 'happy' }, { name: 'sad' }];
+    const items = [{ name: 'happy' }, { name: 'sad' }, { name: 'angry' }];
 
     it('should contain multiple chips', () => {
         const { getAllByTestId } = render(<ItemSelect items={items} onChange={jest.fn()} />);
         const elements = getAllByTestId('itemChip');
-        expect(elements).toHaveLength(2);
+        expect(elements).toHaveLength(3);
     });
 
     it('should allow chip to be toggled', () => {
@@ -35,30 +35,6 @@ describe('ItemSelect', () => {
         expect(getByText('happy').parentElement.className).toContain('MuiChip-colorPrimary');
     });
 
-    describe('hideUnselected', () => {
-        it('should hide unselected items', () => {
-            const { getByText } = render(
-                <ItemSelect items={items} preselectedItems={[{ name: 'happy' }]} onChange={jest.fn()} hideUnselected />,
-            );
-            expect(() => getByText('sad')).toThrow();
-        });
-
-        it('should show more button', () => {
-            const { getByText } = render(
-                <ItemSelect items={items} preselectedItems={[{ name: 'happy' }]} onChange={jest.fn()} hideUnselected />,
-            );
-            expect(getByText('+1 more')).toBeTruthy();
-        });
-
-        it('should show hidden unselected items when more button is clicked', () => {
-            const { getByText } = render(
-                <ItemSelect items={items} preselectedItems={[{ name: 'happy' }]} onChange={jest.fn()} hideUnselected />,
-            );
-            fireEvent.click(getByText('+1 more'));
-            expect(getByText('sad')).toBeTruthy();
-        });
-    });
-
     describe('single', () => {
         it('should only allow single chip to be selected', () => {
             let counter = 0;
@@ -75,6 +51,35 @@ describe('ItemSelect', () => {
             const elements = getAllByTestId('itemChip');
             fireEvent.click(elements[0]);
             fireEvent.click(elements[1]);
+        });
+    });
+
+    describe('max', () => {
+        it('should show mix of items and preselected items up to max', () => {
+            const { baseElement } = render(
+                <ItemSelect items={items} preselectedItems={[{ name: 'angry' }]} max={2} onChange={jest.fn()} />,
+            );
+            expect(baseElement).toHaveTextContent('angryhappy+1 more');
+        });
+
+        it('should show all selected items if they exceed max', () => {
+            const { baseElement } = render(
+                <ItemSelect
+                    items={items}
+                    preselectedItems={[{ name: 'happy' }, { name: 'sad' }]}
+                    max={1}
+                    onChange={jest.fn()}
+                />,
+            );
+            expect(baseElement).toHaveTextContent('happysad+1 more');
+        });
+
+        it('should expand to show all chips when clicked', () => {
+            const { getByTestId, baseElement } = render(
+                <ItemSelect items={items} preselectedItems={[{ name: 'angry' }]} max={2} onChange={jest.fn()} />,
+            );
+            fireEvent.click(getByTestId('moreChips'));
+            expect(baseElement).toHaveTextContent('happysadangry');
         });
     });
 });

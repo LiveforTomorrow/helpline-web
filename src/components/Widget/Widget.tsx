@@ -62,13 +62,13 @@ const useStyles = makeStyles((theme: Theme) =>
             },
         },
         sortText: {
-            '@media (max-width: 320px)': {
+            [theme.breakpoints.down('xs')]: {
                 display: 'none',
             },
         },
         embed: {
             textAlign: 'center',
-            margin: theme.spacing(1),
+            padding: theme.spacing(1),
         },
         embedButton: {
             color: '#000',
@@ -103,7 +103,7 @@ const OrganizationList = ({
             categories: [],
             humanSupportTypes: [],
             topics: [],
-            sorts: [{ name: 'A – Z' }],
+            sorts: [{ name: 'Featured' }],
         }),
     );
 

@@ -135,7 +135,8 @@ const CountrySelect = ({
                         {option.name}
                     </>
                 )}
-                openOnFocus={true}
+                blurOnSelect="touch"
+                openOnFocus
                 onChange={(_e, value: Country): void => localOnCountryChange(value)}
                 renderInput={(params): ReactElement => (
                     <TextField
@@ -163,18 +164,19 @@ const CountrySelect = ({
                     options={sortBy('name', selectedCountry.subdivisions) as Subdivision[]}
                     getOptionLabel={(option): string => option.name}
                     getOptionSelected={(option, value): boolean => option.code == value.code}
-                    openOnFocus={true}
+                    blurOnSelect="touch"
+                    openOnFocus
                     onChange={(_e, value: Subdivision): void => localOnSubdivisionChange(value)}
                     renderInput={(params): ReactElement => (
                         <TextField
                             {...params}
-                            placeholder="State or province (optional)"
+                            placeholder="Search by state or province (optional)"
                             variant="outlined"
                             inputProps={{
                                 ...params.inputProps,
                                 autoComplete: 'new-password', // disable autocomplete and autofill
                                 'data-testid': 'subdivisionInput',
-                                'aria-label': 'State or province (optional)',
+                                'aria-label': 'Search by state or province (optional)',
                             }}
                         />
                     )}

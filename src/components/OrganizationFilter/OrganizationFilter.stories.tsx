@@ -26,7 +26,7 @@ export const Default = (): ReactElement => (
         <OrganizationFilter
             onChange={action('onChange')}
             topics={topics}
-            preselectedTopics={preselectedTopics}
+            preselectedTopics={[]}
             humanSupportTypes={humanSupportTypes}
             categories={categories}
         />
@@ -35,18 +35,39 @@ export const Default = (): ReactElement => (
 
 export const WithTopics = (): ReactElement => (
     <ThemeProvider theme={theme}>
-        <OrganizationFilter topics={topics} preselectedTopics={preselectedTopics} onChange={action('onChange')} />
+        <OrganizationFilter
+            topics={[
+                ...topics,
+                { name: 'Eating' },
+                { name: 'Body Image' },
+                { name: 'Abuse' },
+                { name: 'Domestic Violence' },
+                { name: 'Dementia' },
+            ]}
+            preselectedTopics={preselectedTopics}
+            onChange={action('onChange')}
+        />
     </ThemeProvider>
 );
 
 export const withHumanSupportTypes = (): ReactElement => (
     <ThemeProvider theme={theme}>
-        <OrganizationFilter humanSupportTypes={humanSupportTypes} onChange={action('onChange')} />
+        <OrganizationFilter
+            humanSupportTypes={[
+                ...humanSupportTypes,
+                { name: 'Peer' },
+                { name: 'Verified' },
+                { name: 'Volunteer' },
+                { name: 'Staff' },
+                { name: 'Employees' },
+            ]}
+            onChange={action('onChange')}
+        />
     </ThemeProvider>
 );
 
 export const withCategories = (): ReactElement => (
     <ThemeProvider theme={theme}>
-        <OrganizationFilter categories={categories} onChange={action('onChange')} />
+        <OrganizationFilter categories={[...categories, { name: 'For Deaf' }]} onChange={action('onChange')} />
     </ThemeProvider>
 );

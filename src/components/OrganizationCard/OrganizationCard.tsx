@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import { Typography, Chip, Button, Box, Fab } from '@material-ui/core';
+import { Typography, Button, Box, Fab } from '@material-ui/core';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import SmsOutlinedIcon from '@material-ui/icons/SmsOutlined';
@@ -8,7 +8,10 @@ import PhoneIcon from '@material-ui/icons/Phone';
 import PublicIcon from '@material-ui/icons/Public';
 import MessageOutlinedIcon from '@material-ui/icons/MessageOutlined';
 import Link from 'next/link';
+import WhatshotIcon from '@material-ui/icons/Whatshot';
+import TextTruncate from 'react-text-truncate';
 import OrganizationOpen from '../OrganizationOpen';
+import Chips from '../Chips';
 
 type OpeningHour = {
     day: string;
@@ -41,6 +44,7 @@ export type Organization = {
     url?: string;
     chatUrl?: string;
     timezone: string;
+    featured: boolean;
 };
 
 type Props = {
@@ -59,18 +63,18 @@ const useStyles = makeStyles((theme: Theme) =>
             '& > div': {
                 padding: theme.spacing(2),
             },
-            '@media (max-width: 320px)': {
+            [theme.breakpoints.down('xs')]: {
                 flexDirection: 'column',
             },
         },
         webChatSpacing: {
             display: 'none',
-            '@media (max-width: 320px)': {
+            [theme.breakpoints.down('xs')]: {
                 display: 'inline',
             },
         },
         webChatLineBreak: {
-            '@media (max-width: 320px)': {
+            [theme.breakpoints.down('xs')]: {
                 display: 'none',
             },
         },
@@ -80,21 +84,30 @@ const useStyles = makeStyles((theme: Theme) =>
             flexDirection: 'column',
             minWidth: 0,
         },
-        heading: {
-            fontWeight: 'bold',
-            textDecoration: 'underline',
-            color: theme.palette.text.primary,
+        header: {
+            display: 'grid',
+            gridTemplateColumns: '1fr auto',
+            marginLeft: theme.spacing(1),
+            gridGap: theme.spacing(1),
         },
-        chipAlwaysOpen: {
-            color: '#FFFFFF',
-            fontWeight: 'bold',
-            backgroundColor: theme.palette.secondary.main,
-            textDecoration: 'none',
-            marginLeft: theme.spacing(2),
+        heading: {
+            '& a': {
+                fontWeight: 'bold',
+                textDecoration: 'underline',
+                color: theme.palette.text.primary,
+            },
+        },
+        featured: {
+            color: '#FFD300',
+            paddingTop: '2px',
         },
         button: {
             textTransform: 'none',
             lineHeight: '1.5',
+        },
+        buttonOpen: {
+            textAlign: 'left',
+            alignItems: 'flex-start',
         },
         buttonDisabled: {
             color: `${theme.palette.text.primary} !important`,
@@ -105,21 +118,6 @@ const useStyles = makeStyles((theme: Theme) =>
                 textDecoration: 'underline',
             },
         },
-        chips: {
-            display: 'flex',
-            justifyContent: 'left',
-            flexWrap: 'wrap',
-            marginTop: theme.spacing(1),
-            '& > *': {
-                marginRight: theme.spacing(0.5),
-                marginBottom: theme.spacing(0.5),
-            },
-        },
-        chip: {
-            color: '#FFFFFF',
-            backgroundColor: theme.palette.text.primary,
-            fontWeight: 600,
-        },
         side: {
             display: 'grid',
             backgroundColor: '#F0F1F5',
@@ -128,7 +126,7 @@ const useStyles = makeStyles((theme: Theme) =>
             textAlign: 'center',
             gridRowGap: theme.spacing(2),
             gridAutoRows: 'min-content',
-            '@media (max-width: 320px)': {
+            [theme.breakpoints.down('xs')]: {
                 borderTopRightRadius: '0',
                 borderBottomLeftRadius: '10px',
                 gridAutoFlow: 'column',
@@ -150,24 +148,37 @@ const OrganizationCard = ({ organization, variant }: Props): ReactElement => {
     const classes = useStyles();
 
     return (
-        <Box className={classes.box}>
+        <Box data-testid={organization.slug} className={classes.box}>
             <Box className={classes.grid}>
-                <Box ml={1}>
-                    <Typography variant="h6">
-                        {variant === 'widget' && <a className={classes.heading}>{organization.name}</a>}
+                <Box className={classes.header}>
+                    <Typography variant="h6" className={classes.heading}>
+                        {variant === 'widget' && (
+                            <a data-testid="headingLink">
+                                <TextTruncate line={2} text={organization.name} />
+                            </a>
+                        )}
                         {!variant && (
                             <Link href="/organizations/[slug]" as={`/organizations/${organization.slug}`} passHref>
-                                <a className={classes.heading}>{organization.name}</a>
+                                <a data-testid="headingLink">
+                                    <TextTruncate line={2} text={organization.name} />
+                                </a>
                             </Link>
                         )}
-                        {organization.alwaysOpen && <Chip className={classes.chipAlwaysOpen} label="24/7" />}
                     </Typography>
+                    {organization.featured && (
+                        <Box className={classes.featured}>
+                            <WhatshotIcon />
+                        </Box>
+                    )}
                 </Box>
                 {(organization.alwaysOpen || organization.openingHours.length > 0) && (
                     <Box data-testid="open">
                         <Button
                             size="large"
-                            classes={{ root: classes.button, disabled: classes.buttonDisabled }}
+                            classes={{
+                                root: [classes.button, classes.buttonOpen].join(' '),
+                                disabled: classes.buttonDisabled,
+                            }}
                             startIcon={<AccessTimeIcon />}
                             disabled
                         >
@@ -197,6 +208,7 @@ const OrganizationCard = ({ organization, variant }: Props): ReactElement => {
                                 className={[classes.button, classes.buttonLink].join(' ')}
                                 startIcon={<SmsOutlinedIcon />}
                                 data-testid="smsNumber"
+                                target="_parent"
                             >
                                 {organization.smsNumber}
                             </Button>
@@ -208,6 +220,7 @@ const OrganizationCard = ({ organization, variant }: Props): ReactElement => {
                                 className={[classes.button, classes.buttonLink].join(' ')}
                                 startIcon={<PhoneIcon />}
                                 data-testid="phoneNumber"
+                                target="_parent"
                             >
                                 {organization.phoneNumber}
                             </Button>
@@ -236,10 +249,8 @@ const OrganizationCard = ({ organization, variant }: Props): ReactElement => {
                     </Box>
                 )}
                 {organization.categories.length > 0 && (
-                    <Box ml={1} className={classes.chips} data-testid="categories">
-                        {organization.categories.map((category, index) => (
-                            <Chip className={classes.chip} key={index} label={category.name} />
-                        ))}
+                    <Box ml={1} data-testid="categories">
+                        <Chips items={organization.categories} max={3} />
                     </Box>
                 )}
             </Box>
@@ -253,6 +264,7 @@ const OrganizationCard = ({ organization, variant }: Props): ReactElement => {
                                 aria-label="text"
                                 data-testid="smsNumberFab"
                                 className={classes.fab}
+                                target="_parent"
                             >
                                 <SmsOutlinedIcon fontSize="inherit" />
                             </Fab>
@@ -267,6 +279,7 @@ const OrganizationCard = ({ organization, variant }: Props): ReactElement => {
                                 aria-label="call"
                                 data-testid="phoneNumberFab"
                                 className={classes.fab}
+                                target="_parent"
                             >
                                 <PhoneIcon fontSize="inherit" />
                             </Fab>

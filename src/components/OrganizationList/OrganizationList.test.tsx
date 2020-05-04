@@ -6,6 +6,15 @@ describe('OrganizationList', () => {
     let organizations, country, subdivision, topics;
 
     beforeEach(() => {
+        const createElement = document.createElement.bind(document);
+        // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+        document.createElement = (tagName: string) => {
+            const element = createElement(tagName);
+            if (tagName === 'canvas') {
+                element.getContext = (): {} => ({});
+            }
+            return element;
+        };
         organizations = [
             {
                 slug: 'youthline',
@@ -67,7 +76,7 @@ describe('OrganizationList', () => {
     });
 
     it('should render organization items', () => {
-        const { getByText } = render(
+        const { getByTestId } = render(
             <OrganizationList
                 country={country}
                 organizations={organizations}
@@ -77,7 +86,7 @@ describe('OrganizationList', () => {
                 preselectedTopics={[]}
             />,
         );
-        expect(getByText('Youthline') && getByText('KidsCan')).toBeTruthy();
+        expect(getByTestId('youthline') && getByTestId('kidscan')).toBeTruthy();
     });
 
     describe('filter', () => {
@@ -92,7 +101,7 @@ describe('OrganizationList', () => {
                     preselectedTopics={[]}
                 />,
             );
-            expect(getByText('Youthline') && getByText('KidsCan')).toBeTruthy();
+            expect(getByTestId('youthline') && getByTestId('kidscan')).toBeTruthy();
             fireEvent.click(getByTestId('filter'));
             fireEvent.click(getByText('Phone'));
             fireEvent.click(getByText('Apply'));

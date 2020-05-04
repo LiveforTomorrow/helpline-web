@@ -3,27 +3,15 @@ require('dotenv').config();
 const path = require('path');
 const webpack = require('webpack');
 
-const setupDomainUrl = () => {
-    let domainUrl;
-    switch (process.env.STAGING) {
-        case '0':
-            domainUrl = process.env.NOW_URL
-                ? JSON.stringify(`https://${process.env.NOW_URL}`)
-                : JSON.stringify('https://www.findahelpline.com');
-            break;
-        case '1':
-            domainUrl = process.env.NOW_URL
-                ? JSON.stringify(`https://${process.env.NOW_URL}`)
-                : JSON.stringify('https://stage.findahelpline.com');
-            break;
-        default:
-            domainUrl = process.env.NOW_URL
-                ? JSON.stringify(`https://${process.env.NOW_URL}`)
-                : JSON.stringify('http://localhost:3000');
-            break;
-    }
-    return domainUrl;
-};
+let widgetUrl;
+
+if (process.env.BASE_URL) {
+    widgetUrl = `https://${process.env.BASE_URL}`;
+} else if (process.env.NOW_URL) {
+    widgetUrl = `https://${process.env.NOW_URL}`;
+} else {
+    widgetUrl = 'http://localhost:3000';
+}
 
 module.exports = {
     mode: 'production',
@@ -70,8 +58,8 @@ module.exports = {
         ],
     },
     plugins: [
-        new webpack.DefinePlugin({
-            DOMAIN_URL: setupDomainUrl(),
+        new webpack.EnvironmentPlugin({
+            WIDGET_URL: widgetUrl,
         }),
     ],
 };

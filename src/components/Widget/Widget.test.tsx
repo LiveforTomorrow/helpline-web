@@ -17,6 +17,7 @@ describe('Widget', () => {
             chatUrl: 'https://website.co.nz/chat',
             timezone: 'Pacific/Auckland',
             topics: [],
+            featured: false,
         },
         {
             slug: 'kidscan',
@@ -27,6 +28,7 @@ describe('Widget', () => {
             categories: [],
             timezone: 'Pacific/Auckland',
             topics: [],
+            featured: false,
         },
     ];
     const countries = [
@@ -83,6 +85,16 @@ describe('Widget', () => {
     });
 
     it('should allow organizations to be filtered', () => {
+        const createElement = document.createElement.bind(document);
+        // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+        document.createElement = (tagName: string) => {
+            const element = createElement(tagName);
+            if (tagName === 'canvas') {
+                element.getContext = (): {} => ({});
+            }
+            return element;
+        };
+
         const { getByText, getByTestId } = render(
             <Widget
                 countries={countries}
@@ -93,12 +105,12 @@ describe('Widget', () => {
                 humanSupportTypes={[]}
             />,
         );
-        expect(getByText('Youthline') && getByText('KidsCan')).toBeTruthy();
+        expect(getByTestId('youthline') && getByTestId('kidscan')).toBeTruthy();
         fireEvent.click(getByTestId('filter'));
         fireEvent.click(getByText('Phone'));
         fireEvent.click(getByText('Apply'));
         expect(getByTestId('backdrop')).toHaveStyle({ opacity: 0 });
-        expect(() => getByText('KidsCan')).toThrow();
+        expect(() => getByTestId('kidscan')).toThrow();
     });
 
     it('should hide filters when closed is clicked', () => {

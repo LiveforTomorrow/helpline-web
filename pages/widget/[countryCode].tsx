@@ -24,6 +24,7 @@ const WidgetCountryCodePage = ({
         <>
             <Head>
                 <title>Find A Helpline | {country.name}</title>
+                <script src="/widget.min.js"></script>
             </Head>
             <Widget
                 countries={countries}
@@ -59,6 +60,7 @@ export const getStaticProps: GetStaticProps = async (context): Promise<{ props: 
                     url
                     chatUrl
                     timezone
+                    featured
                     humanSupportTypes {
                         name
                     }

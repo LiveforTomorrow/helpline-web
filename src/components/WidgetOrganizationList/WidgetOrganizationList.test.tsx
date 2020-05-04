@@ -16,6 +16,7 @@ const organizations = [
         chatUrl: 'https://youthline.co.nz/chat',
         timezone: 'Pacific/Auckland',
         topics: [],
+        featured: false,
     },
     {
         slug: 'kidscan',
@@ -26,20 +27,41 @@ const organizations = [
         categories: [],
         timezone: 'Pacific/Auckland',
         topics: [],
+        featured: false,
     },
 ];
 
 describe('WidgetOrganizationList', () => {
-    it('should toggle buttons disabled state', () => {
-        const { getByTestId } = render(<WidgetOrganizationList organizations={organizations} />);
-        const previousButton = getByTestId('previousButton');
-        const nextButton = getByTestId('nextButton');
-        expect(previousButton).toBeDisabled();
-        fireEvent.click(nextButton);
-        expect(previousButton).not.toBeDisabled();
-        expect(nextButton).toBeDisabled();
-        fireEvent.click(previousButton);
-        expect(previousButton).toBeDisabled();
-        expect(nextButton).not.toBeDisabled();
+    describe('OrganizationCard rendering', () => {
+        beforeEach(() => {
+            const createElement = document.createElement.bind(document);
+            // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+            document.createElement = (tagName: string) => {
+                const element = createElement(tagName);
+                if (tagName === 'canvas') {
+                    element.getContext = (): {} => ({});
+                }
+                return element;
+            };
+        });
+
+        it('should toggle buttons disabled state', () => {
+            const { getByTestId } = render(<WidgetOrganizationList organizations={organizations} />);
+            const previousButton = getByTestId('previousButton');
+            const nextButton = getByTestId('nextButton');
+            expect(previousButton).toBeDisabled();
+            fireEvent.click(nextButton);
+            expect(previousButton).not.toBeDisabled();
+            expect(nextButton).toBeDisabled();
+            fireEvent.click(previousButton);
+            expect(previousButton).toBeDisabled();
+            expect(nextButton).not.toBeDisabled();
+        });
+    });
+
+    it('should hide carousel when no organizations', () => {
+        const { getByTestId } = render(<WidgetOrganizationList organizations={[]} />);
+        expect(() => getByTestId('previousButton')).toThrow();
+        expect(() => getByTestId('nextButton')).toThrow();
     });
 });

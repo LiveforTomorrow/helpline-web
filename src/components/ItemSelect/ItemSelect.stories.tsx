@@ -30,14 +30,28 @@ export const WithSingle = (): ReactElement => (
         </Box>
     </ThemeProvider>
 );
-export const WithHideUnselected = (): ReactElement => (
+
+export const WithMax = (): ReactElement => (
     <ThemeProvider theme={theme}>
         <Box m={2}>
             <ItemSelect
                 items={[{ name: 'Anxiety' }, { name: 'Body image' }, { name: 'Bullying' }]}
-                preselectedItems={[{ name: 'Anxiety' }]}
+                preselectedItems={[{ name: 'Bullying' }]}
                 onChange={action('onChange')}
-                hideUnselected
+                max={2}
+            />
+        </Box>
+    </ThemeProvider>
+);
+
+export const WithPreselectedItemsAndMax = (): ReactElement => (
+    <ThemeProvider theme={theme}>
+        <Box m={2}>
+            <ItemSelect
+                items={[{ name: 'Abuse' }, { name: 'Anxiety' }, { name: 'Body image' }, { name: 'Bullying' }]}
+                preselectedItems={[{ name: 'Anxiety' }, { name: 'Body image' }, { name: 'Bullying' }]}
+                onChange={action('onChange')}
+                max={2}
             />
         </Box>
     </ThemeProvider>

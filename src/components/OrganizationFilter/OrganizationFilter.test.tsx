@@ -28,7 +28,6 @@ describe('OrganizationFilter', () => {
         const { getByText } = render(
             <OrganizationFilter topics={topics} preselectedTopics={preselectedTopics} onChange={onChange} />,
         );
-        fireEvent.click(getByText('+2 more'));
         fireEvent.click(getByText('Bullying'));
         fireEvent.click(getByText('Apply'));
     });

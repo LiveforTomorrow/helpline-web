@@ -12,7 +12,7 @@ type Props = {
     onChange: (items: Item[]) => void;
     preselectedItems?: Item[];
     single?: boolean;
-    hideUnselected?: boolean;
+    max?: number;
 };
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -42,10 +42,25 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-const ItemSelect = ({ items, preselectedItems, onChange, single, hideUnselected }: Props): ReactElement => {
+const ItemSelect = ({ items, preselectedItems, onChange, single, max }: Props): ReactElement => {
     const classes = useStyles();
     const [selectedItems, setSelectedItems] = useState(preselectedItems || []);
-    const [hide, setHide] = useState(hideUnselected);
+    const [hide, setHide] = useState(max && true);
+
+    const setVisibleItems = (): Item[] => {
+        if (max && selectedItems.length > max) {
+            return selectedItems;
+        } else if (max) {
+            return [
+                ...selectedItems,
+                ...differenceBy('name', items, selectedItems).slice(0, max - selectedItems.length),
+            ];
+        } else {
+            return items;
+        }
+    };
+
+    const [visibleItems] = useState(setVisibleItems());
 
     const onClick = (item: Item): void => {
         const items = single ? [item] : xorBy('name', [item], selectedItems);
@@ -55,29 +70,25 @@ const ItemSelect = ({ items, preselectedItems, onChange, single, hideUnselected 
 
     return (
         <Box className={classes.chips}>
-            {items.map((item) => {
-                if (hide && !find(item, selectedItems)) {
-                } else {
-                    return (
-                        <Chip
-                            color={find(item, selectedItems) ? 'primary' : 'default'}
-                            key={item.name}
-                            label={item.name}
-                            onClick={(): void => onClick(item)}
-                            data-testid="itemChip"
-                            classes={{
-                                root: classes.chipRoot,
-                                colorPrimary: classes.chipColorPrimary,
-                                clickableColorPrimary: classes.chipColorPrimary,
-                            }}
-                        />
-                    );
-                }
-            })}
-            {hide && differenceBy('name', items, selectedItems).length > 0 && (
+            {(hide ? visibleItems : items).map((item) => (
+                <Chip
+                    color={find(item, selectedItems) ? 'primary' : 'default'}
+                    key={item.name}
+                    label={item.name}
+                    onClick={(): void => onClick(item)}
+                    data-testid="itemChip"
+                    classes={{
+                        root: classes.chipRoot,
+                        colorPrimary: classes.chipColorPrimary,
+                        clickableColorPrimary: classes.chipColorPrimary,
+                    }}
+                />
+            ))}
+            {hide && differenceBy('name', items, visibleItems).length > 0 && (
                 <Chip
                     onClick={(): void => setHide(false)}
-                    label={`+${differenceBy('name', items, selectedItems).length} more`}
+                    label={`+${differenceBy('name', items, visibleItems).length} more`}
+                    data-testid="moreChips"
                 />
             )}
         </Box>

@@ -1,4 +1,4 @@
-import React, { ReactElement, useState, ChangeEvent } from 'react';
+import React, { ReactElement, useState, ChangeEvent, useEffect } from 'react';
 import { Container, Box, Typography, FormControl, MenuItem, InputLabel, Select } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 
@@ -62,27 +62,30 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const Embed = ({ countries }: Props): ReactElement => {
     const [selectedCountryCode, setSelectedCountryCode] = useState<string>('US');
-    const domainUrl = process.env.NOW_URL ? JSON.stringify(`https://${process.env.NOW_URL}`) : 'http://localhost:3000';
     const classes = useStyles();
 
-    const snippet = `<div id="widget"></div>
+    const [snippet, setSnippet] = useState('');
 
-<script src="${domainUrl}/widget.min.js"></script>
-<script>
-    Widget.default.render(
-        {
-            countryCode: '${selectedCountryCode}',
-        },
-        "#widget"
-    );
-</script>`;
+    const updateSnippet = (): void => {
+        let host = window.location.host;
+        if (host.includes('chromatic')) {
+            host = 'findahelpline.com';
+        }
+        setSnippet(
+            `<div id="widget"></div>
+<script src="${window.location.protocol}//${host}/widget.min.js"></script>
+<script>Widget.default({ countryCode: '${selectedCountryCode.toLowerCase()}' }).render('#widget');</script>`,
+        );
+    };
+
+    useEffect(updateSnippet);
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
         setSelectedCountryCode(event.target.value);
     };
 
     return (
-        <Container maxWidth="xs" className={classes.container} data-testid="embedContainer">
+        <Container maxWidth="sm" className={classes.container} data-testid="embedContainer">
             <Box className={classes.box}>
                 <Box className={classes.logo}>
                     <img src="/logo.svg" alt="find a helpline" />

@@ -3,28 +3,37 @@ import { render } from '@testing-library/react';
 import OrganizationCard from '.';
 
 describe('OrganizationCard', () => {
-    let organization;
+    let organization = {
+        slug: 'youthline',
+        name: 'Youthline',
+        alwaysOpen: true,
+        openingHours: [],
+        humanSupportTypes: [{ name: 'Volunteers' }, { name: 'Staff' }],
+        categories: [{ name: '1' }, { name: '2' }, { name: '3' }, { name: '4' }, { name: '5' }],
+        smsNumber: '234',
+        phoneNumber: '0800 376 633',
+        url: 'https://youthline.co.nz/website',
+        chatUrl: 'https://youthline.co.nz/chat',
+        timezone: 'Pacific/Auckland',
+        topics: [],
+        featured: false,
+    };
 
     beforeEach(() => {
-        organization = {
-            slug: 'youthline',
-            name: 'Youthline',
-            alwaysOpen: true,
-            openingHours: [],
-            humanSupportTypes: [{ name: 'Volunteers' }, { name: 'Staff' }],
-            categories: [{ name: 'For youth' }, { name: 'All issues' }],
-            smsNumber: '234',
-            phoneNumber: '0800 376 633',
-            url: 'https://youthline.co.nz/website',
-            chatUrl: 'https://youthline.co.nz/chat',
-            timezone: 'Pacific/Auckland',
-            topics: [],
+        const createElement = document.createElement.bind(document);
+        // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+        document.createElement = (tagName: string) => {
+            const element = createElement(tagName);
+            if (tagName === 'canvas') {
+                element.getContext = (): {} => ({});
+            }
+            return element;
         };
     });
 
     it('should have open element', () => {
         const { getByText } = render(<OrganizationCard organization={organization} />);
-        expect(getByText('Available 24/7')).toBeTruthy();
+        expect(getByText('24/7')).toBeTruthy();
     });
 
     describe('not alwaysOpen', () => {
@@ -122,7 +131,7 @@ describe('OrganizationCard', () => {
 
     it('should contain categories', () => {
         const { getByTestId } = render(<OrganizationCard organization={organization} />);
-        expect(getByTestId('categories')).toHaveTextContent('For youthAll issues');
+        expect(getByTestId('categories')).toHaveTextContent('123+2 more');
     });
 
     describe('no categories', () => {
@@ -164,10 +173,15 @@ describe('OrganizationCard', () => {
         });
     });
 
+    it('should have href', () => {
+        const { getByTestId } = render(<OrganizationCard organization={organization} />);
+        expect(getByTestId('headingLink')).toHaveAttribute('href', `/organizations/${organization.slug}`);
+    });
+
     describe('variant is widget', () => {
-        it('should not have fabs element', () => {
-            const { getByText } = render(<OrganizationCard organization={organization} variant="widget" />);
-            expect(getByText(organization.name)).not.toHaveAttribute('href');
+        it('should not have href', () => {
+            const { getByTestId } = render(<OrganizationCard organization={organization} variant="widget" />);
+            expect(getByTestId('headingLink')).not.toHaveAttribute('href');
         });
     });
 });
