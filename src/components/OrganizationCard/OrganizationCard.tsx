@@ -10,6 +10,7 @@ import MessageOutlinedIcon from '@material-ui/icons/MessageOutlined';
 import Link from 'next/link';
 import WhatshotIcon from '@material-ui/icons/Whatshot';
 import TextTruncate from 'react-text-truncate';
+import { OutboundLink } from 'react-ga';
 import OrganizationOpen from '../OrganizationOpen';
 import Chips from '../Chips';
 
@@ -203,50 +204,64 @@ const OrganizationCard = ({ organization, variant }: Props): ReactElement => {
                 {(organization.smsNumber || organization.phoneNumber) && (
                     <Box>
                         {organization.smsNumber && (
-                            <Button
-                                href={`sms:${organization.smsNumber}`}
-                                size="large"
-                                className={[classes.button, classes.buttonLink].join(' ')}
-                                startIcon={<SmsOutlinedIcon />}
-                                data-testid="smsNumber"
+                            <OutboundLink
+                                eventLabel={`sms:${organization.smsNumber}`}
+                                to={`sms:${organization.smsNumber}`}
                                 target="_parent"
+                                rel="noopener noreferrer"
                             >
-                                {organization.smsNumber}
-                            </Button>
+                                <Button
+                                    size="large"
+                                    className={[classes.button, classes.buttonLink].join(' ')}
+                                    startIcon={<SmsOutlinedIcon />}
+                                    data-testid="smsNumber"
+                                >
+                                    {organization.smsNumber}
+                                </Button>
+                            </OutboundLink>
                         )}
                         {organization.phoneNumber && (
-                            <Button
-                                href={`tel:${organization.phoneNumber}`}
-                                size="large"
-                                className={[classes.button, classes.buttonLink].join(' ')}
-                                startIcon={<PhoneIcon />}
-                                data-testid="phoneNumber"
+                            <OutboundLink
+                                eventLabel={`tel:${organization.phoneNumber}`}
+                                to={`tel:${organization.phoneNumber}`}
                                 target="_parent"
+                                rel="noopener noreferrer"
                             >
-                                {organization.phoneNumber}
-                            </Button>
+                                <Button
+                                    size="large"
+                                    className={[classes.button, classes.buttonLink].join(' ')}
+                                    startIcon={<PhoneIcon />}
+                                    data-testid="phoneNumber"
+                                >
+                                    {organization.phoneNumber}
+                                </Button>
+                            </OutboundLink>
                         )}
                     </Box>
                 )}
                 {organization.url && (
                     <Box>
-                        <Button
-                            size="large"
-                            href={organization.url}
-                            className={[classes.button, classes.buttonLink].join(' ')}
-                            startIcon={<PublicIcon />}
-                            data-testid="url"
+                        <OutboundLink
+                            eventLabel={organization.url}
+                            to={organization.url}
                             target="_blank"
                             rel="noopener noreferrer"
                         >
-                            {
-                                organization.url
-                                    .replace('http://', '')
-                                    .replace('https://', '')
-                                    .replace('www.', '')
-                                    .split(/[/?#]/)[0]
-                            }
-                        </Button>
+                            <Button
+                                size="large"
+                                className={[classes.button, classes.buttonLink].join(' ')}
+                                startIcon={<PublicIcon />}
+                                data-testid="url"
+                            >
+                                {
+                                    organization.url
+                                        .replace('http://', '')
+                                        .replace('https://', '')
+                                        .replace('www.', '')
+                                        .split(/[/?#]/)[0]
+                                }
+                            </Button>
+                        </OutboundLink>
                     </Box>
                 )}
                 {organization.categories.length > 0 && (
@@ -259,47 +274,61 @@ const OrganizationCard = ({ organization, variant }: Props): ReactElement => {
                 <Box className={classes.side} data-testid="fabs">
                     {organization.smsNumber && (
                         <Box>
-                            <Fab
-                                href={`sms:${organization.smsNumber}`}
-                                color="primary"
-                                aria-label="text"
-                                data-testid="smsNumberFab"
-                                className={classes.fab}
+                            <OutboundLink
+                                eventLabel={`sms:${organization.smsNumber}`}
+                                to={`sms:${organization.smsNumber}`}
                                 target="_parent"
+                                rel="noopener noreferrer"
                             >
-                                <SmsOutlinedIcon fontSize="inherit" />
-                            </Fab>
+                                <Fab
+                                    color="primary"
+                                    aria-label="text"
+                                    data-testid="smsNumberFab"
+                                    className={classes.fab}
+                                >
+                                    <SmsOutlinedIcon fontSize="inherit" />
+                                </Fab>
+                            </OutboundLink>
                             <Typography className={classes.fabLabel}>Text</Typography>
                         </Box>
                     )}
                     {organization.phoneNumber && (
                         <Box>
-                            <Fab
-                                href={`tel:${organization.phoneNumber}`}
-                                color="primary"
-                                aria-label="call"
-                                data-testid="phoneNumberFab"
-                                className={classes.fab}
+                            <OutboundLink
+                                eventLabel={`tel:${organization.phoneNumber}`}
+                                to={`tel:${organization.phoneNumber}`}
                                 target="_parent"
+                                rel="noopener noreferrer"
                             >
-                                <PhoneIcon fontSize="inherit" />
-                            </Fab>
+                                <Fab
+                                    color="primary"
+                                    aria-label="call"
+                                    data-testid="phoneNumberFab"
+                                    className={classes.fab}
+                                >
+                                    <PhoneIcon fontSize="inherit" />
+                                </Fab>
+                            </OutboundLink>
                             <Typography className={classes.fabLabel}>Call</Typography>
                         </Box>
                     )}
                     {organization.chatUrl && (
                         <Box>
-                            <Fab
-                                href={organization.chatUrl}
-                                color="primary"
-                                aria-label="web chat"
-                                data-testid="chatUrlFab"
-                                className={classes.fab}
+                            <OutboundLink
+                                eventLabel={organization.chatUrl}
+                                to={organization.chatUrl}
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
-                                <MessageOutlinedIcon fontSize="inherit" />
-                            </Fab>
+                                <Fab
+                                    color="primary"
+                                    aria-label="web chat"
+                                    data-testid="chatUrlFab"
+                                    className={classes.fab}
+                                >
+                                    <MessageOutlinedIcon fontSize="inherit" />
+                                </Fab>
+                            </OutboundLink>
                             <Typography className={classes.fabLabel}>
                                 Web<span className={classes.webChatSpacing}>&nbsp;</span>
                                 <br className={classes.webChatLineBreak} />

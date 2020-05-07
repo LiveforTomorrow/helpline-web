@@ -2,22 +2,21 @@ import React, { ReactElement, useEffect } from 'react';
 import Head from 'next/head';
 import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import TagManager from 'react-gtm-module';
 import { AppProps } from 'next/app';
 import { Router } from 'next/router';
+import ReactGA from 'react-ga';
 import theme from '../src/theme';
 
 const App = ({ Component, pageProps }: AppProps): ReactElement => {
     useEffect(() => {
-        TagManager.initialize({
-            gtmId: process.env.GTM_ID,
-        });
         const jssStyles = document.querySelector('#jss-server-side');
         if (jssStyles) {
             jssStyles.parentElement.removeChild(jssStyles);
         }
+        ReactGA.initialize(process.env.GA_ID);
+        ReactGA.pageview(window.location.pathname + window.location.search);
         Router.events.on('routeChangeComplete', (url) => {
-            ga && ga('gtm1.send', { hitType: 'pageview', page: url });
+            ReactGA.pageview(url);
         });
     }, []);
 

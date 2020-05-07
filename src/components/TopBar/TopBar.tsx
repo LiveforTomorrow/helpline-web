@@ -4,6 +4,7 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import DirectionsRunIcon from '@material-ui/icons/DirectionsRun';
 import CallIcon from '@material-ui/icons/Call';
 import { compact } from 'lodash/fp';
+import { OutboundLink } from 'react-ga';
 
 type Country = {
     emergencyNumber: string;
@@ -63,6 +64,9 @@ const useStyles = makeStyles((theme: Theme) =>
                 alignSelf: 'center',
             },
         },
+        link: {
+            textDecoration: 'none',
+        },
         button: {
             backgroundColor: '#CC001E',
             textAlign: 'left',
@@ -103,37 +107,49 @@ const TopBar = ({ country, variant }: Props): ReactElement => {
                     ].join(' ')}
                 >
                     {country ? (
-                        <Fragment>
+                        <>
                             <Typography className={[classes.title, classes.titleWithCountry].join(' ')}>
                                 Are you or someone else in immediate danger?
                             </Typography>
-                            <Button
-                                color="inherit"
-                                classes={{ root: classes.button, endIcon: classes.buttonEndIcon }}
-                                endIcon={<CallIcon />}
-                                href={`tel:${country.emergencyNumber}`}
-                                data-testid="emergencyServicesButton"
+                            <OutboundLink
+                                eventLabel={`tel:${country.emergencyNumber}`}
+                                to={`tel:${country.emergencyNumber}`}
+                                target="_parent"
+                                rel="noopener noreferrer"
+                                className={classes.link}
                             >
-                                <Hidden smUp>Call {country.emergencyNumber}</Hidden>
-                                <Hidden only="xs">Emergency Services</Hidden>
-                            </Button>
-                        </Fragment>
+                                <Button
+                                    color="inherit"
+                                    classes={{ root: classes.button, endIcon: classes.buttonEndIcon }}
+                                    endIcon={<CallIcon />}
+                                    data-testid="emergencyServicesButton"
+                                >
+                                    <Hidden smUp>Call {country.emergencyNumber}</Hidden>
+                                    <Hidden only="xs">Emergency Services</Hidden>
+                                </Button>
+                            </OutboundLink>
+                        </>
                     ) : (
                         <Typography className={classes.title}>
                             Need to leave quickly? Click to leave this site and open the weather.
                         </Typography>
                     )}
-                    <Button
-                        color="inherit"
-                        classes={{ root: classes.button, endIcon: classes.buttonEndIcon }}
-                        endIcon={<DirectionsRunIcon />}
-                        href="https://accuweather.com"
-                        data-testid="leaveQuicklyButton"
+                    <OutboundLink
+                        eventLabel="https://accuweather.com"
+                        to="https://accuweather.com"
                         target="_parent"
                         rel="noopener noreferrer"
+                        className={classes.link}
                     >
-                        Leave Quickly
-                    </Button>
+                        <Button
+                            color="inherit"
+                            classes={{ root: classes.button, endIcon: classes.buttonEndIcon }}
+                            endIcon={<DirectionsRunIcon />}
+                            data-testid="leaveQuicklyButton"
+                        >
+                            Leave Quickly
+                        </Button>
+                    </OutboundLink>
                 </Toolbar>
             </Container>
         </AppBar>

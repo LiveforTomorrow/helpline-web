@@ -1,5 +1,5 @@
 module.exports = {
     env: {
-        GTM_ID: process.env.GTM_ID,
+        GA_ID: process.env.GA_ID,
     },
 };

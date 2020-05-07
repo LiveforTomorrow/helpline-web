@@ -11,7 +11,7 @@ describe('TopBar', () => {
     it('should contain weather link', () => {
         const { getByTestId } = render(<TopBar />);
         const element = getByTestId('leaveQuicklyButton');
-        expect(element).toHaveAttribute('href', 'https://accuweather.com');
+        expect(element.parentElement).toHaveAttribute('href', 'https://accuweather.com');
     });
 
     describe('country', () => {
@@ -25,13 +25,13 @@ describe('TopBar', () => {
         it('should contain emergency link', () => {
             const { getByTestId } = render(<TopBar country={country} />);
             const element = getByTestId('emergencyServicesButton');
-            expect(element).toHaveAttribute('href', 'tel:111');
+            expect(element.parentElement).toHaveAttribute('href', 'tel:111');
         });
 
         it('should contain weather link', () => {
             const { getByTestId } = render(<TopBar country={country} />);
             const element = getByTestId('leaveQuicklyButton');
-            expect(element).toHaveAttribute('href', 'https://accuweather.com');
+            expect(element.parentElement).toHaveAttribute('href', 'https://accuweather.com');
         });
     });
 });

@@ -66,14 +66,14 @@ describe('OrganizationCard', () => {
     it('should contain smsNumber', () => {
         const { getByTestId } = render(<OrganizationCard organization={organization} />);
         const element = getByTestId('smsNumber');
-        expect(element).toHaveAttribute('href', 'sms:234');
+        expect(element.parentElement).toHaveAttribute('href', 'sms:234');
         expect(element).toHaveTextContent('234');
     });
 
     it('should contain smsNumberFab', () => {
         const { getByTestId } = render(<OrganizationCard organization={organization} />);
         const element = getByTestId('smsNumberFab');
-        expect(element).toHaveAttribute('href', 'sms:234');
+        expect(element.parentElement).toHaveAttribute('href', 'sms:234');
     });
 
     describe('no smsNumber', () => {
@@ -90,14 +90,14 @@ describe('OrganizationCard', () => {
     it('should contain phoneNumber', () => {
         const { getByTestId } = render(<OrganizationCard organization={organization} />);
         const element = getByTestId('phoneNumber');
-        expect(element).toHaveAttribute('href', 'tel:0800 376 633');
+        expect(element.parentElement).toHaveAttribute('href', 'tel:0800 376 633');
         expect(element).toHaveTextContent('0800 376 633');
     });
 
     it('should contain phoneNumberFab', () => {
         const { getByTestId } = render(<OrganizationCard organization={organization} />);
         const element = getByTestId('phoneNumberFab');
-        expect(element).toHaveAttribute('href', 'tel:0800 376 633');
+        expect(element.parentElement).toHaveAttribute('href', 'tel:0800 376 633');
     });
 
     describe('no phoneNumber', () => {
@@ -114,7 +114,7 @@ describe('OrganizationCard', () => {
     it('should contain url', () => {
         const { getByTestId } = render(<OrganizationCard organization={organization} />);
         const element = getByTestId('url');
-        expect(element).toHaveAttribute('href', 'https://youthline.co.nz/website');
+        expect(element.parentElement).toHaveAttribute('href', 'https://youthline.co.nz/website');
         expect(element).toHaveTextContent('youthline.co.nz');
     });
 
@@ -148,7 +148,7 @@ describe('OrganizationCard', () => {
     it('should contain chatUrlFab', () => {
         const { getByTestId } = render(<OrganizationCard organization={organization} />);
         const element = getByTestId('chatUrlFab');
-        expect(element).toHaveAttribute('href', 'https://youthline.co.nz/chat');
+        expect(element.parentElement).toHaveAttribute('href', 'https://youthline.co.nz/chat');
     });
 
     describe('no chatUrl', () => {

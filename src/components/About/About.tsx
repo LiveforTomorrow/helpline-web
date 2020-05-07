@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import { Container, Typography, Button, Box, Link } from '@material-ui/core';
+import { Container, Typography, Button, Box } from '@material-ui/core';
 import NextLink from 'next/link';
 import AvTimerIcon from '@material-ui/icons/AvTimer';
 import TouchAppIcon from '@material-ui/icons/TouchApp';
@@ -8,6 +8,7 @@ import VerifiedUserOutlinedIcon from '@material-ui/icons/VerifiedUserOutlined';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import SmsOutlinedIcon from '@material-ui/icons/SmsOutlined';
+import { OutboundLink } from 'react-ga';
 import NavBar from '../NavBar';
 import SideBar from '../SideBar';
 import Footer from '../Footer';
@@ -144,9 +145,14 @@ const About = (): ReactElement => {
                     <Container maxWidth="xs">
                         <Typography variant="h6">
                             We’re run by{' '}
-                            <Link href="https://www.livefortomorrow.co" target="_blank" rel="noopener noreferrer">
+                            <OutboundLink
+                                eventLabel="https://www.livefortomorrow.co"
+                                to="https://www.livefortomorrow.co"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
                                 Live For Tomorrow
-                            </Link>
+                            </OutboundLink>
                             , a not-for-profit using technology to support mental health.
                         </Typography>
                     </Container>

@@ -4,6 +4,7 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import PublicIcon from '@material-ui/icons/Public';
 import EmailIcon from '@material-ui/icons/Email';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+import { OutboundLink } from 'react-ga';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -52,14 +53,15 @@ const TopBar = (): ReactElement => {
                 <Typography component="div">
                     <p>
                         COVID-19 is{' '}
-                        <a
-                            href="https://www.psychiatry.org/newsroom/news-releases/new-poll-covid-19-impacting-mental-well-being-americans-feeling-anxious-especially-for-loved-ones-older-adults-are-less-anxious"
+                        <OutboundLink
+                            eventLabel="https://www.psychiatry.org/newsroom/news-releases/new-poll-covid-19-impacting-mental-well-being-americans-feeling-anxious-especially-for-loved-ones-older-adults-are-less-anxious"
+                            to="https://www.psychiatry.org/newsroom/news-releases/new-poll-covid-19-impacting-mental-well-being-americans-feeling-anxious-especially-for-loved-ones-older-adults-are-less-anxious"
                             target="_blank"
                             rel="noopener noreferrer"
                             className={classes.link}
                         >
                             affecting people’s mental health.
-                        </a>
+                        </OutboundLink>
                     </p>
                     <p>
                         To do our bit, we’re putting every free mental health helpline in the world at your fingertips.
