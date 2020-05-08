@@ -1,7 +1,7 @@
 import React, { useState, useEffect, ReactElement } from 'react';
 import { useEmblaCarousel } from 'embla-carousel-react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import { Box, Fab, NoSsr } from '@material-ui/core';
+import { Box, Fab } from '@material-ui/core';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import OrganizationCard, { Organization } from '../OrganizationCard/OrganizationCard';
@@ -95,40 +95,38 @@ const WidgetOrganizationList = ({ organizations }: Props): ReactElement => {
 
     return (
         <Box className={classes.box}>
-            <NoSsr>
-                {organizations.length > 0 && (
-                    <>
-                        <EmblaCarouselReact>
-                            <Box className={classes.container}>
-                                {organizations.map((organization) => (
-                                    <Box key={organization.slug} className={classes.slide}>
-                                        <OrganizationCard organization={organization} variant="widget" />
-                                    </Box>
-                                ))}
-                            </Box>
-                        </EmblaCarouselReact>
-                        <Fab
-                            className={[classes.button, classes.buttonLeft].join(' ')}
-                            disabled={!showPreviousButton}
-                            onClick={(): void => embla.scrollPrev()}
-                            data-testid="previousButton"
-                            aria-label="previous"
-                        >
-                            <ChevronLeftIcon fontSize="inherit" />
-                        </Fab>
-                        <Fab
-                            className={[classes.button, classes.buttonRight].join(' ')}
-                            disabled={!showNextButton}
-                            onClick={(): void => embla.scrollNext()}
-                            data-testid="nextButton"
-                            aria-label="next"
-                        >
-                            <ChevronRightIcon fontSize="inherit" />
-                        </Fab>
-                    </>
-                )}
-                {organizations.length == 0 && <OrganizationEmpty />}
-            </NoSsr>
+            {organizations.length > 0 && (
+                <>
+                    <EmblaCarouselReact>
+                        <Box className={classes.container}>
+                            {organizations.map((organization) => (
+                                <Box key={organization.slug} className={classes.slide}>
+                                    <OrganizationCard organization={organization} variant="widget" />
+                                </Box>
+                            ))}
+                        </Box>
+                    </EmblaCarouselReact>
+                    <Fab
+                        className={[classes.button, classes.buttonLeft].join(' ')}
+                        disabled={!showPreviousButton}
+                        onClick={(): void => embla.scrollPrev()}
+                        data-testid="previousButton"
+                        aria-label="previous"
+                    >
+                        <ChevronLeftIcon fontSize="inherit" />
+                    </Fab>
+                    <Fab
+                        className={[classes.button, classes.buttonRight].join(' ')}
+                        disabled={!showNextButton}
+                        onClick={(): void => embla.scrollNext()}
+                        data-testid="nextButton"
+                        aria-label="next"
+                    >
+                        <ChevronRightIcon fontSize="inherit" />
+                    </Fab>
+                </>
+            )}
+            {organizations.length == 0 && <OrganizationEmpty />}
         </Box>
     );
 };
