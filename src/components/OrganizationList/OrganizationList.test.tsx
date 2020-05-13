@@ -1,6 +1,10 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
+import ReactGA from 'react-ga';
+import { mocked } from 'ts-jest/utils';
 import OrganizationList from '.';
+
+jest.mock('react-ga');
 
 describe('OrganizationList', () => {
     let organizations, country, subdivision, topics;
@@ -29,6 +33,8 @@ describe('OrganizationList', () => {
                 chatUrl: 'https://youthline.co.nz/chat',
                 timezone: 'Pacific/Auckland',
                 topics: [],
+                rating: 5,
+                reviewCount: 10,
             },
             {
                 slug: 'kidscan',
@@ -39,6 +45,8 @@ describe('OrganizationList', () => {
                 categories: [],
                 timezone: 'Pacific/Auckland',
                 topics: [],
+                rating: 5,
+                reviewCount: 10,
             },
         ];
         country = { name: 'New Zealand' };
@@ -91,6 +99,7 @@ describe('OrganizationList', () => {
 
     describe('filter', () => {
         it('should allow organizations to be filtered', () => {
+            mocked(ReactGA.event).mockReturnValue();
             const { getByText, getByTestId } = render(
                 <OrganizationList
                     country={country}

@@ -11,6 +11,9 @@ import MessageOutlinedIcon from '@material-ui/icons/MessageOutlined';
 import OrganizationOpen from '../OrganizationOpen';
 import NavBar from '../NavBar';
 import SideBar from '../SideBar';
+import ReviewModal from '../ReviewModal';
+import OrganizationRating from '../OrganizationRating';
+import Reviews from '../Reviews';
 
 type OpeningHour = {
     day: string;
@@ -30,7 +33,14 @@ type Country = {
     name: string;
 };
 
+type Review = {
+    rating: number;
+    content?: string;
+    createdAt: string;
+};
+
 export type Organization = {
+    id: string;
     slug: string;
     name: string;
     alwaysOpen: boolean;
@@ -43,6 +53,9 @@ export type Organization = {
     chatUrl?: string;
     timezone: string;
     country: Country;
+    rating: number;
+    reviewCount: number;
+    reviews: Review[];
 };
 
 type Props = {
@@ -129,6 +142,12 @@ const OrganizationItem = ({ organization }: Props): ReactElement => {
                             <a className={classes.heading}>{organization.name}</a>
                             <span className={classes.country}>{organization.country.name}</span>
                         </Typography>
+                    </Box>
+                    <Box ml={1}>
+                        <OrganizationRating organization={organization} variant="item" />
+                    </Box>
+                    <Box ml={1} my={1}>
+                        <ReviewModal organization={organization} />
                     </Box>
                     {(organization.alwaysOpen || organization.openingHours.length > 0) && (
                         <Box data-testid="open">
@@ -246,6 +265,7 @@ const OrganizationItem = ({ organization }: Props): ReactElement => {
                     </Box>
                 </Box>
             </Container>
+            {organization.reviews.length > 0 && <Reviews reviews={organization.reviews} />}
         </>
     );
 };

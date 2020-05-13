@@ -1,5 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
+import moment from 'moment-timezone';
 import OrganizationItem from '.';
 
 describe('OrganizationItem', () => {
@@ -7,6 +8,8 @@ describe('OrganizationItem', () => {
 
     beforeEach(() => {
         organization = {
+            id: 'abc',
+            rating: 5,
             slug: 'youthline',
             name: 'Youthline',
             alwaysOpen: true,
@@ -19,6 +22,20 @@ describe('OrganizationItem', () => {
             chatUrl: 'https://chatyouthline.co.nz/chat',
             timezone: 'Pacific/Auckland',
             country: { name: 'New Zealand' },
+            reviews: [
+                {
+                    rating: 5,
+                    content: 'Leaving the first review!',
+                    createdAt: moment().subtract(3, 'days').toISOString(),
+                },
+                { rating: 3, content: '', createdAt: moment().subtract(5, 'days').toISOString() },
+                {
+                    rating: 0,
+                    content:
+                        'The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog.',
+                    createdAt: moment().subtract(7, 'days').toISOString(),
+                },
+            ],
         };
     });
 
@@ -148,5 +165,21 @@ describe('OrganizationItem', () => {
             'href',
             'https://zealnz.typeform.com/to/mMLYXV?remote_id=youthline',
         );
+    });
+
+    it('should show reviews', () => {
+        const { getByText } = render(<OrganizationItem organization={organization} />);
+        expect(getByText('Read reviews')).toBeTruthy();
+    });
+
+    describe('no reviews', () => {
+        beforeEach(() => {
+            organization = { ...organization, reviews: [] };
+        });
+
+        it('should not show reviews', () => {
+            const { getByText } = render(<OrganizationItem organization={organization} />);
+            expect(() => getByText('Read reviews')).toThrow();
+        });
     });
 });

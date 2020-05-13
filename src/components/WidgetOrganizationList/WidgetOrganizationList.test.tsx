@@ -17,6 +17,8 @@ const organizations = [
         timezone: 'Pacific/Auckland',
         topics: [],
         featured: false,
+        rating: 5,
+        reviewCount: 10,
     },
     {
         slug: 'kidscan',
@@ -28,10 +30,18 @@ const organizations = [
         timezone: 'Pacific/Auckland',
         topics: [],
         featured: false,
+        rating: 5,
+        reviewCount: 10,
     },
 ];
 
 describe('WidgetOrganizationList', () => {
+    it('should hide carousel when no organizations', () => {
+        const { getByTestId } = render(<WidgetOrganizationList organizations={[]} />);
+        expect(() => getByTestId('previousButton')).toThrow();
+        expect(() => getByTestId('nextButton')).toThrow();
+    });
+
     describe('OrganizationCard rendering', () => {
         beforeEach(() => {
             const createElement = document.createElement.bind(document);
@@ -57,11 +67,5 @@ describe('WidgetOrganizationList', () => {
             expect(previousButton).toBeDisabled();
             expect(nextButton).not.toBeDisabled();
         });
-    });
-
-    it('should hide carousel when no organizations', () => {
-        const { getByTestId } = render(<WidgetOrganizationList organizations={[]} />);
-        expect(() => getByTestId('previousButton')).toThrow();
-        expect(() => getByTestId('nextButton')).toThrow();
     });
 });
