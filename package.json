@@ -67,7 +67,7 @@
         "eslint-plugin-react": "^7.19.0",
         "fetch-mock": "^9.5.0",
         "husky": "^4.2.3",
-        "jest": "^25.5.3",
+        "jest": "^25.5.4",
         "jsx-dom": "^6.4.15",
         "lint-staged": "^10.2.2",
         "prettier": "^2.0.5",
