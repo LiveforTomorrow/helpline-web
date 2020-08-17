@@ -48,11 +48,11 @@ const Footer = (): ReactElement => {
                             Contact
                         </Link>
                     </NextLink>
-                    <NextLink href="/volunteer" passHref>
+                    {/* <NextLink href="/volunteer" passHref>
                         <Link className={classes.link} data-testid="crowdsource">
                             Help Crowdsource
                         </Link>
-                    </NextLink>
+                    </NextLink> */}
                 </Typography>
                 <Typography className={classes.copyright} data-testid="copyright">
                     Powered by Live For Tomorrow &copy; {new Date().getFullYear()}

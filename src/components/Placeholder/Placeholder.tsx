@@ -80,7 +80,7 @@ const TopBar = (): ReactElement => {
                         Partner With Us
                     </Button>
                 </div>
-                <div>
+                {/* <div>
                     <Button
                         startIcon={<PublicIcon />}
                         classes={{ root: classes.buttonRoot, label: classes.link }}
@@ -90,7 +90,7 @@ const TopBar = (): ReactElement => {
                     >
                         Help us crowdsource helplines
                     </Button>
-                </div>
+                </div> */}
                 <div>
                     <Button
                         startIcon={<EmailIcon />}

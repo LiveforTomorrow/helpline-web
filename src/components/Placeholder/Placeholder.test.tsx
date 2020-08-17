@@ -8,10 +8,10 @@ describe('Placeholder', () => {
         expect(getByTestId('partnerWithUs')).toHaveAttribute('href', 'mailto:elliot@livefortomorrow.co');
     });
 
-    it('should contain Help us crowdsource helplines link', () => {
-        const { getByTestId } = render(<Placeholder />);
-        expect(getByTestId('crowdsourceHelplines')).toHaveAttribute('href', 'https://findahelpline.com/volunteer');
-    });
+    // it('should contain Help us crowdsource helplines link', () => {
+    //     const { getByTestId } = render(<Placeholder />);
+    //     expect(getByTestId('crowdsourceHelplines')).toHaveAttribute('href', 'https://findahelpline.com/volunteer');
+    // });
 
     it('should contain Join the launch mailing list link', () => {
         const { getByTestId } = render(<Placeholder />);
