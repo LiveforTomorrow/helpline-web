@@ -6,6 +6,7 @@ import { AppProps } from 'next/app';
 import { Router } from 'next/router';
 import ReactGA from 'react-ga';
 import { hotjar } from 'react-hotjar';
+import { DefaultSeo } from 'next-seo';
 import theme from '../src/theme';
 
 const App = ({ Component, pageProps }: AppProps): ReactElement => {
@@ -27,6 +28,21 @@ const App = ({ Component, pageProps }: AppProps): ReactElement => {
 
     return (
         <>
+            <DefaultSeo
+                title="Struggling? Get free, confidential support from a real human."
+                description="Whatever you’re going through, help is available. Talk to someone today."
+                openGraph={{
+                    type: 'website',
+                    locale: 'en',
+                    url: 'https://findahelpline.com/',
+                    images: [{ url: 'https://findahelpline.com/og.jpg' }],
+                }}
+                twitter={{
+                    handle: '@livefortmw',
+                    site: '@findahelpline',
+                    cardType: 'summary_large_image',
+                }}
+            />
             <Head>
                 <title>Find A Helpline</title>
                 <meta
