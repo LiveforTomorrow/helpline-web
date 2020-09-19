@@ -34,7 +34,6 @@ const App = ({ Component, pageProps }: AppProps): ReactElement => {
                 openGraph={{
                     type: 'website',
                     locale: 'en',
-                    url: 'https://findahelpline.com/',
                     images: [{ url: 'https://findahelpline.com/og.jpg' }],
                 }}
                 twitter={{
