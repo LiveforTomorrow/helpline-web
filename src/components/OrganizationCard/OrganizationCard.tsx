@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { Typography, Button, Box, Fab, NoSsr } from '@material-ui/core';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
@@ -10,10 +10,12 @@ import Link from 'next/link';
 import WhatshotIcon from '@material-ui/icons/Whatshot';
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
 import TextTruncate from 'react-text-truncate';
-import { OutboundLink } from 'react-ga';
+import { outboundLink } from 'react-ga';
+import { noop } from 'lodash/fp';
 import OrganizationOpen from '../OrganizationOpen';
 import Chips from '../Chips';
 import OrganizationRating from '../OrganizationRating';
+import ReviewDialog from '../ReviewDialog';
 
 type OpeningHour = {
     day: string;
@@ -34,6 +36,7 @@ type Topic = {
 };
 
 export type Organization = {
+    id: string;
     slug: string;
     name: string;
     alwaysOpen: boolean;
@@ -150,112 +153,118 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const OrganizationCard = ({ organization, variant }: Props): ReactElement => {
     const classes = useStyles();
+    const [dialogOpen, setDialogOpen] = useState(false);
+
+    const onDialogClose = (): void => {
+        setDialogOpen(false);
+    };
+
+    const onLinkClick = (label) => (): void => {
+        setDialogOpen(true);
+        outboundLink({ label }, noop);
+    };
 
     return (
-        <Box data-testid={organization.slug} className={classes.box}>
-            <Box className={classes.grid}>
-                <Box className={classes.header}>
-                    <Typography variant="h6" className={classes.heading}>
-                        {variant === 'widget' && (
-                            <a data-testid="headingLink">
-                                <TextTruncate line={2} text={organization.name} />
-                            </a>
-                        )}
-                        {!variant && (
-                            <Link href="/organizations/[slug]" as={`/organizations/${organization.slug}`} passHref>
+        <>
+            <ReviewDialog organization={organization} open={dialogOpen} onClose={onDialogClose} />
+            <Box data-testid={organization.slug} className={classes.box}>
+                <Box className={classes.grid}>
+                    <Box className={classes.header}>
+                        <Typography variant="h6" className={classes.heading}>
+                            {variant === 'widget' && (
                                 <a data-testid="headingLink">
                                     <TextTruncate line={2} text={organization.name} />
                                 </a>
-                            </Link>
+                            )}
+                            {!variant && (
+                                <Link href="/organizations/[slug]" as={`/organizations/${organization.slug}`} passHref>
+                                    <a data-testid="headingLink">
+                                        <TextTruncate line={2} text={organization.name} />
+                                    </a>
+                                </Link>
+                            )}
+                        </Typography>
+                        {organization.featured && !organization.verified && (
+                            <Box className={classes.featured} data-testid="featured">
+                                <WhatshotIcon />
+                            </Box>
                         )}
-                    </Typography>
-                    {organization.featured && !organization.verified && (
-                        <Box className={classes.featured} data-testid="featured">
-                            <WhatshotIcon />
+                        {organization.verified && (
+                            <Box className={classes.verified} data-testid="verified">
+                                <VerifiedUserIcon />
+                            </Box>
+                        )}
+                    </Box>
+                    {variant !== 'widget' && (
+                        <Box ml={1}>
+                            <OrganizationRating organization={organization} variant={variant} />
                         </Box>
                     )}
-                    {organization.verified && (
-                        <Box className={classes.verified} data-testid="verified">
-                            <VerifiedUserIcon />
+                    {(organization.alwaysOpen || organization.openingHours.length > 0) && (
+                        <Box data-testid="open">
+                            <NoSsr>
+                                <OrganizationOpen organization={organization} />
+                            </NoSsr>
                         </Box>
                     )}
-                </Box>
-                {variant !== 'widget' && (
-                    <Box ml={1}>
-                        <OrganizationRating organization={organization} variant={variant} />
-                    </Box>
-                )}
-                {(organization.alwaysOpen || organization.openingHours.length > 0) && (
-                    <Box data-testid="open">
-                        <NoSsr>
-                            <OrganizationOpen organization={organization} />
-                        </NoSsr>
-                    </Box>
-                )}
-                {organization.humanSupportTypes.length > 0 && (
-                    <Box>
-                        <Button
-                            size="large"
-                            classes={{ root: classes.button, disabled: classes.buttonDisabled }}
-                            startIcon={<AccountCircleIcon />}
-                            disabled
-                            data-testid="humanSupportTypes"
-                        >
-                            {organization.humanSupportTypes.map((humanSupportType) => humanSupportType.name).join(', ')}
-                        </Button>
-                    </Box>
-                )}
-                {(organization.smsNumber || organization.phoneNumber) && (
-                    <Box>
-                        {organization.smsNumber && (
-                            <OutboundLink
-                                eventLabel={`sms:${organization.smsNumber}`}
-                                to={`sms:${organization.smsNumber}`}
-                                target="_parent"
-                                rel="noopener noreferrer"
+                    {organization.humanSupportTypes.length > 0 && (
+                        <Box>
+                            <Button
+                                size="large"
+                                classes={{ root: classes.button, disabled: classes.buttonDisabled }}
+                                startIcon={<AccountCircleIcon />}
+                                disabled
+                                data-testid="humanSupportTypes"
                             >
+                                {organization.humanSupportTypes
+                                    .map((humanSupportType) => humanSupportType.name)
+                                    .join(', ')}
+                            </Button>
+                        </Box>
+                    )}
+                    {(organization.smsNumber || organization.phoneNumber) && (
+                        <Box>
+                            {organization.smsNumber && (
                                 <Button
                                     size="large"
                                     className={[classes.button, classes.buttonLink].join(' ')}
                                     startIcon={<SmsOutlinedIcon />}
                                     data-testid="smsNumber"
+                                    onClick={onLinkClick(`sms:${organization.smsNumber}`)}
+                                    href={`sms:${organization.smsNumber}`}
+                                    target="_parent"
+                                    rel="noopener noreferrer"
                                 >
                                     {organization.smsNumber}
                                 </Button>
-                            </OutboundLink>
-                        )}
-                        {organization.phoneNumber && (
-                            <OutboundLink
-                                eventLabel={`tel:${organization.phoneNumber}`}
-                                to={`tel:${organization.phoneNumber}`}
-                                target="_parent"
-                                rel="noopener noreferrer"
-                            >
+                            )}
+                            {organization.phoneNumber && (
                                 <Button
                                     size="large"
                                     className={[classes.button, classes.buttonLink].join(' ')}
                                     startIcon={<PhoneIcon />}
                                     data-testid="phoneNumber"
+                                    onClick={onLinkClick(`tel:${organization.phoneNumber}`)}
+                                    href={`tel:${organization.phoneNumber}`}
+                                    target="_parent"
+                                    rel="noopener noreferrer"
                                 >
                                     {organization.phoneNumber}
                                 </Button>
-                            </OutboundLink>
-                        )}
-                    </Box>
-                )}
-                {organization.url && (
-                    <Box>
-                        <OutboundLink
-                            eventLabel={organization.url}
-                            to={organization.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
+                            )}
+                        </Box>
+                    )}
+                    {organization.url && (
+                        <Box>
                             <Button
                                 size="large"
                                 className={[classes.button, classes.buttonLink].join(' ')}
                                 startIcon={<PublicIcon />}
                                 data-testid="url"
+                                onClick={onLinkClick(organization.url)}
+                                href={organization.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
                             >
                                 {
                                     organization.url
@@ -265,84 +274,75 @@ const OrganizationCard = ({ organization, variant }: Props): ReactElement => {
                                         .split(/[/?#]/)[0]
                                 }
                             </Button>
-                        </OutboundLink>
-                    </Box>
-                )}
-                {organization.categories.length > 0 && (
-                    <Box ml={1} data-testid="categories">
-                        <Chips items={organization.categories} max={3} />
-                    </Box>
-                )}
-            </Box>
-            {(organization.smsNumber || organization.phoneNumber || organization.chatUrl) && (
-                <Box className={classes.side} data-testid="fabs">
-                    {organization.smsNumber && (
-                        <Box>
-                            <OutboundLink
-                                eventLabel={`sms:${organization.smsNumber}`}
-                                to={`sms:${organization.smsNumber}`}
-                                target="_parent"
-                                rel="noopener noreferrer"
-                            >
+                        </Box>
+                    )}
+                    {organization.categories.length > 0 && (
+                        <Box ml={1} data-testid="categories">
+                            <Chips items={organization.categories} max={3} />
+                        </Box>
+                    )}
+                </Box>
+                {(organization.smsNumber || organization.phoneNumber || organization.chatUrl) && (
+                    <Box className={classes.side} data-testid="fabs">
+                        {organization.smsNumber && (
+                            <Box>
                                 <Fab
                                     color="primary"
                                     aria-label="text"
                                     data-testid="smsNumberFab"
                                     className={classes.fab}
+                                    onClick={onLinkClick(`sms:${organization.smsNumber}`)}
+                                    href={`sms:${organization.smsNumber}`}
+                                    target="_parent"
+                                    rel="noopener noreferrer"
                                 >
                                     <SmsOutlinedIcon fontSize="inherit" />
                                 </Fab>
-                            </OutboundLink>
-                            <Typography className={classes.fabLabel}>Text</Typography>
-                        </Box>
-                    )}
-                    {organization.phoneNumber && (
-                        <Box>
-                            <OutboundLink
-                                eventLabel={`tel:${organization.phoneNumber}`}
-                                to={`tel:${organization.phoneNumber}`}
-                                target="_parent"
-                                rel="noopener noreferrer"
-                            >
+                                <Typography className={classes.fabLabel}>Text</Typography>
+                            </Box>
+                        )}
+                        {organization.phoneNumber && (
+                            <Box>
                                 <Fab
                                     color="primary"
                                     aria-label="call"
                                     data-testid="phoneNumberFab"
                                     className={classes.fab}
+                                    onClick={onLinkClick(`tel:${organization.phoneNumber}`)}
+                                    href={`tel:${organization.phoneNumber}`}
+                                    target="_parent"
+                                    rel="noopener noreferrer"
                                 >
                                     <PhoneIcon fontSize="inherit" />
                                 </Fab>
-                            </OutboundLink>
-                            <Typography className={classes.fabLabel}>Call</Typography>
-                        </Box>
-                    )}
-                    {organization.chatUrl && (
-                        <Box>
-                            <OutboundLink
-                                eventLabel={organization.chatUrl}
-                                to={organization.chatUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
+                                <Typography className={classes.fabLabel}>Call</Typography>
+                            </Box>
+                        )}
+                        {organization.chatUrl && (
+                            <Box>
                                 <Fab
                                     color="primary"
                                     aria-label="web chat"
                                     data-testid="chatUrlFab"
                                     className={classes.fab}
+                                    onClick={onLinkClick(organization.chatUrl)}
+                                    href={organization.chatUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
                                 >
                                     <MessageOutlinedIcon fontSize="inherit" />
                                 </Fab>
-                            </OutboundLink>
-                            <Typography className={classes.fabLabel}>
-                                Web<span className={classes.webChatSpacing}>&nbsp;</span>
-                                <br className={classes.webChatLineBreak} />
-                                Chat
-                            </Typography>
-                        </Box>
-                    )}
-                </Box>
-            )}
-        </Box>
+                                <Typography className={classes.fabLabel}>
+                                    Web<span className={classes.webChatSpacing}>&nbsp;</span>
+                                    <br className={classes.webChatLineBreak} />
+                                    Chat
+                                </Typography>
+                            </Box>
+                        )}
+                    </Box>
+                )}
+            </Box>
+        </>
     );
 };
 

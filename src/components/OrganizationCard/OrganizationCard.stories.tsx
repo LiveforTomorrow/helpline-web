@@ -3,6 +3,7 @@ import { Box } from '@material-ui/core';
 import OrganizationCard from '.';
 
 const organization = {
+    id: 'abc',
     slug: 'youthline',
     name: 'Youthline',
     alwaysOpen: true,
