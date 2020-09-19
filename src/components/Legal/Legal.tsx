@@ -1,6 +1,6 @@
 import React, { ChangeEvent, ReactElement, useState } from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import { Container, Tab } from '@material-ui/core';
+import { Container, Tab, Typography } from '@material-ui/core';
 import { TabContext, TabList, TabPanel } from '@material-ui/lab';
 import ReactMarkdown from 'react-markdown';
 import { useRouter } from 'next/router';
@@ -59,10 +59,14 @@ const Legal = ({ tab }: Props): ReactElement => {
                         <Tab className={classes.tab} label="Terms of Service" value="terms" />
                     </TabList>
                     <TabPanel value="privacy">
-                        <ReactMarkdown source={privacy} escapeHtml={false} />
+                        <Typography component="div">
+                            <ReactMarkdown source={privacy} escapeHtml={false} />
+                        </Typography>
                     </TabPanel>
                     <TabPanel value="terms">
-                        <ReactMarkdown source={terms} escapeHtml={false} />
+                        <Typography component="div">
+                            <ReactMarkdown source={terms} escapeHtml={false} />
+                        </Typography>
                     </TabPanel>
                 </TabContext>
             </Container>
