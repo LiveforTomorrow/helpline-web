@@ -88,7 +88,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<{ props: WidgetP
     const { country, organizations, categories, humanSupportTypes, topics, countries } = await request<
         GetWidgetCountryCodeProps
     >('https://api.findahelpline.com', print(query), {
-        countryCode: 'us',
+        countryCode: 'nz',
     });
 
     return {
