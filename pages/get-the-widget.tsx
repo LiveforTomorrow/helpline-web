@@ -7,6 +7,7 @@ import { print } from 'graphql';
 import WidgetPartners from '../src/components/WidgetPartners';
 import { WidgetProps } from '../src/components/Widget/Widget';
 import { GetWidgetCountryCodeProps } from '../types/GetWidgetCountryCodeProps';
+import Chrome from '../src/components/Chrome';
 
 const GetTheWidgetPage = (widgetProps: WidgetProps): ReactElement => {
     return (
@@ -14,7 +15,9 @@ const GetTheWidgetPage = (widgetProps: WidgetProps): ReactElement => {
             <Head>
                 <title>Find A Helpline | Get the Widget</title>
             </Head>
-            <WidgetPartners widgetProps={widgetProps} />
+            <Chrome>
+                <WidgetPartners widgetProps={widgetProps} />
+            </Chrome>
         </>
     );
 };
