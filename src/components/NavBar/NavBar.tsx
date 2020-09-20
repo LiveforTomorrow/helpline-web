@@ -2,6 +2,7 @@ import React, { ReactElement, ReactNode } from 'react';
 import { AppBar, Box, Container, Typography } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { compact } from 'lodash/fp';
+import Link from 'next/link';
 
 type Props = {
     children?: ReactNode;
@@ -52,7 +53,15 @@ const NavBar = ({ children, variant }: Props): ReactElement => {
         >
             <Container className={classes.container}>
                 <Box className={classes.logo}>
-                    <img src="/logo.svg" alt="find a helpline" />
+                    {variant == 'widget' ? (
+                        <img src="/logo.svg" alt="find a helpline" />
+                    ) : (
+                        <Link href="/" passHref>
+                            <a>
+                                <img src="/logo.svg" alt="find a helpline" />
+                            </a>
+                        </Link>
+                    )}
                     {variant == 'widget' && <Typography>Struggling? Talk to a real person, for free.</Typography>}
                 </Box>
                 <Box>{children}</Box>
