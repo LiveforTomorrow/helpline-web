@@ -10,6 +10,8 @@ import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import NavBar from '../NavBar';
 import SideBar from '../SideBar';
 import Footer from '../Footer';
+import { WidgetProps } from '../Widget/Widget';
+import Widget from '../Widget';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -75,10 +77,12 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-const WidgetPartners = (): ReactElement => {
-    const classes = useStyles();
+interface Props {
+    widgetProps: WidgetProps;
+}
 
-    const __html = `<div id="widget"></div><script src="https://findahelpline.com/widget.min.js"></script><script>Widget.default({ countryCode: 'us' }).render('#widget');</script>`;
+const WidgetPartners = ({ widgetProps }: Props): ReactElement => {
+    const classes = useStyles();
 
     return (
         <>
@@ -162,12 +166,12 @@ const WidgetPartners = (): ReactElement => {
                     <Typography>Quickly connect visitors to help, right from your website.</Typography>
                 </Box>
             </Container>
-            <Container className={classes.content} maxWidth="sm">
+            <Box m={2} mt={10}>
                 <Typography variant="h6" gutterBottom>
-                    Test the Find a Helpline widget below
+                    Test the Find a Helpline widget below:
                 </Typography>
-                <div dangerouslySetInnerHTML={{ __html }} />
-            </Container>
+                <Widget {...widgetProps} />
+            </Box>
             <Box className={[classes.content, classes.cta].join(' ')}>
                 <Container maxWidth="xs">
                     <Box mb={3}>

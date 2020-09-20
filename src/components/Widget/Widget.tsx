@@ -25,7 +25,7 @@ type Country = {
     subdivisions: Subdivision[];
 };
 
-type Props = {
+export type WidgetProps = {
     preselectedCountry: Country;
     countries: Country[];
     preselectedSubdivision?: Subdivision;
@@ -87,7 +87,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-const OrganizationList = ({
+const Widget = ({
     preselectedCountry,
     preselectedSubdivision,
     countries,
@@ -95,7 +95,7 @@ const OrganizationList = ({
     humanSupportTypes,
     topics,
     organizations,
-}: Props): ReactElement => {
+}: WidgetProps): ReactElement => {
     const classes = useStyles();
     const [showFilters, setShowFilters] = useState(false);
     const [filteredOrganizations, setOrganizations] = useState(
@@ -183,4 +183,4 @@ const OrganizationList = ({
     );
 };
 
-export default OrganizationList;
+export default Widget;

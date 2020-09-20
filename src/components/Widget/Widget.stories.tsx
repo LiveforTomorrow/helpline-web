@@ -61,29 +61,21 @@ const countries = [
     },
 ];
 
+export const widgetPropsMock = {
+    preselectedCountry: country,
+    countries: countries,
+    categories: [],
+    humanSupportTypes: [],
+    topics: [],
+    organizations: organizations,
+};
+
 export default {
     title: 'Widget',
 };
 
-export const Default = (): ReactElement => (
-    <Widget
-        preselectedCountry={country}
-        countries={countries}
-        categories={[]}
-        humanSupportTypes={[]}
-        topics={[]}
-        organizations={organizations}
-    />
-);
+export const Default = (): ReactElement => <Widget {...widgetPropsMock} />;
 
 export const WithSubdivision = (): ReactElement => (
-    <Widget
-        preselectedCountry={country}
-        countries={countries}
-        preselectedSubdivision={country.subdivisions[0]}
-        categories={[]}
-        humanSupportTypes={[]}
-        topics={[]}
-        organizations={organizations}
-    />
+    <Widget {...widgetPropsMock} preselectedSubdivision={country.subdivisions[0]} />
 );

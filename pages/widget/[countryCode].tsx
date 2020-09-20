@@ -101,13 +101,11 @@ export const getStaticProps: GetStaticProps = async (context): Promise<{ props: 
             }
         }
     `;
-    const { country, organizations, categories, humanSupportTypes, topics, countries } = await request(
-        'https://api.findahelpline.com',
-        print(query),
-        {
-            countryCode: context.params.countryCode,
-        },
-    );
+    const { country, organizations, categories, humanSupportTypes, topics, countries } = await request<
+        GetWidgetCountryCodeProps
+    >('https://api.findahelpline.com', print(query), {
+        countryCode: context.params.countryCode,
+    });
 
     return {
         props: {
@@ -130,7 +128,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
             }
         }
     `;
-    const { countries } = (await request('https://api.findahelpline.com', print(query))) as GetWidgetCountryCodePaths;
+    const { countries } = await request<GetWidgetCountryCodePaths>('https://api.findahelpline.com', print(query));
 
     return {
         paths: countries.map((country) => {
