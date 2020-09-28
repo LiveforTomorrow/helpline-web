@@ -66,7 +66,7 @@ describe('OrganizationList', () => {
                 preselectedTopics={[]}
             />,
         );
-        expect(getByText('Best helplines in New Zealand.')).toBeTruthy();
+        expect(getByText('Helplines in New Zealand.')).toBeTruthy();
     });
 
     it('should display subdivision name', () => {
@@ -81,7 +81,7 @@ describe('OrganizationList', () => {
                 preselectedTopics={[]}
             />,
         );
-        expect(getByText('Best helplines in Auckland, New Zealand.')).toBeTruthy();
+        expect(getByText('Helplines in Auckland, New Zealand.')).toBeTruthy();
     });
 
     it('should render organization items', () => {
@@ -235,7 +235,7 @@ describe('OrganizationList', () => {
                     preselectedTopics={topics}
                 />,
             );
-            expect(getByText('Best helplines in New Zealand for anxiety, bullying, and depression.')).toBeTruthy();
+            expect(getByText('Helplines in New Zealand for anxiety, bullying, and depression.')).toBeTruthy();
         });
 
         it('should allow preselectedTopics to be updated', () => {
@@ -249,7 +249,7 @@ describe('OrganizationList', () => {
                     preselectedTopics={[]}
                 />,
             );
-            expect(getByText('Best helplines in New Zealand.')).toBeTruthy();
+            expect(getByText('Helplines in New Zealand.')).toBeTruthy();
             rerender(
                 <OrganizationList
                     country={country}
@@ -260,7 +260,7 @@ describe('OrganizationList', () => {
                     preselectedTopics={topics}
                 />,
             );
-            expect(getByText('Best helplines in New Zealand for anxiety, bullying, and depression.')).toBeTruthy();
+            expect(getByText('Helplines in New Zealand for anxiety, bullying, and depression.')).toBeTruthy();
         });
     });
 });

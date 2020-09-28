@@ -139,7 +139,7 @@ const OrganizationList = ({
             <Container maxWidth="xs">
                 <Box my={2}>
                     <Typography variant="h6">
-                        {`Best helplines in ${subdivision ? `${subdivision.name}, ` : ''}${country.name}${
+                        {`Helplines in ${subdivision ? `${subdivision.name}, ` : ''}${country.name}${
                             selectedTopics.length > 0
                                 ? ` for ${formatArrayIntoSentence(selectedTopics.map((t) => t.name)).toLowerCase()}`
                                 : ''
