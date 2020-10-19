@@ -155,7 +155,7 @@ const OrganizationFilter = ({
                         className={classes.tab}
                         label={`Specialty${selectedCategories.length > 0 ? ` (${selectedCategories.length})` : ''}`}
                     />
-                    <Tab className={classes.tab} label="Other Options" />
+                    <Tab className={classes.tab} label="Support Type" />
                 </Tabs>
             </Box>
             <SwipeableViews index={value} onChangeIndex={handleChangeIndex}>

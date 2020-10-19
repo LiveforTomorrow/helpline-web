@@ -143,7 +143,7 @@ describe('OrganizationList', () => {
             );
             expect(getByTestId('youthline') && getByTestId('kidscan')).toBeTruthy();
             fireEvent.click(getByTestId('filter'));
-            fireEvent.click(getByText('Other Options'));
+            fireEvent.click(getByText('Support Type'));
             fireEvent.click(getByText('Phone'));
             fireEvent.click(getByText('Apply'));
             expect(getByTestId('backdrop')).toHaveStyle({ opacity: 0 });
@@ -212,7 +212,7 @@ describe('OrganizationList', () => {
             fireEvent.click(getByRole('button', { name: 'Show More' }));
             expect(getAllByTestId('OrganizationCard').length).toEqual(11);
             fireEvent.click(getByTestId('filter'));
-            fireEvent.click(getByText('Other Options'));
+            fireEvent.click(getByText('Support Type'));
             fireEvent.click(getByText('Phone'));
             fireEvent.click(getByText('Apply'));
             expect(getByTestId('backdrop')).toHaveStyle({ opacity: 0 });

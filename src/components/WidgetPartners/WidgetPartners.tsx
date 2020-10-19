@@ -62,8 +62,7 @@ const useStyles = makeStyles((theme: Theme) =>
             paddingBottom: theme.spacing(1),
         },
         background0: {
-            background:
-                'linear-gradient(0deg, rgba(51, 51, 51, 0.75), rgba(51, 51, 51, 0.75)), url(/bg2.jpg) top center',
+            background: 'linear-gradient(0deg, rgba(51, 51, 51, 0.5), rgba(51, 51, 51, 0.5)), url(/bg3.jpg) top center',
             backgroundSize: 'cover',
         },
         cta: {
