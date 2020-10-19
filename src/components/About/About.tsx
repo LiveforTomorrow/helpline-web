@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import { Container, Typography, Button, Box } from '@material-ui/core';
+import { Container, Typography, Button, Box, Link } from '@material-ui/core';
 import NextLink from 'next/link';
 import AvTimerIcon from '@material-ui/icons/AvTimer';
 import TouchAppIcon from '@material-ui/icons/TouchApp';
@@ -16,8 +16,11 @@ import Footer from '../Footer';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
-        page: {
+        center: {
             textAlign: 'center',
+        },
+        left: {
+            textAlign: 'left',
         },
         container: {
             display: 'flex',
@@ -76,14 +79,17 @@ const useStyles = makeStyles((theme: Theme) =>
             backgroundSize: 'cover',
         },
         link: {
-            textDecoration: 'none',
-            color: theme.palette.primary.main,
+            textDecoration: 'underline',
+            color: theme.palette.text.primary,
         },
         containerContent: {
             display: 'flex',
             justifyContent: 'center',
             flexDirection: 'column',
             flexGrow: 1,
+        },
+        outboundLink: {
+            textDecoration: 'none',
         },
     }),
 );
@@ -100,9 +106,7 @@ const About = (): ReactElement => {
                 <Container className={classes.containerContent} maxWidth="xs">
                     <Box mb={3}>
                         <Typography variant="h5">
-                            You want help.
-                            <br />
-                            We bring it to you.
+                            We&apos;re putting every free mental health helpline in the world at your fingertips.
                         </Typography>
                     </Box>
                     <Box>
@@ -117,12 +121,27 @@ const About = (): ReactElement => {
                     <ArrowDownwardIcon />
                 </Box>
             </Box>
-            <Box className={classes.page}>
-                <Box className={classes.content}>
+            <Box className={classes.center}>
+                <Box className={[classes.content, classes.left].join(' ')}>
                     <Container maxWidth="xs">
-                        <Typography variant="h6">
-                            We’re on a mission to put every free mental health helpline in the world at your finger
-                            tips.
+                        <Typography variant="h6" gutterBottom>
+                            Helplines exist the world over, but finding the right one for you remains difficult. We’re
+                            set on changing that.
+                        </Typography>
+                        <Typography gutterBottom>
+                            Find A Helpline is a free tool that connects people to the most relevant mental health
+                            helpline for them, wherever they are in the world.
+                        </Typography>
+                        <Typography gutterBottom>
+                            By the end of 2020, Find A Helpline will be available in every English speaking country in
+                            the world.
+                        </Typography>
+                        <Typography>
+                            Find A Helpline is also available as a{' '}
+                            <NextLink href="/get-the-widget" passHref>
+                                <Link className={classes.link}>widget</Link>
+                            </NextLink>{' '}
+                            to easily embed on your website.
                         </Typography>
                     </Container>
                 </Box>
@@ -134,7 +153,7 @@ const About = (): ReactElement => {
                         <Typography className={classes.highlightTitle} variant="h6">
                             Quick
                         </Typography>
-                        <Typography>Find the right helpline for you, in seconds.</Typography>
+                        <Typography>Match with need-specific support, in seconds.</Typography>
                     </Box>
                     <Box className={classes.highlight}>
                         <Box className={classes.highlightIcon}>
@@ -152,13 +171,13 @@ const About = (): ReactElement => {
                         <Typography className={classes.highlightTitle} variant="h6">
                             Reliable
                         </Typography>
-                        <Typography>Up-to-date information you can trust.</Typography>
+                        <Typography>Verified helpline information, no broken links.</Typography>
                     </Box>
                 </Container>
-                <Box className={classes.content}>
+                <Box className={[classes.content, classes.left].join(' ')}>
                     <Container maxWidth="xs">
-                        <Typography variant="h6">
-                            We’re run by{' '}
+                        <Typography variant="h6" gutterBottom>
+                            Built by{' '}
                             <OutboundLink
                                 eventLabel="https://www.livefortomorrow.co"
                                 to="https://www.livefortomorrow.co"
@@ -168,23 +187,39 @@ const About = (): ReactElement => {
                             >
                                 Live For Tomorrow
                             </OutboundLink>
-                            , a not-for-profit using technology to support mental health.
+                            , a registered charity using technology to support mental health.
+                        </Typography>
+                        <Typography gutterBottom>
+                            We&apos;re a small team motivated by our own and other&apos;s experiences of mental health,
+                            and a deep frustration of how hard it can be to access help when you’re struggling.
+                        </Typography>
+                        <Typography>
+                            We want to make it easier for everyone to receive human support, when and where they need
+                            it.
                         </Typography>
                     </Container>
                 </Box>
                 <Box className={[classes.container, classes.background1].join(' ')}>
-                    <Box className={classes.content}>
-                        <Container maxWidth="xs">
-                            <Typography variant="h6">
-                                All of the helplines on our platform are free and confidential.
-                            </Typography>
-                        </Container>
-                    </Box>
+                    <Container className={classes.containerContent} maxWidth="xs">
+                        <Box mb={3}>
+                            <Typography variant="h5">Want Find A Helpline on your website?</Typography>
+                        </Box>
+                        <Box>
+                            <NextLink href="/get-the-widget" passHref>
+                                <Button className={classes.button} color="secondary" variant="contained" size="large">
+                                    Get the widget
+                                </Button>
+                            </NextLink>
+                        </Box>
+                    </Container>
                 </Box>
                 <Box className={classes.content}>
                     <Container maxWidth="xs">
                         <Typography variant="h6">Helpline criteria</Typography>
-                        <Typography>We only include helplines that meet three simple criteria.</Typography>
+                        <Typography>
+                            We only include helplines that meet three simple criteria, ensuring a trustworthy and
+                            reliable service for all.
+                        </Typography>
                     </Container>
                 </Box>
                 <Container className={classes.highlights} maxWidth="sm">
@@ -210,16 +245,26 @@ const About = (): ReactElement => {
                 <Box className={classes.content}>
                     <Container maxWidth="xs">
                         <Box mb={3}>
-                            <Typography variant="h6">
+                            <Typography variant="h6" gutterBottom>
                                 Want to partner?
                                 <br />
                                 Got a question?
                             </Typography>
+                            <Typography>
+                                Our partners include social media platforms, technology companies, influencers,
+                                academics, not-for-profits and helplines.
+                            </Typography>
                         </Box>
                         <NextLink href="/contact" passHref>
-                            <Button className={classes.button} color="primary" variant="contained" size="large">
-                                Get in touch
-                            </Button>
+                            <OutboundLink
+                                eventLabel="mailto:elliot@livefortomorrow.co"
+                                to="mailto:elliot@livefortomorrow.co"
+                                className={classes.outboundLink}
+                            >
+                                <Button className={classes.button} color="primary" variant="contained" size="large">
+                                    Email us
+                                </Button>
+                            </OutboundLink>
                         </NextLink>
                     </Container>
                 </Box>
