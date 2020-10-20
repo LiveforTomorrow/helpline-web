@@ -29,7 +29,7 @@ const Chrome = ({ footer, country, children }: Props): ReactElement => {
     const classes = useStyles();
 
     return (
-        <Div100vh className={classes.div100vh} as="main">
+        <Div100vh className={classes.div100vh}>
             <TopBar country={country} />
             <div className={classes.content}>{children}</div>
             {footer && <Footer />}
