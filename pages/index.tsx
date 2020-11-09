@@ -6,7 +6,6 @@ import { print } from 'graphql';
 import Search from '../src/components/Search';
 import Chrome from '../src/components/Chrome';
 import { GetSearchProps } from '../types/GetSearchProps';
-import About from '../src/components/About';
 
 const IndexPage = ({ topics, countries }: GetSearchProps): ReactElement => {
     return (
@@ -16,7 +15,6 @@ const IndexPage = ({ topics, countries }: GetSearchProps): ReactElement => {
             </Head>
             <Chrome footer={true}>
                 <Search countries={countries} topics={topics} />
-                <About />
             </Chrome>
         </>
     );
