@@ -10,9 +10,6 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import SmsOutlinedIcon from '@material-ui/icons/SmsOutlined';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import { OutboundLink } from 'react-ga';
-import NavBar from '../NavBar';
-import SideBar from '../SideBar';
-import Footer from '../Footer';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -99,9 +96,6 @@ const About = (): ReactElement => {
 
     return (
         <>
-            <NavBar>
-                <SideBar />
-            </NavBar>
             <Box className={[classes.container, classes.background0].join(' ')}>
                 <Container className={classes.containerContent} maxWidth="xs">
                     <Box mb={3}>
@@ -269,7 +263,6 @@ const About = (): ReactElement => {
                     </Container>
                 </Box>
             </Box>
-            <Footer />
         </>
     );
 };

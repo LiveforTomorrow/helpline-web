@@ -42,6 +42,13 @@ const useStyles = makeStyles((theme: Theme) =>
             justifyContent: 'center',
             paddingTop: theme.spacing(5),
             paddingBottom: theme.spacing(5),
+            marginBottom: theme.spacing(3),
+            '@media (max-height: 668px) and (min-height: 580px)': {
+                marginBottom: theme.spacing(11),
+            },
+            '@media (max-height: 579px)': {
+                marginBottom: theme.spacing(26),
+            },
             textAlign: 'center',
             height: '100%',
         },
