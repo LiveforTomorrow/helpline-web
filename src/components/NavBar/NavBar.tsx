@@ -49,7 +49,7 @@ const NavBar = ({ children, variant }: Props): ReactElement => {
     return (
         <AppBar
             className={compact([classes.appBar, variant == 'widget' && classes.appBarWidget]).join(' ')}
-            position="static"
+            position="sticky"
         >
             <Container className={classes.container}>
                 <Box className={classes.logo}>

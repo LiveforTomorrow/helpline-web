@@ -2,6 +2,7 @@ import React, { ReactElement } from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { Container, Typography, Button, Box, Link } from '@material-ui/core';
 import NextLink from 'next/link';
+import Image from 'next/image';
 import AvTimerIcon from '@material-ui/icons/AvTimer';
 import TouchAppIcon from '@material-ui/icons/TouchApp';
 import VerifiedUserOutlinedIcon from '@material-ui/icons/VerifiedUserOutlined';
@@ -10,6 +11,8 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import SmsOutlinedIcon from '@material-ui/icons/SmsOutlined';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import { OutboundLink } from 'react-ga';
+import NavBar from '../NavBar';
+import SideBar from '../SideBar';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -67,23 +70,32 @@ const useStyles = makeStyles((theme: Theme) =>
             fontSize: '4rem',
             paddingBottom: theme.spacing(1),
         },
-        background0: {
-            background: 'linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/bg0.jpg) center center',
-            backgroundSize: 'cover',
-        },
-        background1: {
-            background: 'linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/bg1.jpg) center center',
-            backgroundSize: 'cover',
+        backgroundImage: {
+            objectFit: 'cover',
         },
         link: {
             textDecoration: 'underline',
             color: theme.palette.text.primary,
+        },
+        boxImage: {
+            position: 'relative',
         },
         containerContent: {
             display: 'flex',
             justifyContent: 'center',
             flexDirection: 'column',
             flexGrow: 1,
+        },
+        containerImageContent: {
+            position: 'absolute',
+            margin: '0 auto',
+            left: '0',
+            right: '0',
+            top: '40%',
+        },
+        containerImage: {
+            paddingLeft: '0',
+            paddingRight: '0',
         },
         outboundLink: {
             textDecoration: 'none',
@@ -96,23 +108,36 @@ const About = (): ReactElement => {
 
     return (
         <>
-            <Box className={[classes.container, classes.background0].join(' ')}>
-                <Container className={classes.containerContent} maxWidth="xs">
-                    <Box mb={3}>
-                        <Typography variant="h5">
-                            We&apos;re putting every free mental health helpline in the world at your fingertips.
-                        </Typography>
-                    </Box>
-                    <Box>
-                        <NextLink href="/" passHref>
-                            <Button className={classes.button} color="secondary" variant="contained" size="large">
-                                Find a helpline
-                            </Button>
-                        </NextLink>
-                    </Box>
-                </Container>
-                <Box>
-                    <ArrowDownwardIcon />
+            <Box className={classes.container}>
+                <NavBar>
+                    <SideBar />
+                </NavBar>
+                <Box className={classes.boxImage}>
+                    <Container className={[classes.container, classes.containerImage].join(' ')} maxWidth="xs">
+                        <Image className={classes.backgroundImage} src="/bg0-g.jpg" layout="fill"></Image>
+                    </Container>
+                    <Container
+                        className={[classes.containerContent, classes.containerImageContent].join(' ')}
+                        maxWidth="xs"
+                    >
+                        <Box mb={3}>
+                            <Typography variant="h5">
+                                We&apos;re putting every free mental health helpline in the world at your fingertips.
+                            </Typography>
+                        </Box>
+                        <Box>
+                            <NextLink href="/" passHref>
+                                <Button className={classes.button} color="secondary" variant="contained" size="large">
+                                    Find a helpline
+                                </Button>
+                            </NextLink>
+                        </Box>
+                    </Container>
+                    <Container className={[classes.container, classes.containerImageContent].join(' ')}>
+                        <Box>
+                            <ArrowDownwardIcon />
+                        </Box>
+                    </Container>
                 </Box>
             </Box>
             <Box className={classes.center}>
@@ -193,8 +218,14 @@ const About = (): ReactElement => {
                         </Typography>
                     </Container>
                 </Box>
-                <Box className={[classes.container, classes.background1].join(' ')}>
-                    <Container className={classes.containerContent} maxWidth="xs">
+                <Box className={[classes.container, classes.boxImage].join(' ')}>
+                    <Container className={[classes.container, classes.containerImage].join(' ')} maxWidth="xs">
+                        <Image className={classes.backgroundImage} src="/bg1-g.jpg" layout="fill"></Image>
+                    </Container>
+                    <Container
+                        className={[classes.containerContent, classes.containerImageContent].join(' ')}
+                        maxWidth="xs"
+                    >
                         <Box mb={3}>
                             <Typography variant="h5">Want Find A Helpline on your website?</Typography>
                         </Box>
