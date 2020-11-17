@@ -114,7 +114,12 @@ const About = (): ReactElement => {
                 </NavBar>
                 <Box className={classes.boxImage}>
                     <Container className={[classes.container, classes.containerImage].join(' ')} maxWidth="xs">
-                        <Image className={classes.backgroundImage} src="/bg0-g.jpg" layout="fill"></Image>
+                        <Image
+                            className={classes.backgroundImage}
+                            src="/bg0-g.jpg"
+                            layout="fill"
+                            alt="Women laying down looking at her phone"
+                        ></Image>
                     </Container>
                     <Container
                         className={[classes.containerContent, classes.containerImageContent].join(' ')}
@@ -220,7 +225,12 @@ const About = (): ReactElement => {
                 </Box>
                 <Box className={[classes.container, classes.boxImage].join(' ')}>
                     <Container className={[classes.container, classes.containerImage].join(' ')} maxWidth="xs">
-                        <Image className={classes.backgroundImage} src="/bg1-g.jpg" layout="fill"></Image>
+                        <Image
+                            className={classes.backgroundImage}
+                            src="/bg1-g.jpg"
+                            layout="fill"
+                            alt="Man holding phone"
+                        ></Image>
                     </Container>
                     <Container
                         className={[classes.containerContent, classes.containerImageContent].join(' ')}
