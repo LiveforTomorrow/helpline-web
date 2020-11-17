@@ -6,6 +6,7 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import { Box } from '@material-ui/core';
 import { sortBy, compact } from 'lodash/fp';
+import Flag from 'react-world-flags';
 
 type Subdivision = {
     code: string;
@@ -26,14 +27,6 @@ type Props = {
     inline?: boolean;
     preselectedCountry?: Country;
     preselectedSubdivision?: Subdivision;
-};
-
-// ISO 3166-1 alpha-2
-// ⚠️ No support for IE 11
-const countryToFlag = (isoCode: string): string => {
-    return typeof String.fromCodePoint !== 'undefined'
-        ? isoCode.toUpperCase().replace(/./g, (char) => String.fromCodePoint(char.charCodeAt(0) + 127397))
-        : isoCode;
 };
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -131,7 +124,7 @@ const CountrySelect = ({
                 getOptionSelected={(option, value): boolean => option.code == value.code}
                 renderOption={(option): ReactElement => (
                     <>
-                        <span data-testid="countryFlag">{countryToFlag(option.code)}</span>
+                        <Flag code={option.code} width={20} data-testid="countryFlag" />
                         {option.name}
                     </>
                 )}

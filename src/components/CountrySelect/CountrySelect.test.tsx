@@ -29,7 +29,7 @@ describe('CountrySelect', () => {
         const element = getByRole('textbox');
         fireEvent.click(element);
         fireEvent.change(element, { target: { value: 'Aus' } });
-        expect(getByTestId('countryFlag').textContent).toEqual('🇦🇺');
+        expect(getByTestId('countryFlag').attributes['src']).not.toBeUndefined();
     });
 
     it('should call onCountryChange', () => {
