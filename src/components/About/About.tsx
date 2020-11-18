@@ -11,8 +11,6 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import SmsOutlinedIcon from '@material-ui/icons/SmsOutlined';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import { OutboundLink } from 'react-ga';
-import NavBar from '../NavBar';
-import SideBar from '../SideBar';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -112,9 +110,6 @@ const About = (): ReactElement => {
     return (
         <>
             <Box className={classes.container}>
-                <NavBar>
-                    <SideBar />
-                </NavBar>
                 <Box className={classes.boxImage}>
                     <Container className={[classes.container, classes.containerImage].join(' ')} maxWidth="xs">
                         <Image
