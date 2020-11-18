@@ -44,8 +44,9 @@ const useStyles = makeStyles((theme: Theme) =>
             paddingBottom: theme.spacing(5),
             marginBottom: theme.spacing(3),
             textAlign: 'center',
-            [theme.breakpoints.up('sm')]: {
+            [theme.breakpoints.down('md')]: {
                 height: '100%',
+                marginBottom: theme.spacing(11),
             },
         },
         box: {
