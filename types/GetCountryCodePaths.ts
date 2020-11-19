@@ -8,7 +8,6 @@
 // ====================================================
 
 export interface GetCountryCodePaths_countries {
-  __typename: "Country";
   code: string;
 }
 

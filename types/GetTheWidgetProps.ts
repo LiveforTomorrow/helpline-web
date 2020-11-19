@@ -3,6 +3,8 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
+import { LocalityEnum } from "./globalTypes";
+
 // ====================================================
 // GraphQL query operation: GetTheWidgetProps
 // ====================================================
@@ -85,6 +87,7 @@ export interface GetTheWidgetProps_countries {
   code: string;
   name: string;
   emergencyNumber: string | null;
+  locality: LocalityEnum;
   subdivisions: GetTheWidgetProps_countries_subdivisions[];
 }
 

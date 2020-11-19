@@ -78,6 +78,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<{ props: WidgetP
                 code
                 name
                 emergencyNumber
+                locality
                 subdivisions {
                     code
                     name

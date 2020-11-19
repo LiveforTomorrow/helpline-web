@@ -53,6 +53,7 @@ export const getStaticProps: GetStaticProps = async (context): Promise<{ props: 
                 code
                 name
                 emergencyNumber
+                locality
             }
             organizations(countryCode: $countryCode, subdivisionCodes: []) {
                 nodes {

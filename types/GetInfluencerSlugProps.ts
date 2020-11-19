@@ -8,7 +8,6 @@
 // ====================================================
 
 export interface GetInfluencerSlugProps_influencer {
-  slug: string;
   name: string;
   message: string;
 }

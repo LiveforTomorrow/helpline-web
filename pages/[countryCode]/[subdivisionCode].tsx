@@ -140,6 +140,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
         query GetCountryCodeSubdivisionCodePaths {
             countries {
                 code
+                locality
                 subdivisions {
                     code
                 }
