@@ -3,6 +3,8 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
+import { LocalityEnum } from "./globalTypes";
+
 // ====================================================
 // GraphQL query operation: GetInfluencerSlugProps
 // ====================================================
@@ -20,6 +22,7 @@ export interface GetInfluencerSlugProps_countries_subdivisions {
 export interface GetInfluencerSlugProps_countries {
   code: string;
   name: string;
+  locality: LocalityEnum;
   subdivisions: GetInfluencerSlugProps_countries_subdivisions[];
 }
 

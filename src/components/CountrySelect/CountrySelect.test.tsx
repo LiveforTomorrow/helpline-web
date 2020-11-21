@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
+import { LocalityEnum } from '../../../types/globalTypes';
 import CountrySelect from '.';
 
 describe('CountrySelect', () => {
@@ -11,8 +12,9 @@ describe('CountrySelect', () => {
                 { name: 'Bay of Plenty', code: 'BOP' },
                 { name: 'Auckland', code: 'AUK' },
             ],
+            locality: LocalityEnum.LOCATION,
         },
-        { code: 'AU', name: 'Australia', subdivisions: [] },
+        { code: 'AU', name: 'Australia', subdivisions: [], locality: LocalityEnum.LOCATION },
     ];
 
     it('should contain placeholder', () => {
@@ -34,7 +36,12 @@ describe('CountrySelect', () => {
 
     it('should call onCountryChange', () => {
         const onCountryChange = (country): void => {
-            expect(country).toEqual({ code: 'AU', name: 'Australia', subdivisions: [] });
+            expect(country).toEqual({
+                code: 'AU',
+                name: 'Australia',
+                subdivisions: [],
+                locality: LocalityEnum.LOCATION,
+            });
         };
 
         const { getAllByRole } = render(

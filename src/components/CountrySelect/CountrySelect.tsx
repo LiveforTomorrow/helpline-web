@@ -126,7 +126,9 @@ const CountrySelect = ({
                 getOptionSelected={(option, value): boolean => option.code == value.code}
                 renderOption={(option): ReactElement => (
                     <Grid container spacing={2}>
-                        <Grid item><Flag code={option.code} width={20} data-testid="countryFlag" /></Grid>
+                        <Grid item>
+                            <Flag code={option.code} width={20} data-testid="countryFlag" />
+                        </Grid>
                         <Grid item>{option.name}</Grid>
                     </Grid>
                 )}
@@ -166,11 +168,13 @@ const CountrySelect = ({
                         <TextField
                             {...params}
                             placeholder={
-                                selectedCountry.locality == LocalityEnum.COUNTY && "Refine by county (optional)" ||
-                                selectedCountry.locality == LocalityEnum.LOCATION && "Refine by location (optional)" ||
-                                selectedCountry.locality == LocalityEnum.PROVINCE && "Refine by province (optional)" ||
-                                selectedCountry.locality == LocalityEnum.REGION && "Refine by region (optional)" ||
-                                selectedCountry.locality == LocalityEnum.STATE && "Refine by state (optional)"
+                                (selectedCountry.locality == LocalityEnum.COUNTY && 'Refine by county (optional)') ||
+                                (selectedCountry.locality == LocalityEnum.LOCATION &&
+                                    'Refine by location (optional)') ||
+                                (selectedCountry.locality == LocalityEnum.PROVINCE &&
+                                    'Refine by province (optional)') ||
+                                (selectedCountry.locality == LocalityEnum.REGION && 'Refine by region (optional)') ||
+                                (selectedCountry.locality == LocalityEnum.STATE && 'Refine by state (optional)')
                             }
                             variant="outlined"
                             inputProps={{

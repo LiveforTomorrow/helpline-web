@@ -2,6 +2,7 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import ReactGA from 'react-ga';
 import { mocked } from 'ts-jest/utils';
+import { LocalityEnum } from '../../../types/globalTypes';
 import Widget from '.';
 
 jest.mock('react-ga');
@@ -52,8 +53,9 @@ describe('Widget', () => {
                 { name: 'Bay of Plenty', code: 'BOP' },
                 { name: 'Auckland', code: 'AUK' },
             ],
+            locality: LocalityEnum.LOCATION,
         },
-        { code: 'AU', name: 'Australia', emergencyNumber: '111', subdivisions: [] },
+        { code: 'AU', name: 'Australia', emergencyNumber: '111', subdivisions: [], locality: LocalityEnum.LOCATION },
     ];
     const country = {
         code: 'NZ',
@@ -63,6 +65,7 @@ describe('Widget', () => {
             { name: 'Bay of Plenty', code: 'BOP' },
             { name: 'Auckland', code: 'AUK' },
         ],
+        locality: LocalityEnum.LOCATION,
     };
     const subdivision = { name: 'Bay of Plenty', code: 'BOP' };
     const topics = [];

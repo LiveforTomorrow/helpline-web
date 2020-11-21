@@ -18,6 +18,7 @@ export interface GetTheWidgetProps_country {
   code: string;
   name: string;
   emergencyNumber: string | null;
+  locality: LocalityEnum;
   subdivisions: GetTheWidgetProps_country_subdivisions[];
 }
 

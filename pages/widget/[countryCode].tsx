@@ -45,6 +45,7 @@ export const getStaticProps: GetStaticProps = async (context): Promise<{ props: 
                 code
                 name
                 emergencyNumber
+                locality
                 subdivisions {
                     code
                     name

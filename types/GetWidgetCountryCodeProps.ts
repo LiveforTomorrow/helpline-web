@@ -18,6 +18,7 @@ export interface GetWidgetCountryCodeProps_country {
   code: string;
   name: string;
   emergencyNumber: string | null;
+  locality: LocalityEnum;
   subdivisions: GetWidgetCountryCodeProps_country_subdivisions[];
 }
 

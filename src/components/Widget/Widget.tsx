@@ -12,6 +12,7 @@ import WidgetOrganizationList from '../WidgetOrganizationList';
 import TopBar from '../TopBar';
 import WidgetSearch from '../WidgetSearch';
 import { Organization } from '../OrganizationCard/OrganizationCard';
+import { LocalityEnum } from '../../../types/globalTypes';
 
 type Subdivision = {
     name: string;
@@ -23,6 +24,7 @@ type Country = {
     code: string;
     emergencyNumber: string;
     subdivisions: Subdivision[];
+    locality: LocalityEnum;
 };
 
 export type WidgetProps = {

@@ -7,6 +7,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import LoyaltyIcon from '@material-ui/icons/Loyalty';
 import TopicSelect from '../TopicSelect';
 import CountrySelect from '../CountrySelect';
+import { LocalityEnum } from '../../../types/globalTypes';
 
 type Subdivision = {
     code: string;
@@ -17,6 +18,7 @@ type Country = {
     code: string;
     name: string;
     subdivisions: Subdivision[];
+    locality: LocalityEnum;
 };
 
 type Topic = {
