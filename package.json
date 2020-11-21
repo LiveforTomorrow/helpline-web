@@ -1,5 +1,5 @@
 {
-    "name": "helpline-nextjs",
+    "name": "helpline-web",
     "version": "0.1.0",
     "private": true,
     "scripts": {
@@ -10,7 +10,7 @@
         "lint:ci": "tsc --noEmit && eslint '*/**/*.{js,ts,tsx}'",
         "storybook": "start-storybook -p 6006 -c .storybook -s ./public",
         "build-storybook": "build-storybook -c .storybook -s ./public",
-        "test": "jest",
+        "test": "jest --silent",
         "test:watch": "jest --watch",
         "test:coverage": "jest --coverage",
         "chromatic": "chromatic"
