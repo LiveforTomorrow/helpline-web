@@ -95,9 +95,6 @@ const useStyles = makeStyles((theme: Theme) =>
         containerImage: {
             paddingLeft: '0',
             paddingRight: '0',
-            '&:after': {
-                background: 'linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5))',
-            },
         },
         outboundLink: {
             textDecoration: 'none',
@@ -115,7 +112,7 @@ const About = (): ReactElement => {
                     <Container className={[classes.container, classes.containerImage].join(' ')} maxWidth="xs">
                         <Image
                             className={classes.backgroundImage}
-                            src="/bg0.jpg"
+                            src="/bg0-g.jpg"
                             layout="fill"
                             alt="Women laying down looking at her phone"
                         ></Image>
@@ -226,7 +223,7 @@ const About = (): ReactElement => {
                     <Container className={[classes.container, classes.containerImage].join(' ')} maxWidth="xs">
                         <Image
                             className={classes.backgroundImage}
-                            src="/bg1.jpg"
+                            src="/bg1-g.jpg"
                             layout="fill"
                             alt="Man holding phone"
                         ></Image>
