@@ -4,6 +4,7 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { Typography, Container, Box, Button, Backdrop } from '@material-ui/core';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import AddIcon from '@material-ui/icons/Add';
+import { sortBy } from 'lodash/fp';
 import OrganizationCard, { Organization } from '../OrganizationCard/OrganizationCard';
 import formatArrayIntoSentence from '../../util/formatArrayIntoSentence';
 import NavBar from '../NavBar';
@@ -19,6 +20,7 @@ type Props = {
     topics: { name: string }[];
     preselectedTopics: { name: string }[];
     organizations: Organization[];
+    organizationsWhenEmpty: Organization[];
 };
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -63,6 +65,7 @@ const OrganizationList = ({
     topics,
     preselectedTopics,
     organizations,
+    organizationsWhenEmpty,
 }: Props): ReactElement => {
     const classes = useStyles();
     const [showFilters, setShowFilters] = useState(false);
@@ -146,12 +149,14 @@ const OrganizationList = ({
                         }.`}
                     </Typography>
                 </Box>
-                {filteredOrganizations.slice(0, limit).map((organization) => (
-                    <Box key={organization.slug} my={2} data-testid="OrganizationCard">
-                        <OrganizationCard organization={organization} />
-                    </Box>
-                ))}
-                {filteredOrganizations.length == 0 && <OrganizationEmpty />}
+                {filteredOrganizations.length === 0 && <OrganizationEmpty organizations={organizationsWhenEmpty} />}
+                {(filteredOrganizations.length > 0 ? filteredOrganizations : sortBy('name', organizationsWhenEmpty))
+                    .slice(0, limit)
+                    .map((organization) => (
+                        <Box key={organization.slug} my={2} data-testid="OrganizationCard">
+                            <OrganizationCard organization={organization} />
+                        </Box>
+                    ))}
                 {filteredOrganizations.length > limit && (
                     <Box className={classes.showMore}>
                         <Button

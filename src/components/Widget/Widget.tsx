@@ -36,6 +36,7 @@ export type WidgetProps = {
     humanSupportTypes: { name: string }[];
     topics: { name: string }[];
     organizations: Organization[];
+    organizationsWhenEmpty: Organization[];
 };
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -99,6 +100,7 @@ const Widget = ({
     humanSupportTypes,
     topics,
     organizations,
+    organizationsWhenEmpty,
 }: WidgetProps): ReactElement => {
     const classes = useStyles();
     const [showFilters, setShowFilters] = useState(false);
@@ -142,7 +144,10 @@ const Widget = ({
             <Box className={classes.box}>
                 <TopBar variant="widget" country={preselectedCountry} />
                 <NoSsr>
-                    <WidgetOrganizationList organizations={filteredOrganizations} />
+                    <WidgetOrganizationList
+                        organizations={filteredOrganizations}
+                        organizationsWhenEmpty={organizationsWhenEmpty}
+                    />
                 </NoSsr>
             </Box>
             <Box className={classes.embed}>

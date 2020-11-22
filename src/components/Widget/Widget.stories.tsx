@@ -72,6 +72,7 @@ export const widgetPropsMock = {
     topics: [],
     preselectedTopics: [],
     organizations: organizations,
+    organizationsWhenEmpty: organizations,
 };
 
 export default {

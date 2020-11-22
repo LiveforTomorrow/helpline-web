@@ -4,11 +4,13 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { Box, Fab } from '@material-ui/core';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import { sortBy } from 'lodash/fp';
 import OrganizationCard, { Organization } from '../OrganizationCard/OrganizationCard';
 import OrganizationEmpty from '../OrganizationEmpty';
 
 type Props = {
     organizations: Organization[];
+    organizationsWhenEmpty: Organization[];
 };
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -63,7 +65,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-const WidgetOrganizationList = ({ organizations }: Props): ReactElement => {
+const WidgetOrganizationList = ({ organizations, organizationsWhenEmpty }: Props): ReactElement => {
     const classes = useStyles();
     const [EmblaCarouselReact, embla] = useEmblaCarousel({
         align: 'start',
@@ -95,15 +97,29 @@ const WidgetOrganizationList = ({ organizations }: Props): ReactElement => {
 
     return (
         <Box className={classes.box}>
-            {organizations.length > 0 && (
+            {organizations.length === 0 && organizationsWhenEmpty.length === 0 && (
+                <OrganizationEmpty organizations={organizationsWhenEmpty} variant="widget" />
+            )}
+            {(organizations.length > 0 || organizationsWhenEmpty.length > 0) && (
                 <>
                     <EmblaCarouselReact>
                         <Box className={classes.container}>
-                            {organizations.map((organization) => (
-                                <Box key={organization.slug} className={classes.slide} data-testid="OrganizationCard">
-                                    <OrganizationCard organization={organization} variant="widget" />
+                            {organizations.length === 0 && (
+                                <Box className={classes.slide}>
+                                    <OrganizationEmpty organizations={organizationsWhenEmpty} variant="widget" />
                                 </Box>
-                            ))}
+                            )}
+                            {(organizations.length > 0 ? organizations : sortBy('name', organizationsWhenEmpty)).map(
+                                (organization) => (
+                                    <Box
+                                        key={organization.slug}
+                                        className={classes.slide}
+                                        data-testid="OrganizationCard"
+                                    >
+                                        <OrganizationCard organization={organization} variant="widget" />
+                                    </Box>
+                                ),
+                            )}
                         </Box>
                     </EmblaCarouselReact>
                     <Fab
@@ -126,7 +142,6 @@ const WidgetOrganizationList = ({ organizations }: Props): ReactElement => {
                     </Fab>
                 </>
             )}
-            {organizations.length == 0 && <OrganizationEmpty />}
         </Box>
     );
 };

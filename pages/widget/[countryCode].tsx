@@ -16,6 +16,7 @@ interface Props extends GetWidgetCountryCodeProps {
 const WidgetCountryCodePage = ({
     country,
     organizations,
+    organizationsWhenEmpty,
     categories,
     humanSupportTypes,
     topics,
@@ -41,6 +42,7 @@ const WidgetCountryCodePage = ({
                 countries={countries}
                 preselectedCountry={country}
                 organizations={organizations.nodes}
+                organizationsWhenEmpty={organizationsWhenEmpty.nodes}
                 preselectedTopics={preselectedTopics}
                 topics={topics}
                 categories={categories}
@@ -64,35 +66,10 @@ export const getStaticProps: GetStaticProps = async (context): Promise<{ props: 
                 }
             }
             organizations(countryCode: $countryCode, subdivisionCodes: []) {
-                nodes {
-                    id
-                    slug
-                    name
-                    alwaysOpen
-                    smsNumber
-                    phoneNumber
-                    url
-                    chatUrl
-                    timezone
-                    featured
-                    verified
-                    rating
-                    reviewCount
-                    humanSupportTypes {
-                        name
-                    }
-                    categories {
-                        name
-                    }
-                    topics {
-                        name
-                    }
-                    openingHours {
-                        day
-                        open
-                        close
-                    }
-                }
+                ...organizationConnectionFields
+            }
+            organizationsWhenEmpty: organizations(countryCode: $countryCode, subdivisionCodes: [], featured: true) {
+                ...organizationConnectionFields
             }
             categories {
                 name
@@ -114,10 +91,47 @@ export const getStaticProps: GetStaticProps = async (context): Promise<{ props: 
                 }
             }
         }
+        fragment organizationConnectionFields on OrganizationConnection {
+            nodes {
+                id
+                slug
+                name
+                alwaysOpen
+                smsNumber
+                phoneNumber
+                url
+                chatUrl
+                timezone
+                featured
+                verified
+                rating
+                reviewCount
+                humanSupportTypes {
+                    name
+                }
+                categories {
+                    name
+                }
+                topics {
+                    name
+                }
+                openingHours {
+                    day
+                    open
+                    close
+                }
+            }
+        }
     `;
-    const { country, organizations, categories, humanSupportTypes, topics, countries } = await request<
-        GetWidgetCountryCodeProps
-    >('https://api.findahelpline.com', print(query), {
+    const {
+        country,
+        organizations,
+        organizationsWhenEmpty,
+        categories,
+        humanSupportTypes,
+        topics,
+        countries,
+    } = await request<GetWidgetCountryCodeProps>('https://api.findahelpline.com', print(query), {
         countryCode: context.params.countryCode,
     });
 
@@ -125,6 +139,7 @@ export const getStaticProps: GetStaticProps = async (context): Promise<{ props: 
         props: {
             country,
             organizations,
+            organizationsWhenEmpty,
             categories,
             humanSupportTypes,
             topics,
