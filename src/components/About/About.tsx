@@ -11,6 +11,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import SmsOutlinedIcon from '@material-ui/icons/SmsOutlined';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import { OutboundLink } from 'react-ga';
+import Footer from '../Footer';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -302,6 +303,7 @@ const About = (): ReactElement => {
                     </Container>
                 </Box>
             </Box>
+            <Footer />
         </>
     );
 };
