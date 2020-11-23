@@ -4,8 +4,10 @@ import TextField from '@material-ui/core/TextField';
 import { Autocomplete } from '@material-ui/lab';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
-import { Box } from '@material-ui/core';
+import { Box, Grid } from '@material-ui/core';
 import { sortBy, compact } from 'lodash/fp';
+import Flag from 'react-world-flags';
+import { LocalityEnum } from '../../../types/globalTypes';
 
 type Subdivision = {
     code: string;
@@ -17,6 +19,7 @@ type Country = {
     name: string;
     subdivisions: Subdivision[];
     emergencyNumber?: string;
+    locality: LocalityEnum;
 };
 
 type Props = {
@@ -26,14 +29,6 @@ type Props = {
     inline?: boolean;
     preselectedCountry?: Country;
     preselectedSubdivision?: Subdivision;
-};
-
-// ISO 3166-1 alpha-2
-// ⚠️ No support for IE 11
-const countryToFlag = (isoCode: string): string => {
-    return typeof String.fromCodePoint !== 'undefined'
-        ? isoCode.toUpperCase().replace(/./g, (char) => String.fromCodePoint(char.charCodeAt(0) + 127397))
-        : isoCode;
 };
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -114,6 +109,7 @@ const CountrySelect = ({
     return (
         <Box className={compact([classes.box, inline && classes.inline]).join(' ')}>
             <Autocomplete
+                aria-label="country"
                 value={selectedCountry}
                 style={{ width: 300 }}
                 options={sortBy('name', countries) as Country[]}
@@ -128,12 +124,14 @@ const CountrySelect = ({
                 popupIcon={<SearchIcon />}
                 autoHighlight
                 getOptionLabel={(option): string => option.name}
-                getOptionSelected={(option, value): boolean => option.code == value.code}
+                getOptionSelected={(option, value): boolean => option.code === value.code}
                 renderOption={(option): ReactElement => (
-                    <>
-                        <span data-testid="countryFlag">{countryToFlag(option.code)}</span>
-                        {option.name}
-                    </>
+                    <Grid container spacing={2}>
+                        <Grid item>
+                            <Flag code={option.code} width={20} data-testid="countryFlag" />
+                        </Grid>
+                        <Grid item>{option.name}</Grid>
+                    </Grid>
                 )}
                 blurOnSelect="touch"
                 openOnFocus
@@ -154,6 +152,7 @@ const CountrySelect = ({
             />
             {selectedCountry && selectedCountry.subdivisions.length > 0 && (
                 <Autocomplete
+                    aria-label="subdivision"
                     classes={{
                         root: classes.root,
                         inputRoot: classes.inputRoot,
@@ -163,20 +162,28 @@ const CountrySelect = ({
                     value={selectedSubdivision}
                     options={sortBy('name', selectedCountry.subdivisions) as Subdivision[]}
                     getOptionLabel={(option): string => option.name}
-                    getOptionSelected={(option, value): boolean => option.code == value.code}
+                    getOptionSelected={(option, value): boolean => option.code === value.code}
                     blurOnSelect="touch"
                     openOnFocus
                     onChange={(_e, value: Subdivision): void => localOnSubdivisionChange(value)}
                     renderInput={(params): ReactElement => (
                         <TextField
                             {...params}
-                            placeholder="Refine by state or province (optional)"
+                            placeholder={
+                                (selectedCountry.locality === LocalityEnum.COUNTY && 'Refine by county (optional)') ||
+                                (selectedCountry.locality === LocalityEnum.LOCATION &&
+                                    'Refine by location (optional)') ||
+                                (selectedCountry.locality === LocalityEnum.PROVINCE &&
+                                    'Refine by province (optional)') ||
+                                (selectedCountry.locality === LocalityEnum.REGION && 'Refine by region (optional)') ||
+                                (selectedCountry.locality === LocalityEnum.STATE && 'Refine by state (optional)')
+                            }
                             variant="outlined"
                             inputProps={{
                                 ...params.inputProps,
-                                autoComplete: 'new-password', // disable autocomplete and autofill
+                                autoComplete: 'new-password',
                                 'data-testid': 'subdivisionInput',
-                                'aria-label': 'Refine by state or province (optional)',
+                                'aria-label': 'Refine by location',
                             }}
                         />
                     )}

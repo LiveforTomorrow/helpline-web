@@ -2,6 +2,7 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import ReactGA from 'react-ga';
 import { mocked } from 'ts-jest/utils';
+import { LocalityEnum } from '../../../types/globalTypes';
 import Widget from '.';
 
 jest.mock('react-ga');
@@ -36,7 +37,7 @@ describe('Widget', () => {
             humanSupportTypes: [],
             categories: [],
             timezone: 'Pacific/Auckland',
-            topics: [],
+            topics: [{ name: 'Anxiety' }],
             featured: false,
             verified: false,
             rating: 5,
@@ -52,8 +53,9 @@ describe('Widget', () => {
                 { name: 'Bay of Plenty', code: 'BOP' },
                 { name: 'Auckland', code: 'AUK' },
             ],
+            locality: LocalityEnum.LOCATION,
         },
-        { code: 'AU', name: 'Australia', emergencyNumber: '111', subdivisions: [] },
+        { code: 'AU', name: 'Australia', emergencyNumber: '111', subdivisions: [], locality: LocalityEnum.LOCATION },
     ];
     const country = {
         code: 'NZ',
@@ -63,16 +65,19 @@ describe('Widget', () => {
             { name: 'Bay of Plenty', code: 'BOP' },
             { name: 'Auckland', code: 'AUK' },
         ],
+        locality: LocalityEnum.LOCATION,
     };
     const subdivision = { name: 'Bay of Plenty', code: 'BOP' };
-    const topics = [];
+    const topics = [{ name: 'Anxiety' }];
 
     it('should display country name', () => {
         const { getByTestId } = render(
             <Widget
                 countries={countries}
                 preselectedCountry={country}
+                preselectedTopics={[]}
                 organizations={[]}
+                organizationsWhenEmpty={[]}
                 topics={topics}
                 categories={[]}
                 humanSupportTypes={[]}
@@ -87,7 +92,9 @@ describe('Widget', () => {
                 countries={countries}
                 preselectedCountry={country}
                 preselectedSubdivision={subdivision}
+                preselectedTopics={[]}
                 organizations={[]}
+                organizationsWhenEmpty={[]}
                 topics={topics}
                 categories={[]}
                 humanSupportTypes={[]}
@@ -112,7 +119,9 @@ describe('Widget', () => {
             <Widget
                 countries={countries}
                 preselectedCountry={country}
+                preselectedTopics={[]}
                 organizations={organizations}
+                organizationsWhenEmpty={organizations}
                 topics={[]}
                 categories={[]}
                 humanSupportTypes={[]}
@@ -132,7 +141,9 @@ describe('Widget', () => {
             <Widget
                 countries={countries}
                 preselectedCountry={country}
+                preselectedTopics={[]}
                 organizations={[]}
+                organizationsWhenEmpty={organizations}
                 topics={[]}
                 categories={[]}
                 humanSupportTypes={[]}
@@ -149,7 +160,9 @@ describe('Widget', () => {
             <Widget
                 countries={countries}
                 preselectedCountry={country}
+                preselectedTopics={[]}
                 organizations={[]}
+                organizationsWhenEmpty={[]}
                 topics={[]}
                 categories={[]}
                 humanSupportTypes={[]}
@@ -159,5 +172,37 @@ describe('Widget', () => {
         expect(getByTestId('backdrop')).toHaveStyle({ opacity: 1 });
         fireEvent.click(getByTestId('backdrop'));
         expect(getByTestId('backdrop')).toHaveStyle({ opacity: 0 });
+    });
+
+    it('should allow preselectedTopics to be updated', () => {
+        const { getAllByTestId, rerender } = render(
+            <Widget
+                countries={countries}
+                preselectedCountry={country}
+                organizations={organizations}
+                organizationsWhenEmpty={organizations}
+                topics={topics}
+                categories={[]}
+                humanSupportTypes={[]}
+                preselectedTopics={[]}
+            />,
+        );
+        expect(getAllByTestId('OrganizationCard').map((o) => o.textContent)).toEqual([
+            'Open 24/7',
+            'Open 24/7Volunteers, Staff2340800 376 633website.co.nzFor youthAll issuesTextCallWeb Chat',
+        ]);
+        rerender(
+            <Widget
+                countries={countries}
+                preselectedCountry={country}
+                organizations={organizations}
+                organizationsWhenEmpty={organizations}
+                topics={topics}
+                categories={[]}
+                humanSupportTypes={[]}
+                preselectedTopics={[{ name: 'Anxiety' }]}
+            />,
+        );
+        expect(getAllByTestId('OrganizationCard').map((o) => o.textContent)).toEqual(['Open 24/7']);
     });
 });

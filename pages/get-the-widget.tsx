@@ -29,41 +29,17 @@ export const getStaticProps: GetStaticProps = async (): Promise<{ props: WidgetP
                 code
                 name
                 emergencyNumber
+                locality
                 subdivisions {
                     code
                     name
                 }
             }
             organizations(countryCode: $countryCode, subdivisionCodes: []) {
-                nodes {
-                    id
-                    slug
-                    name
-                    alwaysOpen
-                    smsNumber
-                    phoneNumber
-                    url
-                    chatUrl
-                    timezone
-                    featured
-                    verified
-                    rating
-                    reviewCount
-                    humanSupportTypes {
-                        name
-                    }
-                    categories {
-                        name
-                    }
-                    topics {
-                        name
-                    }
-                    openingHours {
-                        day
-                        open
-                        close
-                    }
-                }
+                ...organizationConnectionFields
+            }
+            organizationsWhenEmpty: organizations(countryCode: $countryCode, subdivisionCodes: [], featured: true) {
+                ...organizationConnectionFields
             }
             categories {
                 name
@@ -78,23 +54,63 @@ export const getStaticProps: GetStaticProps = async (): Promise<{ props: WidgetP
                 code
                 name
                 emergencyNumber
+                locality
                 subdivisions {
                     code
                     name
                 }
             }
         }
+        fragment organizationConnectionFields on OrganizationConnection {
+            nodes {
+                id
+                slug
+                name
+                alwaysOpen
+                smsNumber
+                phoneNumber
+                url
+                chatUrl
+                timezone
+                featured
+                verified
+                rating
+                reviewCount
+                humanSupportTypes {
+                    name
+                }
+                categories {
+                    name
+                }
+                topics {
+                    name
+                }
+                openingHours {
+                    day
+                    open
+                    close
+                }
+            }
+        }
     `;
-    const { country, organizations, categories, humanSupportTypes, topics, countries } = await request<
-        GetTheWidgetProps
-    >('https://api.findahelpline.com', print(query), {
+    const {
+        country,
+        organizations,
+        organizationsWhenEmpty,
+        categories,
+        humanSupportTypes,
+        topics,
+        countries,
+    } = await request<GetTheWidgetProps>('https://api.findahelpline.com', print(query), {
         countryCode: 'nz',
     });
 
     return {
         props: {
             preselectedCountry: country,
+            preselectedTopics: [],
             organizations: organizations.nodes,
+            organizationsWhenEmpty: organizationsWhenEmpty.nodes,
             categories,
             humanSupportTypes,
             topics,

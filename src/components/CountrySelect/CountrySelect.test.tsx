@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
+import { LocalityEnum } from '../../../types/globalTypes';
 import CountrySelect from '.';
 
 describe('CountrySelect', () => {
@@ -11,8 +12,9 @@ describe('CountrySelect', () => {
                 { name: 'Bay of Plenty', code: 'BOP' },
                 { name: 'Auckland', code: 'AUK' },
             ],
+            locality: LocalityEnum.LOCATION,
         },
-        { code: 'AU', name: 'Australia', subdivisions: [] },
+        { code: 'AU', name: 'Australia', subdivisions: [], locality: LocalityEnum.LOCATION },
     ];
 
     it('should contain placeholder', () => {
@@ -29,12 +31,17 @@ describe('CountrySelect', () => {
         const element = getByRole('textbox');
         fireEvent.click(element);
         fireEvent.change(element, { target: { value: 'Aus' } });
-        expect(getByTestId('countryFlag').textContent).toEqual('🇦🇺');
+        expect(getByTestId('countryFlag').attributes['src']).not.toBeUndefined();
     });
 
     it('should call onCountryChange', () => {
         const onCountryChange = (country): void => {
-            expect(country).toEqual({ code: 'AU', name: 'Australia', subdivisions: [] });
+            expect(country).toEqual({
+                code: 'AU',
+                name: 'Australia',
+                subdivisions: [],
+                locality: LocalityEnum.LOCATION,
+            });
         };
 
         const { getAllByRole } = render(
@@ -48,7 +55,7 @@ describe('CountrySelect', () => {
     it('should call onSubdivisionChange', () => {
         let counter = 0;
         const onSubdivisionChange = (subdivision): void => {
-            if (counter == 0) {
+            if (counter === 0) {
                 expect(subdivision).toEqual(null);
             } else {
                 expect(subdivision).toEqual({ name: 'Bay of Plenty', code: 'BOP' });

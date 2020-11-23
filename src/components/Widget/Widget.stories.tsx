@@ -1,4 +1,5 @@
 import React, { ReactElement } from 'react';
+import { LocalityEnum } from '../../../types/globalTypes';
 import Widget from '.';
 
 const organizations = [
@@ -46,10 +47,11 @@ const country = {
         { name: 'Bay of Plenty', code: 'BOP' },
         { name: 'Auckland', code: 'AUK' },
     ],
+    locality: LocalityEnum.LOCATION,
 };
 
 const countries = [
-    { code: 'AU', name: 'Australia', emergencyNumber: '111', subdivisions: [] },
+    { code: 'AU', name: 'Australia', emergencyNumber: '111', subdivisions: [], locality: LocalityEnum.LOCATION },
     {
         code: 'NZ',
         name: 'New Zealand',
@@ -58,6 +60,7 @@ const countries = [
             { name: 'Bay of Plenty', code: 'BOP' },
             { name: 'Auckland', code: 'AUK' },
         ],
+        locality: LocalityEnum.LOCATION,
     },
 ];
 
@@ -67,7 +70,9 @@ export const widgetPropsMock = {
     categories: [],
     humanSupportTypes: [],
     topics: [],
+    preselectedTopics: [],
     organizations: organizations,
+    organizationsWhenEmpty: organizations,
 };
 
 export default {

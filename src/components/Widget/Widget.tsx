@@ -1,5 +1,5 @@
 import CloseIcon from '@material-ui/icons/Close';
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { Box, Button, Backdrop, NoSsr } from '@material-ui/core';
 import FilterListIcon from '@material-ui/icons/FilterList';
@@ -12,6 +12,7 @@ import WidgetOrganizationList from '../WidgetOrganizationList';
 import TopBar from '../TopBar';
 import WidgetSearch from '../WidgetSearch';
 import { Organization } from '../OrganizationCard/OrganizationCard';
+import { LocalityEnum } from '../../../types/globalTypes';
 
 type Subdivision = {
     name: string;
@@ -23,16 +24,19 @@ type Country = {
     code: string;
     emergencyNumber: string;
     subdivisions: Subdivision[];
+    locality: LocalityEnum;
 };
 
 export type WidgetProps = {
     preselectedCountry: Country;
-    countries: Country[];
     preselectedSubdivision?: Subdivision;
+    preselectedTopics: { name: string }[];
+    countries: Country[];
     categories: { name: string }[];
     humanSupportTypes: { name: string }[];
     topics: { name: string }[];
     organizations: Organization[];
+    organizationsWhenEmpty: Organization[];
 };
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -90,28 +94,35 @@ const useStyles = makeStyles((theme: Theme) =>
 const Widget = ({
     preselectedCountry,
     preselectedSubdivision,
+    preselectedTopics,
     countries,
     categories,
     humanSupportTypes,
     topics,
     organizations,
+    organizationsWhenEmpty,
 }: WidgetProps): ReactElement => {
     const classes = useStyles();
     const [showFilters, setShowFilters] = useState(false);
-    const [filteredOrganizations, setOrganizations] = useState(
-        filterAndSortOrganizations(organizations, {
+    const filterByPreselectedTopics = (): Organization[] => {
+        return filterAndSortOrganizations(organizations, {
             contactMethods: [],
             categories: [],
             humanSupportTypes: [],
-            topics: [],
-            sorts: [{ name: 'Featured' }],
-        }),
-    );
+            topics: preselectedTopics,
+            sorts: [{ name: preselectedTopics.length > 0 ? 'Relevance' : 'Featured' }],
+        });
+    };
+    const [filteredOrganizations, setOrganizations] = useState(filterByPreselectedTopics());
 
     const onChange = (changes): void => {
         setOrganizations(filterAndSortOrganizations(organizations, changes));
         setShowFilters(false);
     };
+
+    useEffect(() => {
+        setOrganizations(filterByPreselectedTopics());
+    }, [preselectedTopics]);
 
     return (
         <>
@@ -133,7 +144,10 @@ const Widget = ({
             <Box className={classes.box}>
                 <TopBar variant="widget" country={preselectedCountry} />
                 <NoSsr>
-                    <WidgetOrganizationList organizations={filteredOrganizations} />
+                    <WidgetOrganizationList
+                        organizations={filteredOrganizations}
+                        organizationsWhenEmpty={organizationsWhenEmpty}
+                    />
                 </NoSsr>
             </Box>
             <Box className={classes.embed}>
@@ -173,6 +187,7 @@ const Widget = ({
                         <OrganizationFilter
                             categories={categories}
                             humanSupportTypes={humanSupportTypes}
+                            preselectedTopics={preselectedTopics}
                             topics={topics}
                             onChange={onChange}
                         />

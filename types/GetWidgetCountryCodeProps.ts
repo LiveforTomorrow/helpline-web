@@ -3,6 +3,8 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
+import { LocalityEnum } from "./globalTypes";
+
 // ====================================================
 // GraphQL query operation: GetWidgetCountryCodeProps
 // ====================================================
@@ -16,6 +18,7 @@ export interface GetWidgetCountryCodeProps_country {
   code: string;
   name: string;
   emergencyNumber: string | null;
+  locality: LocalityEnum;
   subdivisions: GetWidgetCountryCodeProps_country_subdivisions[];
 }
 
@@ -64,6 +67,51 @@ export interface GetWidgetCountryCodeProps_organizations {
   nodes: (GetWidgetCountryCodeProps_organizations_nodes | null)[] | null;
 }
 
+export interface GetWidgetCountryCodeProps_organizationsWhenEmpty_nodes_humanSupportTypes {
+  name: string;
+}
+
+export interface GetWidgetCountryCodeProps_organizationsWhenEmpty_nodes_categories {
+  name: string;
+}
+
+export interface GetWidgetCountryCodeProps_organizationsWhenEmpty_nodes_topics {
+  name: string;
+}
+
+export interface GetWidgetCountryCodeProps_organizationsWhenEmpty_nodes_openingHours {
+  day: string;
+  open: any;
+  close: any;
+}
+
+export interface GetWidgetCountryCodeProps_organizationsWhenEmpty_nodes {
+  id: string;
+  slug: string;
+  name: string;
+  alwaysOpen: boolean;
+  smsNumber: string | null;
+  phoneNumber: string | null;
+  url: string | null;
+  chatUrl: string | null;
+  timezone: string;
+  featured: boolean;
+  verified: boolean;
+  rating: number;
+  reviewCount: number;
+  humanSupportTypes: GetWidgetCountryCodeProps_organizationsWhenEmpty_nodes_humanSupportTypes[];
+  categories: GetWidgetCountryCodeProps_organizationsWhenEmpty_nodes_categories[];
+  topics: GetWidgetCountryCodeProps_organizationsWhenEmpty_nodes_topics[];
+  openingHours: GetWidgetCountryCodeProps_organizationsWhenEmpty_nodes_openingHours[];
+}
+
+export interface GetWidgetCountryCodeProps_organizationsWhenEmpty {
+  /**
+   * A list of nodes.
+   */
+  nodes: (GetWidgetCountryCodeProps_organizationsWhenEmpty_nodes | null)[] | null;
+}
+
 export interface GetWidgetCountryCodeProps_categories {
   name: string;
 }
@@ -85,6 +133,7 @@ export interface GetWidgetCountryCodeProps_countries {
   code: string;
   name: string;
   emergencyNumber: string | null;
+  locality: LocalityEnum;
   subdivisions: GetWidgetCountryCodeProps_countries_subdivisions[];
 }
 
@@ -97,6 +146,10 @@ export interface GetWidgetCountryCodeProps {
    * Find all organizations
    */
   organizations: GetWidgetCountryCodeProps_organizations;
+  /**
+   * Find all organizations
+   */
+  organizationsWhenEmpty: GetWidgetCountryCodeProps_organizationsWhenEmpty;
   /**
    * Find all categories
    */
