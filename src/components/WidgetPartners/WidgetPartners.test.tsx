@@ -5,9 +5,7 @@ import WidgetPartners from '.';
 
 describe('WidgetPartners', () => {
     it('should contain widget', () => {
-        const { getByTestId } = render(
-            <WidgetPartners widgetProps={{ ...widgetPropsMock, organizations: [], organizationsWhenEmpty: [] }} />,
-        );
+        const { getByTestId } = render(<WidgetPartners widgetProps={{ ...widgetPropsMock, organizations: [] }} />);
         expect(getByTestId('countryInput')).toHaveAttribute('value', 'New Zealand');
     });
 });

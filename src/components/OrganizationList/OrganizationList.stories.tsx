@@ -41,21 +41,6 @@ const organizations = [
         rating: 5,
         reviewCount: 10,
     },
-    {
-        id: 'kidscan',
-        slug: 'kidscan',
-        name: 'KidsCan',
-        alwaysOpen: false,
-        openingHours: [],
-        humanSupportTypes: [],
-        categories: [],
-        timezone: 'Pacific/Auckland',
-        topics: [],
-        featured: false,
-        verified: false,
-        rating: 5,
-        reviewCount: 10,
-    },
 ];
 
 export default {
@@ -71,7 +56,6 @@ export const Default = (): ReactElement => (
             preselectedTopics={[]}
             topics={[]}
             organizations={organizations}
-            organizationsWhenEmpty={organizations}
         />
     </Chrome>
 );
@@ -86,7 +70,6 @@ export const WithSubdivision = (): ReactElement => (
             preselectedTopics={[]}
             topics={[]}
             organizations={organizations}
-            organizationsWhenEmpty={organizations}
         />
     </Chrome>
 );
@@ -100,7 +83,6 @@ export const WithTopics = (): ReactElement => (
             preselectedTopics={[{ name: 'Anxiety' }, { name: 'Stress' }]}
             topics={[{ name: 'Anxiety' }, { name: 'Bullying' }, { name: 'Stress' }]}
             organizations={organizations}
-            organizationsWhenEmpty={organizations}
         />
     </Chrome>
 );
@@ -111,10 +93,9 @@ export const WhenEmpty = (): ReactElement => (
             country={{ name: 'New Zealand' }}
             categories={[]}
             humanSupportTypes={[]}
-            preselectedTopics={[{ name: 'Bullying' }]}
-            topics={[{ name: 'Bullying' }]}
-            organizations={organizations}
-            organizationsWhenEmpty={organizations}
+            preselectedTopics={[]}
+            topics={[]}
+            organizations={[]}
         />
     </Chrome>
 );

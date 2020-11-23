@@ -1,32 +1,23 @@
-import React, { ReactElement, useState } from 'react';
-import { Container, Box, Typography, Button } from '@material-ui/core';
+import React, { ReactElement, useState, ChangeEvent, useEffect } from 'react';
+import { Container, Box, Typography, FormControl, MenuItem, InputLabel, Select } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import { Alert } from '@material-ui/lab';
-import { isUndefined, omitBy } from 'lodash/fp';
-import SyntaxHighlighter from 'react-syntax-highlighter';
-import { monokai } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
-import { GetEmbedProps, GetEmbedProps_topics as Topic } from '../../../types/GetEmbedProps';
-import Search from '../Search';
-import { LocalityEnum } from '../../../types/globalTypes';
-import Footer from '../Footer';
-import NavBar from '../NavBar';
-import SideBar from '../SideBar';
-
-type Subdivision = {
-    code: string;
-    name: string;
-};
 
 type Country = {
     code: string;
     name: string;
-    subdivisions: Subdivision[];
-    locality: LocalityEnum;
+};
+
+type Props = {
+    countries: Country[];
 };
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
+        logo: {
+            '& img': {
+                maxWidth: '250px',
+            },
+        },
         container: {
             display: 'flex',
             flexDirection: 'column',
@@ -39,94 +30,106 @@ const useStyles = makeStyles((theme: Theme) =>
             gridGap: theme.spacing(2),
         },
         code: {
-            margin: 0,
-            padding: theme.spacing(2),
+            backgroundColor: '#F0F1F5',
+            paddingRight: theme.spacing(2),
+            paddingLeft: theme.spacing(2),
+            width: '100%',
+            fontFamily: 'Courier',
+        },
+        buttonRoot: {
+            color: '#000',
+            textDecoration: 'underline',
+            textTransform: 'none',
+            textAlign: 'left',
+            '&:hover': {
+                textDecoration: 'underline',
+                color: theme.palette.primary.main,
+            },
+        },
+        link: {
+            color: '#000',
+        },
+        formControl: {
+            marginBottom: theme.spacing(1),
+            minWidth: 120,
+            alignSelf: 'center',
         },
         steps: {
             fontWeight: 'bold',
         },
-        button: {
-            borderRadius: '1000px',
-            fontWeight: 'bold',
-            color: '#FFFFFF',
-            textTransform: 'none',
-        },
     }),
 );
 
-const Embed = ({ countries, topics }: GetEmbedProps): ReactElement => {
+const Embed = ({ countries }: Props): ReactElement => {
+    const [selectedCountryCode, setSelectedCountryCode] = useState<string>('US');
     const classes = useStyles();
-    const [snippet, setSnippet] = useState('');
-    const [copied, setCopied] = useState(false);
 
-    const handleChange = (topics: Topic[], country?: Country, subdivision?: Subdivision): void => {
-        if (country) {
-            let host = window.location.host;
-            if (host.includes('chromatic')) {
-                host = 'findahelpline.com';
-            }
-            const attributes = omitBy(isUndefined, {
-                countryCode: country.code.toLowerCase(),
-                subdivisionCode: subdivision?.code?.toLowerCase(),
-                topics: topics.length === 0 ? undefined : topics.map(({ name }) => name),
-            });
-            setSnippet(
-                `<div id="fah-widget"></div>\n<script src="${
-                    window.location.protocol
-                }//${host}/widget.min.js"></script>\n<script type="text/javascript">\nWidget.default(${JSON.stringify(
-                    attributes,
-                    null,
-                    2,
-                )}).render('#fah-widget');\n</script>`,
-            );
-        } else {
-            setSnippet('');
+    const [snippet, setSnippet] = useState('');
+
+    const updateSnippet = (): void => {
+        let host = window.location.host;
+        if (host.includes('chromatic')) {
+            host = 'findahelpline.com';
         }
+        setSnippet(
+            `<div id="widget"></div>
+<script src="${window.location.protocol}//${host}/widget.min.js"></script>
+<script>Widget.default({ countryCode: '${selectedCountryCode.toLowerCase()}' }).render('#widget');</script>`,
+        );
     };
 
-    const handleCopy = (): void => setCopied(true);
+    useEffect(updateSnippet);
+
+    const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
+        setSelectedCountryCode(event.target.value);
+    };
 
     return (
-        <>
-            <NavBar>
-                <SideBar />
-            </NavBar>
-            <Container maxWidth="sm" className={classes.container}>
-                <Box className={classes.box}>
-                    <Typography component="div">
-                        <p>We’re putting every free mental health helpline in the world at your fingertips.</p>
-                        <p>Quick. Easy. Reliable.</p>
-                        <h3>Embed the Find A Helpline widget</h3>
-                        <span className={classes.steps}>Step 1:</span> Select default country, subdivision and topics
-                        for your widget.
-                    </Typography>
-                    <Search countries={countries} topics={topics} variant="embed" onChange={handleChange} />
-                    <Typography component="div" color={snippet === '' ? 'textSecondary' : 'textPrimary'}>
+        <Container maxWidth="sm" className={classes.container} data-testid="embedContainer">
+            <Box className={classes.box}>
+                <Box className={classes.logo}>
+                    <img src="/logo.svg" alt="find a helpline" />
+                </Box>
+                <Typography component="div" data-testid="typographyOne">
+                    <p>We’re putting every free mental health helpline in the world at your fingertips.</p>
+                    <p>Quick. Easy. Reliable.</p>
+                    <h3>Embed the Find A Helpline widget</h3>
+                    <p>
+                        <span className={classes.steps}>Step 1:</span> Choose the default country for the widget.
+                    </p>
+                </Typography>
+                <FormControl className={classes.formControl} data-testid="dropdownForm">
+                    <InputLabel id="demo-simple-select-label">Select Country</InputLabel>
+                    <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={selectedCountryCode}
+                        onChange={handleChange}
+                    >
+                        {countries.map(
+                            (country): ReactElement => {
+                                return (
+                                    <MenuItem key={country.code} value={country.code}>
+                                        {country.name}
+                                    </MenuItem>
+                                );
+                            },
+                        )}
+                    </Select>
+                </FormControl>
+                <Typography component="div" data-testid="typographyTwo">
+                    <p>
                         <span className={classes.steps}>Step 2:</span> Simply copy the code snippet and paste it in your
                         page’s HTML where you want the widget to appear.
-                    </Typography>
-                    {snippet !== '' && (
-                        <>
-                            <SyntaxHighlighter
-                                language="html"
-                                style={monokai}
-                                className={classes.code}
-                                data-testid="EmbedSyntaxHighlighter"
-                            >
-                                {snippet}
-                            </SyntaxHighlighter>
-                            {copied && <Alert severity="success">Copied to clipboard!</Alert>}
-                            <CopyToClipboard text={snippet} onCopy={handleCopy}>
-                                <Button className={classes.button} color="primary" variant="contained" size="large">
-                                    Copy to clipboard
-                                </Button>
-                            </CopyToClipboard>
-                        </>
-                    )}
-                </Box>
-            </Container>
-            <Footer />
-        </>
+                    </p>
+                </Typography>
+                <Typography className={classes.code} data-testid="typographyThree" component="div">
+                    <pre>
+                        <code>{snippet}</code>
+                    </pre>
+                </Typography>
+            </Box>
+        </Container>
     );
 };
 

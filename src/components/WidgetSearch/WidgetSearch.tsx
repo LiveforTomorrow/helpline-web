@@ -3,7 +3,6 @@ import { Button, Container, Box } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { useRouter } from 'next/router';
 import CountrySelect from '../CountrySelect';
-import { LocalityEnum } from '../../../types/globalTypes';
 
 type Subdivision = {
     code: string;
@@ -14,7 +13,6 @@ type Country = {
     code: string;
     name: string;
     subdivisions: Subdivision[];
-    locality: LocalityEnum;
 };
 
 type Props = {

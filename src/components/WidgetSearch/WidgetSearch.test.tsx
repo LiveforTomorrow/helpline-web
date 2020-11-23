@@ -1,6 +1,5 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
-import { LocalityEnum } from '../../../types/globalTypes';
 import WidgetSearch from '.';
 
 const push = jest.fn();
@@ -12,9 +11,9 @@ jest.mock('next/router', () => ({
 }));
 
 describe('WidgetSearch', () => {
-    const preselectedCountry = { code: 'AU', name: 'Australia', subdivisions: [], locality: LocalityEnum.LOCATION };
+    const preselectedCountry = { code: 'AU', name: 'Australia', subdivisions: [] };
     const countries = [
-        { code: 'AU', name: 'Australia', subdivisions: [], locality: LocalityEnum.LOCATION },
+        { code: 'AU', name: 'Australia', subdivisions: [] },
         {
             code: 'NZ',
             name: 'New Zealand',
@@ -22,7 +21,6 @@ describe('WidgetSearch', () => {
                 { name: 'Bay of Plenty', code: 'BOP' },
                 { name: 'Auckland', code: 'AUK' },
             ],
-            locality: LocalityEnum.LOCATION,
         },
     ];
 

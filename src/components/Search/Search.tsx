@@ -1,14 +1,12 @@
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { Typography, Box, Button, Container } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Link from 'next/link';
 import { OutboundLink } from 'react-ga';
 import MailIcon from '@material-ui/icons/Mail';
 import LoyaltyIcon from '@material-ui/icons/Loyalty';
-import clsx from 'clsx';
 import TopicSelect from '../TopicSelect';
 import CountrySelect from '../CountrySelect';
-import { LocalityEnum } from '../../../types/globalTypes';
 
 type Subdivision = {
     code: string;
@@ -19,7 +17,6 @@ type Country = {
     code: string;
     name: string;
     subdivisions: Subdivision[];
-    locality: LocalityEnum;
 };
 
 type Topic = {
@@ -29,8 +26,6 @@ type Topic = {
 type Props = {
     countries: Country[];
     topics: Topic[];
-    variant?: 'embed';
-    onChange?: (topics: Topic[], country?: Country, subdivion?: Subdivision) => void;
 };
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -56,10 +51,6 @@ const useStyles = makeStyles((theme: Theme) =>
             '@media (max-width: 330px)': {
                 marginBottom: theme.spacing(23),
             },
-            maxWidth: '444px',
-        },
-        containerEmbed: {
-            padding: 0,
         },
         box: {
             display: 'grid',
@@ -90,37 +81,31 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-const Search = ({ topics, countries, variant, onChange }: Props): ReactElement => {
+const Search = ({ topics, countries }: Props): ReactElement => {
     const [selectedCountry, setSelectedCountry] = useState<Country | undefined>(undefined);
     const [selectedSubdivision, setSelectedSubdivision] = useState<Subdivision | undefined>(undefined);
     const [selectedTopics, setSelectedTopics] = useState<Topic[]>([]);
     const classes = useStyles();
 
-    useEffect(() => {
-        onChange && onChange(selectedTopics, selectedCountry, selectedSubdivision);
-    }, [selectedCountry, selectedSubdivision, selectedTopics]);
-
     return (
-        <Container
-            className={clsx(variant !== 'embed' && classes.container, variant === 'embed' && classes.containerEmbed)}
-        >
+        <Container maxWidth="xs" className={classes.container}>
             <Box className={classes.box}>
-                {!selectedCountry && variant !== 'embed' && (
-                    <>
-                        <Box className={classes.logo}>
-                            <img src="/logo.svg" alt="find a helpline" />
-                        </Box>
-                        <Typography>
-                            Struggling? Get free, confidential support from a real human over phone, text or webchat.
-                        </Typography>
-                    </>
+                {!selectedCountry && (
+                    <Box className={classes.logo}>
+                        <img src="/logo.svg" alt="find a helpline" />
+                    </Box>
+                )}
+                {!selectedCountry && (
+                    <Typography>
+                        Struggling? Get free, confidential support from a real human over phone, text or webchat.
+                    </Typography>
                 )}
                 <CountrySelect
                     countries={countries}
                     onCountryChange={setSelectedCountry}
                     onSubdivisionChange={setSelectedSubdivision}
                 />
-                {!selectedCountry && variant !== 'embed' && (
+                {!selectedCountry && (
                     <Box className={classes.links}>
                         <OutboundLink
                             eventLabel="https://bit.ly/fah-founders-note"
@@ -154,13 +139,13 @@ const Search = ({ topics, countries, variant, onChange }: Props): ReactElement =
                         </OutboundLink>
                     </Box>
                 )}
-                {selectedCountry && variant !== 'embed' && (
+                {selectedCountry && (
                     <Typography variant="h6">
                         <strong>What would you like help with?</strong>
                     </Typography>
                 )}
                 {selectedCountry && <TopicSelect topics={topics} onChange={setSelectedTopics} />}
-                {selectedCountry && variant !== 'embed' && (
+                {selectedCountry && (
                     <Link
                         href={{
                             pathname: `/[countryCode]${selectedSubdivision ? `/[subdivisionCode]` : ''}`,
