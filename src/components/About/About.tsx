@@ -1,18 +1,20 @@
 import React, { ReactElement } from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import { Container, Typography, Button, Box, Link } from '@material-ui/core';
+import { Container, Typography, Button, Box, Grid } from '@material-ui/core';
 import NextLink from 'next/link';
+import Image from 'next/image';
 import AvTimerIcon from '@material-ui/icons/AvTimer';
 import TouchAppIcon from '@material-ui/icons/TouchApp';
 import VerifiedUserOutlinedIcon from '@material-ui/icons/VerifiedUserOutlined';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import SmsOutlinedIcon from '@material-ui/icons/SmsOutlined';
-import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import { OutboundLink } from 'react-ga';
+import Flag from 'react-world-flags';
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
+import Footer from '../Footer';
 import NavBar from '../NavBar';
 import SideBar from '../SideBar';
-import Footer from '../Footer';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -23,6 +25,7 @@ const useStyles = makeStyles((theme: Theme) =>
             textAlign: 'left',
         },
         container: {
+            position: 'relative',
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
@@ -39,8 +42,8 @@ const useStyles = makeStyles((theme: Theme) =>
             textTransform: 'none',
         },
         content: {
-            paddingTop: theme.spacing(10),
-            paddingBottom: theme.spacing(10),
+            marginTop: theme.spacing(10),
+            marginBottom: theme.spacing(10),
         },
         highlights: {
             padding: 0,
@@ -70,13 +73,25 @@ const useStyles = makeStyles((theme: Theme) =>
             fontSize: '4rem',
             paddingBottom: theme.spacing(1),
         },
-        background0: {
-            background: 'linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/bg0.jpg) center center',
-            backgroundSize: 'cover',
+        backgroundImageContainer: {
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            zIndex: -1,
+            '& > div::after': {
+                content: '" "',
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                background: 'linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5))',
+            },
         },
-        background1: {
-            background: 'linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/bg1.jpg) center center',
-            backgroundSize: 'cover',
+        backgroundImage: {
+            objectFit: 'cover',
         },
         link: {
             textDecoration: 'underline',
@@ -94,55 +109,83 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-const About = (): ReactElement => {
+type Country = {
+    code: string;
+    name: string;
+};
+
+interface Props {
+    countries: Country[];
+    navBar?: boolean;
+}
+
+const About = ({ countries, navBar }: Props): ReactElement => {
     const classes = useStyles();
 
     return (
         <>
-            <NavBar>
-                <SideBar />
-            </NavBar>
-            <Box className={[classes.container, classes.background0].join(' ')}>
+            {navBar && (
+                <NavBar>
+                    <SideBar />
+                </NavBar>
+            )}
+            <Box className={[classes.container].join(' ')}>
+                <Box className={classes.backgroundImageContainer}>
+                    <Image
+                        src="/bg0.jpg"
+                        layout="fill"
+                        alt="Women laying down looking at her phone"
+                        className={classes.backgroundImage}
+                    />
+                </Box>
                 <Container className={classes.containerContent} maxWidth="xs">
                     <Box mb={3}>
                         <Typography variant="h5">
-                            We&apos;re putting every free mental health helpline in the world at your fingertips.
+                            Whatever you&apos;re
+                            <br />
+                            going through, free
+                            <br />
+                            help is available.
                         </Typography>
                     </Box>
-                    <Box>
-                        <NextLink href="/" passHref prefetch={process.env.NODE_ENV === 'production'}>
-                            <Button className={classes.button} color="secondary" variant="contained" size="large">
-                                Find a helpline
-                            </Button>
-                        </NextLink>
-                    </Box>
                 </Container>
-                <Box>
-                    <ArrowDownwardIcon />
-                </Box>
+                {navBar && (
+                    <Box>
+                        <ArrowDownwardIcon />
+                    </Box>
+                )}
             </Box>
             <Box className={classes.center}>
                 <Box className={[classes.content, classes.left].join(' ')}>
                     <Container maxWidth="xs">
                         <Typography variant="h6" gutterBottom>
+                            We&apos;re putting every free mental health and crisis helpline in the world at your
+                            fingertips.
+                        </Typography>
+                        <Typography gutterBottom>
                             Helplines exist the world over, but finding the right one for you remains difficult. We’re
                             set on changing that.
                         </Typography>
                         <Typography gutterBottom>
-                            Find A Helpline is a free tool that connects people to the most relevant mental health
-                            helpline for them, wherever they are in the world.
+                            Find A Helpline is a free tool that connects people to the most relevant helpline for them,
+                            wherever they are in the world.
                         </Typography>
-                        <Typography gutterBottom>
-                            By the end of 2020, Find A Helpline will be available in every English speaking country in
-                            the world.
+                    </Container>
+                </Box>
+                <Box className={[classes.content, classes.left].join(' ')}>
+                    <Container maxWidth="xs">
+                        <Typography variant="h6" gutterBottom>
+                            Supported countries
                         </Typography>
-                        <Typography>
-                            Find A Helpline is also available as a{' '}
-                            <NextLink href="/get-the-widget" passHref prefetch={process.env.NODE_ENV === 'production'}>
-                                <Link className={classes.link}>widget</Link>
-                            </NextLink>{' '}
-                            to easily embed on your website.
-                        </Typography>
+                        <Grid container spacing={2}>
+                            {countries.map((country) => (
+                                <Grid key={country.code} item xs={6}>
+                                    <Typography>
+                                        <Flag code={country.code} width={20} /> {country.name}
+                                    </Typography>
+                                </Grid>
+                            ))}
+                        </Grid>
                     </Container>
                 </Box>
                 <Container className={classes.highlights} maxWidth="sm">
@@ -177,48 +220,14 @@ const About = (): ReactElement => {
                 <Box className={[classes.content, classes.left].join(' ')}>
                     <Container maxWidth="xs">
                         <Typography variant="h6" gutterBottom>
-                            Built by{' '}
-                            <OutboundLink
-                                eventLabel="https://www.livefortomorrow.co"
-                                to="https://www.livefortomorrow.co"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className={classes.link}
-                            >
-                                Live For Tomorrow
-                            </OutboundLink>
-                            , a registered charity using technology to support mental health.
+                            The world&apos;s most reliable helpline data
                         </Typography>
                         <Typography gutterBottom>
-                            We&apos;re a small team motivated by our own and other&apos;s experiences of mental health,
-                            and a deep frustration of how hard it can be to access help when you’re struggling.
+                            Having made the brave decision to reach out, people need to feel confident that help is on
+                            the other side – not a dial tone.
                         </Typography>
                         <Typography>
-                            We want to make it easier for everyone to receive human support, when and where they need
-                            it.
-                        </Typography>
-                    </Container>
-                </Box>
-                <Box className={[classes.container, classes.background1].join(' ')}>
-                    <Container className={classes.containerContent} maxWidth="xs">
-                        <Box mb={3}>
-                            <Typography variant="h5">Want Find A Helpline on your website?</Typography>
-                        </Box>
-                        <Box>
-                            <NextLink href="/get-the-widget" passHref prefetch={process.env.NODE_ENV === 'production'}>
-                                <Button className={classes.button} color="secondary" variant="contained" size="large">
-                                    Get the widget
-                                </Button>
-                            </NextLink>
-                        </Box>
-                    </Container>
-                </Box>
-                <Box className={classes.content}>
-                    <Container maxWidth="xs">
-                        <Typography variant="h6">Helpline criteria</Typography>
-                        <Typography>
-                            We only include helplines that meet three simple criteria, ensuring a trustworthy and
-                            reliable service for all.
+                            That’s why we work directly with helplines to ensure our data remains accurate and reliable.
                         </Typography>
                     </Container>
                 </Box>
@@ -242,6 +251,54 @@ const About = (): ReactElement => {
                         <Typography>Immediate emotional support.</Typography>
                     </Box>
                 </Container>
+                <Box className={[classes.content, classes.left].join(' ')}>
+                    <Container maxWidth="xs">
+                        <Typography variant="h6" gutterBottom>
+                            Built by{' '}
+                            <OutboundLink
+                                eventLabel="https://www.livefortomorrow.co"
+                                to="https://www.livefortomorrow.co"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className={classes.link}
+                            >
+                                Live For Tomorrow
+                            </OutboundLink>
+                            , a not-for-profit startup using technology to support mental health.
+                        </Typography>
+                        <Typography gutterBottom>
+                            We&apos;re a small team motivated by our own and other&apos;s experiences of mental health,
+                            and a deep frustration of how hard it can be to access help when you’re struggling.
+                        </Typography>
+                        <Typography>
+                            Our mission is to take meaningful help to people experiencing distress, all over the world.
+                            We want to make it easier for everyone to receive human support, when and where they need
+                            it.
+                        </Typography>
+                    </Container>
+                </Box>
+                <Box className={[classes.container].join(' ')}>
+                    <Box className={classes.backgroundImageContainer}>
+                        <Image
+                            src="/bg1.jpg"
+                            layout="fill"
+                            alt="Man holding phone"
+                            className={classes.backgroundImage}
+                        />
+                    </Box>
+                    <Container className={classes.containerContent} maxWidth="xs">
+                        <Box mb={3}>
+                            <Typography variant="h5">Want Find A Helpline on your website?</Typography>
+                        </Box>
+                        <Box>
+                            <NextLink href="/get-the-widget" passHref prefetch={process.env.NODE_ENV === 'production'}>
+                                <Button className={classes.button} color="secondary" variant="contained" size="large">
+                                    Learn more
+                                </Button>
+                            </NextLink>
+                        </Box>
+                    </Container>
+                </Box>
                 <Box className={classes.content}>
                     <Container maxWidth="xs">
                         <Box mb={3}>
@@ -251,8 +308,8 @@ const About = (): ReactElement => {
                                 Got a question?
                             </Typography>
                             <Typography>
-                                Our partners include social media platforms, technology companies, influencers,
-                                academics, not-for-profits and helplines.
+                                Our partners include helplines, not-for-profits, universities, social media platforms,
+                                technology companies, and social influencers.
                             </Typography>
                         </Box>
                         <NextLink href="/contact" passHref prefetch={process.env.NODE_ENV === 'production'}>
@@ -262,7 +319,7 @@ const About = (): ReactElement => {
                                 className={classes.outboundLink}
                             >
                                 <Button className={classes.button} color="primary" variant="contained" size="large">
-                                    Email us
+                                    Get in touch
                                 </Button>
                             </OutboundLink>
                         </NextLink>
