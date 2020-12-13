@@ -6,9 +6,13 @@ import { OutboundLink } from 'react-ga';
 import MailIcon from '@material-ui/icons/Mail';
 import LoyaltyIcon from '@material-ui/icons/Loyalty';
 import clsx from 'clsx';
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import TopicSelect from '../TopicSelect';
 import CountrySelect from '../CountrySelect';
 import { LocalityEnum } from '../../../types/globalTypes';
+import NavBar from '../NavBar';
+import SideBar from '../SideBar';
+import About from '../About';
 
 type Subdivision = {
     code: string;
@@ -48,7 +52,7 @@ const useStyles = makeStyles((theme: Theme) =>
             paddingTop: theme.spacing(5),
             paddingBottom: theme.spacing(5),
             textAlign: 'center',
-            height: '100%',
+            height: 'calc(100vh - 245px)',
             maxWidth: '444px',
             [theme.breakpoints.down('md')]: {
                 marginBottom: theme.spacing(11),
@@ -63,6 +67,10 @@ const useStyles = makeStyles((theme: Theme) =>
         box: {
             display: 'grid',
             gridGap: theme.spacing(2),
+        },
+        boxScrollArrow: {
+            textAlign: 'center',
+            margin: theme.spacing(2),
         },
         button: {
             borderRadius: '1000px',
@@ -100,93 +108,112 @@ const Search = ({ topics, countries, variant, onChange }: Props): ReactElement =
     }, [selectedCountry, selectedSubdivision, selectedTopics]);
 
     return (
-        <Container
-            className={clsx(variant !== 'embed' && classes.container, variant === 'embed' && classes.containerEmbed)}
-        >
-            <Box className={classes.box}>
-                {!selectedCountry && variant !== 'embed' && (
-                    <>
-                        <Box className={classes.logo}>
-                            <img src="/logo.svg" alt="find a helpline" />
+        <>
+            {variant !== 'embed' && (
+                <NavBar variant={(!selectedCountry && 'minimal') || null}>
+                    <SideBar />
+                </NavBar>
+            )}
+            <Container
+                className={clsx(
+                    variant !== 'embed' && classes.container,
+                    variant === 'embed' && classes.containerEmbed,
+                )}
+            >
+                <Box className={classes.box}>
+                    {!selectedCountry && variant !== 'embed' && (
+                        <>
+                            <Box className={classes.logo}>
+                                <img src="/logo.svg" alt="find a helpline" />
+                            </Box>
+                            <Typography>
+                                Struggling? Get free, confidential support from a real human over phone, text or
+                                webchat.
+                            </Typography>
+                        </>
+                    )}
+                    <CountrySelect
+                        countries={countries}
+                        onCountryChange={setSelectedCountry}
+                        onSubdivisionChange={setSelectedSubdivision}
+                    />
+                    {!selectedCountry && variant !== 'embed' && (
+                        <Box className={classes.links}>
+                            <OutboundLink
+                                eventLabel="https://bit.ly/fah-founders-note"
+                                to="https://bit.ly/fah-founders-note"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className={classes.link}
+                            >
+                                <Button
+                                    startIcon={<LoyaltyIcon />}
+                                    classes={{ root: classes.buttonRoot, label: classes.link }}
+                                    color="primary"
+                                >
+                                    A note from our founder
+                                </Button>
+                            </OutboundLink>
+                            <OutboundLink
+                                eventLabel="https://livefortomorrow.typeform.com/to/ErmyL3tv"
+                                to="https://livefortomorrow.typeform.com/to/ErmyL3tv"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className={classes.link}
+                            >
+                                <Button
+                                    startIcon={<MailIcon />}
+                                    classes={{ root: classes.buttonRoot, label: classes.link }}
+                                    color="primary"
+                                >
+                                    Hear when we launch in your country
+                                </Button>
+                            </OutboundLink>
                         </Box>
-                        <Typography>
-                            Struggling? Get free, confidential support from a real human over phone, text or webchat.
+                    )}
+                    {selectedCountry && variant !== 'embed' && (
+                        <Typography variant="h6">
+                            <strong>What would you like help with?</strong>
                         </Typography>
-                    </>
-                )}
-                <CountrySelect
-                    countries={countries}
-                    onCountryChange={setSelectedCountry}
-                    onSubdivisionChange={setSelectedSubdivision}
-                />
-                {!selectedCountry && variant !== 'embed' && (
-                    <Box className={classes.links}>
-                        <OutboundLink
-                            eventLabel="https://bit.ly/fah-founders-note"
-                            to="https://bit.ly/fah-founders-note"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className={classes.link}
+                    )}
+                    {selectedCountry && <TopicSelect topics={topics} onChange={setSelectedTopics} />}
+                    {selectedCountry && variant !== 'embed' && (
+                        <Link
+                            href={{
+                                pathname: `/[countryCode]${selectedSubdivision ? `/[subdivisionCode]` : ''}`,
+                                query: { topics: selectedTopics.map((topic) => topic.name) },
+                            }}
+                            as={{
+                                pathname: `/${selectedCountry.code.toLowerCase()}${
+                                    selectedSubdivision ? `/${selectedSubdivision.code.toLowerCase()}` : ''
+                                }`,
+                                query: { topics: selectedTopics.map((topic) => topic.name) },
+                            }}
+                            passHref
+                            prefetch={process.env.NODE_ENV === 'production'}
                         >
                             <Button
-                                startIcon={<LoyaltyIcon />}
-                                classes={{ root: classes.buttonRoot, label: classes.link }}
+                                data-testid="searchButton"
+                                className={classes.button}
+                                variant="contained"
                                 color="primary"
+                                size="large"
                             >
-                                A note from our founder
+                                Search
                             </Button>
-                        </OutboundLink>
-                        <OutboundLink
-                            eventLabel="https://livefortomorrow.typeform.com/to/ErmyL3tv"
-                            to="https://livefortomorrow.typeform.com/to/ErmyL3tv"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className={classes.link}
-                        >
-                            <Button
-                                startIcon={<MailIcon />}
-                                classes={{ root: classes.buttonRoot, label: classes.link }}
-                                color="primary"
-                            >
-                                Hear when we launch in your country
-                            </Button>
-                        </OutboundLink>
+                        </Link>
+                    )}
+                </Box>
+            </Container>
+            {!selectedCountry && variant !== 'embed' && (
+                <>
+                    <Box className={classes.boxScrollArrow}>
+                        <ArrowDownwardIcon />
                     </Box>
-                )}
-                {selectedCountry && variant !== 'embed' && (
-                    <Typography variant="h6">
-                        <strong>What would you like help with?</strong>
-                    </Typography>
-                )}
-                {selectedCountry && <TopicSelect topics={topics} onChange={setSelectedTopics} />}
-                {selectedCountry && variant !== 'embed' && (
-                    <Link
-                        href={{
-                            pathname: `/[countryCode]${selectedSubdivision ? `/[subdivisionCode]` : ''}`,
-                            query: { topics: selectedTopics.map((topic) => topic.name) },
-                        }}
-                        as={{
-                            pathname: `/${selectedCountry.code.toLowerCase()}${
-                                selectedSubdivision ? `/${selectedSubdivision.code.toLowerCase()}` : ''
-                            }`,
-                            query: { topics: selectedTopics.map((topic) => topic.name) },
-                        }}
-                        passHref
-                        prefetch={process.env.NODE_ENV === 'production'}
-                    >
-                        <Button
-                            data-testid="searchButton"
-                            className={classes.button}
-                            variant="contained"
-                            color="primary"
-                            size="large"
-                        >
-                            Search
-                        </Button>
-                    </Link>
-                )}
-            </Box>
-        </Container>
+                    <About countries={countries} />
+                </>
+            )}
+        </>
     );
 };
 

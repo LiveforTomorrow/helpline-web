@@ -1,12 +1,12 @@
 import React, { ReactElement, ReactNode } from 'react';
 import { AppBar, Box, Container, Typography } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import { compact } from 'lodash/fp';
 import Link from 'next/link';
+import clsx from 'clsx';
 
 type Props = {
     children?: ReactNode;
-    variant?: 'widget';
+    variant?: 'widget' | 'minimal';
 };
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -20,6 +20,10 @@ const useStyles = makeStyles((theme: Theme) =>
             boxShadow: 'none',
             backgroundColor: '#181719',
             color: '#FFFFFF',
+        },
+        appBarMinimal: {
+            boxShadow: 'none',
+            backgroundColor: 'transparent',
         },
         container: {
             display: 'grid',
@@ -48,21 +52,29 @@ const NavBar = ({ children, variant }: Props): ReactElement => {
 
     return (
         <AppBar
-            className={compact([classes.appBar, variant === 'widget' && classes.appBarWidget]).join(' ')}
+            className={clsx(
+                classes.appBar,
+                variant === 'widget' && classes.appBarWidget,
+                variant === 'minimal' && classes.appBarMinimal,
+            )}
             position="static"
         >
             <Container className={classes.container}>
                 <Box className={classes.logo}>
-                    {variant === 'widget' ? (
-                        <img src="/logo.svg" alt="find a helpline" />
-                    ) : (
-                        <Link href="/" passHref prefetch={process.env.NODE_ENV === 'production'}>
-                            <a>
+                    {variant !== 'minimal' && (
+                        <>
+                            {variant === 'widget' ? (
                                 <img src="/logo.svg" alt="find a helpline" />
-                            </a>
-                        </Link>
+                            ) : (
+                                <Link href="/" prefetch={process.env.NODE_ENV === 'production'}>
+                                    <img src="/logo.svg" alt="find a helpline" />
+                                </Link>
+                            )}
+                            {variant === 'widget' && (
+                                <Typography>Struggling? Talk to a real person, for free.</Typography>
+                            )}
+                        </>
                     )}
-                    {variant === 'widget' && <Typography>Struggling? Talk to a real person, for free.</Typography>}
                 </Box>
                 <Box>{children}</Box>
             </Container>

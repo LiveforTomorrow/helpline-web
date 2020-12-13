@@ -7,44 +7,26 @@ export default {
     title: 'Search',
 };
 
-export const Default = (): ReactElement => (
-    <Box m={2}>
-        <Search
-            countries={[
-                { code: 'AU', name: 'Australia', subdivisions: [], locality: LocalityEnum.LOCATION },
-                {
-                    code: 'NZ',
-                    name: 'New Zealand',
-                    subdivisions: [
-                        { name: 'Bay of Plenty', code: 'BOP' },
-                        { name: 'Auckland', code: 'AUK' },
-                    ],
-                    locality: LocalityEnum.LOCATION,
-                },
-            ]}
-            topics={[{ name: 'Anxiety' }, { name: 'Bullying' }]}
-        />
-    </Box>
-);
+const countries = [
+    { code: 'AU', name: 'Australia', subdivisions: [], locality: LocalityEnum.LOCATION },
+    {
+        code: 'NZ',
+        name: 'New Zealand',
+        subdivisions: [
+            { name: 'Bay of Plenty', code: 'BOP' },
+            { name: 'Auckland', code: 'AUK' },
+        ],
+        locality: LocalityEnum.LOCATION,
+    },
+];
+
+const topics = [{ name: 'Anxiety' }, { name: 'Bullying' }];
+
+export const Default = (): ReactElement => <Search countries={countries} topics={topics} />;
 
 export const WhenEmbed = (): ReactElement => (
     <Box m={2}>
-        <Search
-            countries={[
-                { code: 'AU', name: 'Australia', subdivisions: [], locality: LocalityEnum.LOCATION },
-                {
-                    code: 'NZ',
-                    name: 'New Zealand',
-                    subdivisions: [
-                        { name: 'Bay of Plenty', code: 'BOP' },
-                        { name: 'Auckland', code: 'AUK' },
-                    ],
-                    locality: LocalityEnum.LOCATION,
-                },
-            ]}
-            topics={[{ name: 'Anxiety' }, { name: 'Bullying' }]}
-            variant="embed"
-        />
+        <Search countries={countries} topics={topics} variant="embed" />
     </Box>
 );
 

@@ -3,7 +3,6 @@ import React, { ReactElement } from 'react';
 import { request } from 'graphql-request';
 import gql from 'graphql-tag';
 import { print } from 'graphql';
-import About from '../src/components/About';
 import Search from '../src/components/Search';
 import Chrome from '../src/components/Chrome';
 import { GetSearchProps } from '../types/GetSearchProps';
@@ -16,7 +15,6 @@ const IndexPage = ({ topics, countries }: GetSearchProps): ReactElement => {
             </Head>
             <Chrome>
                 <Search countries={countries} topics={topics} />
-                <About countries={countries} />
             </Chrome>
         </>
     );
