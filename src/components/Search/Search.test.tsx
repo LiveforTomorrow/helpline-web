@@ -49,11 +49,11 @@ describe('Search', () => {
 
     it('should change search url after country and subdivision select', () => {
         const handleChange = jest.fn();
-        const { getByTestId, getByRole, getByText } = render(
+        const { getByTestId, getByRole, getByText, getAllByText } = render(
             <Search countries={countries} topics={topics} onChange={handleChange} />,
         );
         fireEvent.click(getByRole('combobox', { name: 'country' }));
-        fireEvent.click(getByText('New Zealand'));
+        fireEvent.click(getAllByText('New Zealand')[1]);
         fireEvent.click(getByRole('combobox', { name: 'subdivision' }));
         fireEvent.click(getByText('Auckland'));
         fireEvent.click(getByText('happy'));

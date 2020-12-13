@@ -66,8 +66,10 @@ const NavBar = ({ children, variant }: Props): ReactElement => {
                             {variant === 'widget' ? (
                                 <img src="/logo.svg" alt="find a helpline" />
                             ) : (
-                                <Link href="/" prefetch={process.env.NODE_ENV === 'production'}>
-                                    <img src="/logo.svg" alt="find a helpline" />
+                                <Link href="/" prefetch={process.env.NODE_ENV === 'production'} passHref>
+                                    <a>
+                                        <img src="/logo.svg" alt="find a helpline" />
+                                    </a>
                                 </Link>
                             )}
                             {variant === 'widget' && (
