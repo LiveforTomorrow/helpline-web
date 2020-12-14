@@ -4,10 +4,12 @@ Find A Helpline has only been made possible due to the contribution of our value
 
 ## Partners
 
-<img style="width: 200px; padding: 13.5px 0px; margin-right: 5px ;" src="/gravitylab-logo.png" alt="Gravity Lab logo" />
-<img style="width: 200px; padding: 20.5px 0px; margin: 0px 5px;" src="/datastory-logo.png" alt="DataStory logo" />
-<img style="width: 200px; padding: 1.5px; background-color: black; margin: 0px 5px;"src="/polyform-logo.png" alt="PolyForm logo" />
-<img style="width: 200px; margin: 0px 5px;" src="/search-republic-logo.png" alt="Search Republic logo" />
+<img style="width: 200px; padding: 13.5px 0px; margin-right: 10px ;" src="/gravitylab-logo.png" alt="Gravity Lab logo" />
+<img style="width: 200px; padding: 20.5px 0px; margin: 0px 20px 0px 10px;" src="/datastory-logo.png" alt="DataStory logo" />
+<img style="width: 200px; padding: 1.5px; background-color: black; margin: 5px 20px 5px 10px;"src="/polyform-logo.png" alt="PolyForm logo" />
+<img style="width: 200px; margin: 10px 20px 0px 10px;" src="/search-republic-logo.png" alt="Search Republic logo" />
+
+<hr />
 
 |                       |                           |
 | --------------------- | ------------------------- |
@@ -38,7 +40,7 @@ Find A Helpline has only been made possible due to the contribution of our value
 | Aroha              | Maria Foy                  |
 | Ashley McInroe     | Melissa Maritz             |
 | Ash Owens          | Natasha Bonniface          |
-| Brittany McKrystal | Richie Hardcore            |
+| Brittany McCrystal | Richie Hardcore            |
 | Cate Graumans      | Shirley McLeod             |
 | Claudia Rose       | Simone Anderson            |
 | Danica Lillbostad  | Sophia Piearcey            |
