@@ -17,6 +17,8 @@ Find A Helpline has only been made possible due to the contribution of our value
     <img style="width: 200px; margin: 10px 20px 0px 10px;" src="/search-republic-logo.png" alt="Search Republic logo" />
 </a>
 
+<hr/>
+
 |                       |                           |
 | --------------------- | ------------------------- |
 | Tataihono Nikora (NZ) | Impact PR (NZ)            |
