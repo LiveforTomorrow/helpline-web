@@ -4,12 +4,17 @@ Find A Helpline has only been made possible due to the contribution of our value
 
 ## Partners
 
-|                       |                      |
-| --------------------- | -------------------- |
-| Tataihono Nikora (NZ) | Headstream (US)      |
-| AND Digital (UK)      | Impact PR (NZ)       |
-| GravityLab (NZ)       | Simpson Western (NZ) |
-| Astra Labs (US)       | Vinci Law (NZ)       |
+<img style="width: 200px; padding: 13.5px 0px; margin-right: 5px ;" src="/gravitylab-logo.png" alt="Gravity Lab logo" />
+<img style="width: 200px; padding: 20.5px 0px; margin: 0px 5px;" src="/datastory-logo.png" alt="DataStory logo" />
+<img style="width: 200px; padding: 1.5px; background-color: black; margin: 0px 5px;"src="/polyform-logo.png" alt="PolyForm logo" />
+<img style="width: 200px; margin: 0px 5px;" src="/search-republic-logo.png" alt="Search Republic logo" />
+
+|                       |                           |
+| --------------------- | ------------------------- |
+| Tataihono Nikora (NZ) | Impact PR (NZ)            |
+| AND Digital (UK)      | The Molly Rose Foundation |
+| Astra Labs (US)       | Simpson Western (NZ)      |
+| Headstream (US)       | Vinci Law (NZ)            |
 
 ## Advisors and Contributors
 
@@ -30,15 +35,53 @@ Find A Helpline has only been made possible due to the contribution of our value
 
 |                    |                            |
 | ------------------ | -------------------------- |
+| Aroha              | Maria Foy                  |
 | Ashley McInroe     | Melissa Maritz             |
 | Ash Owens          | Natasha Bonniface          |
 | Brittany McKrystal | Richie Hardcore            |
 | Cate Graumans      | Shirley McLeod             |
 | Claudia Rose       | Simone Anderson            |
-| Genevieve Mora     | Sophia Piearcey            |
-| Iyia Liu           | Zakk d’Larté               |
-| Lucy O'Connor      | Outspoken (Liz and Olivia) |
-| Maria Foy          | We Are Tenzing (Amanda)    |
+| Danica Lillbostad  | Sophia Piearcey            |
+| Genevieve Mora     | Zakk d’Larté               |
+| Iyia Liu           | Outspoken (Liz and Olivia) |
+| Lucy O'Connor      | We Are Tenzing (Amanda)    |
+
+### Australia
+
+|                    |                       |
+| ------------------ | --------------------- |
+| Adele (love_ave)   | Kayla Pickering       |
+| Alexa Towersey     | Leilani Vakaahi       |
+| Bella Colwell      | Lynley (Topknot Yoga) |
+| Charley Bond       | Matt Grant            |
+| Gemma White        | McKenzie Collins      |
+| Hannah             | Michelle Wright       |
+| Izzy Sharman-Firth | Terry Cornick         |
+| Katie Clitherow    | TRIBE                 |
+
+### Cook Islands
+
+|              |     |
+| ------------ | --- |
+| Terito Story |     |
+
+### Ireland
+
+|               |             |
+| ------------- | ----------- |
+| Amy O’Riordan | James Walsh |
+| Anna Lou      | Liam Bee    |
+| Dave James    |             |
+
+### UK
+
+|                |                     |
+| -------------- | ------------------- |
+| Alice Thorpe   | Lou Brown           |
+| Amy Whitbread  | Marie Senechal      |
+| Bee Anderson   | Mentally_attentive  |
+| Holly Matthews | Paul Danan          |
+| Jonny Stephens | Sharp Talent Agency |
 
 ## Volunteer Crowdworkers
 
