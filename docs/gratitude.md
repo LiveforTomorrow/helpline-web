@@ -19,12 +19,12 @@ Find A Helpline has only been made possible due to the contribution of our value
 
 <hr/>
 
-|                       |                           |
-| --------------------- | ------------------------- |
-| Tataihono Nikora (NZ) | Impact PR (NZ)            |
-| AND Digital (UK)      | The Molly Rose Foundation |
-| Astra Labs (US)       | Simpson Western (NZ)      |
-| Headstream (US)       | Vinci Law (NZ)            |
+|                       |                                |
+| --------------------- | ------------------------------ |
+| Tataihono Nikora (NZ) | Impact PR (NZ)                 |
+| AND Digital (UK)      | The Molly Rose Foundation (UK) |
+| Astra Labs (US)       | Simpson Western (NZ)           |
+| Headstream (US)       | Vinci Law (NZ)                 |
 
 ## Advisors and Contributors
 
