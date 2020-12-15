@@ -4,16 +4,16 @@ Find A Helpline has only been made possible due to the contribution of our value
 
 ## Partners
 
-<a href="https://gravitylab.nz" data-testid="gravityLab" style="text-decoration: none">
+<a href="https://gravitylab.nz" style="text-decoration: none">
     <img style="width: 200px; padding: 13.5px 0px; margin-right: 10px ;" src="/gravitylab-logo.png" alt="Gravity Lab logo" />
 <a/>
-<a href="https://www.datastory.nz" data-testid="dataStory" style="text-decoration: none">
+<a href="https://www.datastory.nz" style="text-decoration: none">
     <img style="width: 200px; padding: 20.5px 0px; margin: 0px 20px 0px 10px;" src="/datastory-logo.png" alt="DataStory logo" />
 </a>
-<a href="https://www.polyform.co" data-testid="polyForm" style="text-decoration: none">
+<a href="https://www.polyform.co" style="text-decoration: none">
     <img style="width: 200px; padding: 1.5px; background-color: black; margin: 5px 20px 5px 10px;"src="/polyform-logo.png" alt="PolyForm logo" />
 </a>
-<a href="https://www.searchrepublic.co.nz" data-testid="searchRepublic" style="text-decoration: none">
+<a href="https://www.searchrepublic.co.nz" style="text-decoration: none">
     <img style="width: 200px; margin: 10px 20px 0px 10px;" src="/search-republic-logo.png" alt="Search Republic logo" />
 </a>
 
