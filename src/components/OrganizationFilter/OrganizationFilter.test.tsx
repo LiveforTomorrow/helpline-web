@@ -50,6 +50,11 @@ describe('OrganizationFilter', () => {
             expect(mock).toHaveBeenCalledWith({
                 category: 'User',
                 action: 'Changed Filters',
+                dimension1: 'Featured',
+                dimension2: '',
+                dimension3: '',
+                dimension4: '',
+                dimension5: '',
             });
         };
         const { getByText } = render(<OrganizationFilter onChange={onChange} />);
@@ -140,6 +145,39 @@ describe('OrganizationFilter', () => {
         fireEvent.click(getByText('A – Z'));
         fireEvent.click(getByText('Open now'));
         fireEvent.click(getByText('Relevance'));
+        fireEvent.click(getByText('Apply'));
+    });
+
+    it('should call event 2', () => {
+        const onChange = (): void => {
+            expect(mock).toHaveBeenCalledWith({
+                category: 'User',
+                action: 'Changed Filters',
+                dimension1: 'Relevance',
+                dimension2: 'Anxiety, Bullying, Depression',
+                dimension3: 'Counsellors, Volunteers',
+                dimension4: 'All ages, All issues',
+                dimension5: 'Phone, Text',
+            });
+        };
+        const { getByText, getByRole } = render(
+            <OrganizationFilter
+                categories={categories}
+                humanSupportTypes={humanSupportTypes}
+                topics={topics}
+                preselectedTopics={preselectedTopics}
+                onChange={onChange}
+            />,
+        );
+        fireEvent.click(getByText('Bullying'));
+        fireEvent.click(getByRole('tab', { name: 'Specialty' }));
+        fireEvent.click(getByText('All issues'));
+        fireEvent.click(getByText('All ages'));
+        fireEvent.click(getByRole('tab', { name: 'Support Type' }));
+        fireEvent.click(getByText('Counsellors'));
+        fireEvent.click(getByText('Volunteers'));
+        fireEvent.click(getByText('Phone'));
+        fireEvent.click(getByText('Text'));
         fireEvent.click(getByText('Apply'));
     });
 });

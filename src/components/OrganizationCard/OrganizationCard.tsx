@@ -9,7 +9,7 @@ import MessageOutlinedIcon from '@material-ui/icons/MessageOutlined';
 import Link from 'next/link';
 import WhatshotIcon from '@material-ui/icons/Whatshot';
 import TextTruncate from 'react-text-truncate';
-import { outboundLink } from 'react-ga';
+import ReactGA, { outboundLink } from 'react-ga';
 import { noop } from 'lodash/fp';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import OrganizationOpen from '../OrganizationOpen';
@@ -160,7 +160,17 @@ const OrganizationCard = ({ organization, variant }: Props): ReactElement => {
         setDialogOpen(false);
     };
 
-    const onLinkClick = (label) => (): void => {
+    const onLinkClick = (label: string, gaEventAction = '') => (): void => {
+        const dimension7 = organization.categories.map(({ name }) => name).join(', ');
+
+        ReactGA.event({
+            category: 'Helpline Card Engagement',
+            action: gaEventAction,
+            label: label,
+            dimension6: organization.name,
+            dimension7: dimension7,
+        });
+
         setDialogOpen(true);
         outboundLink({ label }, noop);
     };
@@ -240,7 +250,7 @@ const OrganizationCard = ({ organization, variant }: Props): ReactElement => {
                                     className={[classes.button, classes.buttonLink].join(' ')}
                                     startIcon={<SmsOutlinedIcon />}
                                     data-testid="smsNumber"
-                                    onClick={onLinkClick(`sms:${organization.smsNumber}`)}
+                                    onClick={onLinkClick(`sms:${organization.smsNumber}`, 'SMS Number')}
                                     href={`sms:${organization.smsNumber}`}
                                     target="_parent"
                                     rel="noopener noreferrer"
@@ -254,7 +264,7 @@ const OrganizationCard = ({ organization, variant }: Props): ReactElement => {
                                     className={[classes.button, classes.buttonLink].join(' ')}
                                     startIcon={<PhoneIcon />}
                                     data-testid="phoneNumber"
-                                    onClick={onLinkClick(`tel:${organization.phoneNumber}`)}
+                                    onClick={onLinkClick(`tel:${organization.phoneNumber}`, 'Phone Number')}
                                     href={`tel:${organization.phoneNumber}`}
                                     target="_parent"
                                     rel="noopener noreferrer"
@@ -271,7 +281,7 @@ const OrganizationCard = ({ organization, variant }: Props): ReactElement => {
                                 className={[classes.button, classes.buttonLink].join(' ')}
                                 startIcon={<PublicIcon />}
                                 data-testid="url"
-                                onClick={onLinkClick(organization.url)}
+                                onClick={onLinkClick(organization.url, 'Website URL')}
                                 href={organization.url}
                                 target="_blank"
                                 rel="noopener noreferrer"
@@ -301,7 +311,7 @@ const OrganizationCard = ({ organization, variant }: Props): ReactElement => {
                                     aria-label="text"
                                     data-testid="smsNumberFab"
                                     className={classes.fab}
-                                    onClick={onLinkClick(`sms:${organization.smsNumber}`)}
+                                    onClick={onLinkClick(`sms:${organization.smsNumber}`, 'SMS Button')}
                                     href={`sms:${organization.smsNumber}`}
                                     target="_parent"
                                     rel="noopener noreferrer"
@@ -318,7 +328,7 @@ const OrganizationCard = ({ organization, variant }: Props): ReactElement => {
                                     aria-label="call"
                                     data-testid="phoneNumberFab"
                                     className={classes.fab}
-                                    onClick={onLinkClick(`tel:${organization.phoneNumber}`)}
+                                    onClick={onLinkClick(`tel:${organization.phoneNumber}`, 'Call Button')}
                                     href={`tel:${organization.phoneNumber}`}
                                     target="_parent"
                                     rel="noopener noreferrer"
@@ -335,7 +345,7 @@ const OrganizationCard = ({ organization, variant }: Props): ReactElement => {
                                     aria-label="web chat"
                                     data-testid="chatUrlFab"
                                     className={classes.fab}
-                                    onClick={onLinkClick(organization.chatUrl)}
+                                    onClick={onLinkClick(organization.chatUrl, 'Chat Button')}
                                     href={organization.chatUrl}
                                     target="_blank"
                                     rel="noopener noreferrer"
